@@ -44,6 +44,7 @@ class component
     public:
         static float ambientTemperature;    ///< define operating temperature for all parts
         static environment_t environment;   ///< operating environment
+        static std::string FITunit;
 
     protected:
         float qualityFactor;                ///< quality factor

@@ -61,11 +61,12 @@ float capacitor::getFIT(){
             break;
     }
 
-    std::cout << "\tCalculating FIT for " << name << std::endl;
     float stress = usedVoltage / ratedVoltage;
     double FIT = 0.0003 * ( pow(stress, 3) + 1) * exp( ambientTemperature / ratedTemperature);
     FIT *= 0.41 * pow(capacity, 0.11);
     FIT *= qualityFactor;
     FIT *= environmentFactor;
-    return 2;
+
+    std::cout << "\tCalculating FIT for " << name << "\tFIT: " << FIT << " / " << component::FITunit << std::endl;
+    return FIT;
 }

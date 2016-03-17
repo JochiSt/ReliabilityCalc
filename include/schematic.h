@@ -23,7 +23,7 @@ class schematic : public component {
             parts.push_back(part);
         }
 
-        virtual float getFailureRate(float deviceHours);
+        static float getFailureRate(float deviceHours, double FIT);
 
     protected:
         std::vector<component* > parts;

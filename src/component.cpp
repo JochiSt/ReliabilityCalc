@@ -2,6 +2,7 @@
 
 float component::ambientTemperature = 298.15;                       // init to 25°C
 component::environment_t component::environment = component::GB;    // init with easiest environment
+std::string component::FITunit = "1E6 h";
 
 component::component(std::string val){
     name = val;
