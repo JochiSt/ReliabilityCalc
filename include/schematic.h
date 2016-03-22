@@ -52,6 +52,18 @@ class schematic : public component {
          */
         static float getFailureRate(float deviceHours, double FIT);
 
+        /**
+         * export schematic into file
+         * @param filename path and filename of file, into which should be exported
+         */
+        virtual void exportToFile(std::string filename);
+
+        /**
+         * import schematic from file
+         * @param filename path and filename of file, which should be imported
+         */
+        virtual void importFromFile(std::string filename);
+
     protected:
         /// store components of this schematic
         std::vector<component* > parts;
