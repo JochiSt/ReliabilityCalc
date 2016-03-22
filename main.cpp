@@ -5,7 +5,8 @@ using namespace std;
 #include "schematic.h"
 #include "component.h"
 #include "capacitor.h"
-//#include "resistor.h"
+#include "resistor.h"
+#include "IC.h"
 
 int main(){
     cout << "Reliability Calculator" << endl;
@@ -16,8 +17,11 @@ int main(){
     cout << endl;
 
     schematic* CLKdecoupling = new schematic("Clock Decoupling");
-    CLKdecoupling -> addComponent(new capacitor("C1", 10*capacitor::nF, 5, 10, 85, capacitor::Q_S ));
-    CLKdecoupling -> addComponent(new capacitor("C2", 10*capacitor::nF, 5, 10, 85, capacitor::Q_S ));
+    CLKdecoupling -> addComponent(new capacitor("C1", 10*capacitor::nF, 5, 10, 85, capacitor::Q_M ));
+    CLKdecoupling -> addComponent(new capacitor("C2", 10*capacitor::nF, 5, 10, 85, capacitor::Q_M ));
+    CLKdecoupling -> addComponent(new resistor("R1", 10*resistor::kOhm, 0.1, 0.5, resistor::Q_M ));
+    CLKdecoupling -> addComponent(new IC("IC1", 1.76e9, 55, IC::MTTF ));
+    //CLKdecoupling -> addComponent(new coil("L1", 125, coil::Q_M ));
 
 
     cout << "###############################################################################" << endl;
@@ -38,7 +42,7 @@ int main(){
 
 //######################################################################################################################
 
-    component::environment = component::CL;
+    component::environment = component::GF;
 
     cout << "###############################################################################" << endl;
     cout << endl;
