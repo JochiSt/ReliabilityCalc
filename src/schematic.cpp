@@ -11,7 +11,6 @@ schematic::~schematic(){
     //dtor
 }
 
-
 float schematic::getFIT(){
     std::cout << "Calculating FIT for " << name << std::endl;
     double FIT = 0;
