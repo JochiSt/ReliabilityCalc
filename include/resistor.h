@@ -34,7 +34,7 @@ class resistor : public component {
          * \param ratedT    rated temperature
          * \param qual      part quality
          */
-        resistor(std::string name, float value, float usedP, float ratedP, Rquality_t qual);
+        resistor(std::string name, float value, float usedP, float ratedP, Rquality_t qual = resistor::Q_LESS);
         virtual ~resistor();
 
         /**

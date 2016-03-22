@@ -18,11 +18,11 @@ class inductor : public component
 
         /**
          * Constructor of Inductor
-         * \param name      internal naming of inductor, e.g. C1, C2
+         * \param name      internal naming of inductor, e.g. L1, L2
          * \param ratedT    rated maximum Temperature
+         * \param qual      quality of inductor
          */
-
-        inductor(std::string name, float ratedT, Iquality_t qual);
+        inductor(std::string name, float ratedT, Iquality_t qual = inductor::Q_LESS);
         virtual ~inductor();
 
         virtual float getFIT();

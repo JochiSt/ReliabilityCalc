@@ -35,7 +35,7 @@ class capacitor : public component {
          * \param ratedT    rated temperature
          * \param qual      part quality
          */
-        capacitor(std::string name, float value, float usedU, float ratedU, float ratedT, Cquality_t qual);
+        capacitor(std::string name, float value, float usedU, float ratedU, float ratedT, Cquality_t qual = capacitor::Q_LESS);
         virtual ~capacitor();
 
         /// @return capacity in pF
