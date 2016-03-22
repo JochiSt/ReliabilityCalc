@@ -26,6 +26,7 @@ float schematic::getFailureRate(float deviceHours, double FIT){
 }
 
 void schematic::exportToFile(std::string filename){
+    std::cout << std::endl << std::endl;
     std::cout << "Exporting to: " << filename << std::endl;
     for(unsigned int i = 0; i< parts.size(); i++){
             std::cout << i << "\t" << parts.at(i)->toString() << std::endl;

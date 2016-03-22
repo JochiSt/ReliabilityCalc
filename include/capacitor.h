@@ -48,6 +48,9 @@ class capacitor : public component {
         /// @return FIT of this specific component
         virtual float getFIT();
 
+        virtual std::string toString();
+        virtual void fromString(std::string value);
+
     protected:
         float capacity;     ///< capacity in pF
         float usedVoltage;  ///< voltage applied to the capacitor

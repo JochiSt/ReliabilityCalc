@@ -1,5 +1,6 @@
 #include "capacitor.h"
 
+#include <sstream>
 #include <iostream>
 #include <cmath>
 
@@ -68,4 +69,21 @@ float capacitor::getFIT(){
     FIT *= environmentFactor;
     std::cout << "\tCalculating FIT for " << name << "\tFIT: " << FIT << " / " << component::FITunit << std::endl;
     return FIT;
+}
+
+std::string capacitor::toString(){
+    std::ostringstream os;
+    os << name << "\t";
+    os << capacity << "\t";
+    os << usedVoltage << "\t";
+    os << ratedVoltage << "\t";
+    os << ratedTemperature << "\t";
+    os << qualityFactor;
+    return os.str();
+}
+
+void capacitor::fromString(std::string value){
+    std::istringstream is;
+    is.str(value);
+    is >> name >> capacity >> usedVoltage >> ratedVoltage >> ratedTemperature >> qualityFactor;
 }

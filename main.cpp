@@ -43,21 +43,7 @@ int main(){
 
 //######################################################################################################################
 
-    component::environment = component::GF;
+    CLKdecoupling -> exportToFile("test");
 
-    cout << "###############################################################################" << endl;
-    cout << endl;
-
-    FIT = CLKdecoupling -> getFIT();
-
-    cout << "Total FIT " << FIT << " / " << component::FITunit << endl;
-
-    cout << endl;
-    cout << "###############################################################################" << endl;
-    cout << endl;
-
-    cout << "Failures within 6 years: " << schematic::getFailureRate( 6 * component::YEAR, FIT ) * 100. << " %" << endl;
-
-    cout << endl;
     return 0;
 }

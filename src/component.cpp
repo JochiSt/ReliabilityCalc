@@ -1,9 +1,9 @@
 #include "component.h"
 
-float component::ambientTemperature = 298.15;                       // init to 25°C
-component::environment_t component::environment = component::GB;    // init with easiest environment
-std::string component::FITunit = "1E6 h";
-component::calc_method_t component::calculation_method = MIL_HDBK_217F;
+float component::ambientTemperature = 298.15;                           // init to 25°C
+component::environment_t component::environment = component::GB;        // init with easiest environment
+std::string component::FITunit = "1E6 h";                               // set fit unit to MIL HDBK
+component::calc_method_t component::calculation_method = MIL_HDBK_217F; // for normal use MIL HDBK without notice
 
 component::component(std::string val){
     name = val;
@@ -41,7 +41,3 @@ component::component(std::string val){
             break;
     }
 */
-
-component::~component(){
-    //dtor
-}

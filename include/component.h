@@ -9,6 +9,7 @@
 class component
 {
     public:
+        /// hours of one year
         static const float YEAR = 365. * 24;
 
         /**
@@ -41,7 +42,7 @@ class component
         };
 
         component(std::string name);
-        virtual ~component();
+        virtual ~component(){ };
 
         static float getAmbientTemperature() {
             return ambientTemperature;
