@@ -2,16 +2,14 @@
 
 #include <iostream>
 #include <cmath>
+#include <sstream>
+
+std::string inductor::identifier = "L";
 
 inductor::inductor(std::string name, float ratedT, Iquality_t qual) : component(name)
 {
     ratedTemperature = ratedT;
     qualityFactor = (float)qual / 100.;
-}
-
-inductor::~inductor()
-{
-    //dtor
 }
 
 float inductor::getFIT(){
@@ -74,5 +72,27 @@ float inductor::getFIT(){
     FIT *= environmentFactor;
     std::cout << "\tCalculating FIT for " << name << "\tFIT: " << FIT << " / " << component::FITunit << std::endl;
     return FIT;
+}
+
+std::string inductor::toString(){
+    std::ostringstream os;
+    os << identifier << "\t";
+    os << name << "\t";
+    os << ratedTemperature << "\t";
+    os << qualityFactor;
+    return os.str();
+}
+
+int inductor::fromString(std::string value){
+    std::istringstream is;
+    is.str(value);
+    std::string ident;
+    is >> ident;
+    if(ident == identifier){
+        is >> name >> ratedTemperature >> qualityFactor;
+        return 0;
+    }else{
+        return -1;
+    }
 }
 

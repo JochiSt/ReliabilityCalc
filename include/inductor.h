@@ -29,13 +29,21 @@ class inductor : public component
          * \param qual      quality of inductor
          */
         inductor(std::string name, float ratedT, Iquality_t qual = inductor::Q_LESS);
-        virtual ~inductor();
+        inductor(){ };
+        virtual ~inductor(){ };
 
         virtual float getFIT();
 
+        virtual std::string toString();
+        virtual int fromString(std::string value);
+
+        static std::string getIdentifier(){
+            return identifier;
+        }
     protected:
 
     private:
+        static std::string identifier;
 };
 
 #endif // INDUCTOR_H
