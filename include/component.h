@@ -11,6 +11,9 @@ class component
     public:
         static const float YEAR = 365. * 24;
 
+        /**
+         * environment definition according to MIL HDBK
+         */
         enum environment_t{
             GB,     ///< Ground, Benign
             GF,     ///< Ground, Fixed
@@ -44,7 +47,7 @@ class component
     public:
         static float ambientTemperature;    ///< define operating temperature for all parts
         static environment_t environment;   ///< operating environment
-        static std::string FITunit;
+        static std::string FITunit;         ///< string of FIT unit
 
     protected:
         float qualityFactor;                ///< quality factor
