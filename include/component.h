@@ -53,6 +53,20 @@ class component
         /// pure virtual function, which should be implemented inside each sub component
         virtual float getFIT() = 0;
 
+        /**
+         * put all relevant informations into one string
+         */
+        virtual std::string toString() {
+            return name;
+        }
+
+        /**
+         * set all relevant informations from one string
+         */
+        virtual void fromString(std::string value) {
+            name = value;
+        }
+
     public:
         static calc_method_t calculation_method;    ///< used calculation method
         static float ambientTemperature;            ///< define operating temperature for all parts
