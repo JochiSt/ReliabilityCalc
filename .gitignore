@@ -33,3 +33,4 @@ doxygen/html/*
 html
 
 *.depend
+*.layout
