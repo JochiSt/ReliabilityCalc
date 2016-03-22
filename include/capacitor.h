@@ -8,9 +8,13 @@
  */
 class capacitor : public component {
     public:
-        static const float pF = 1;
-        static const float nF = 1000;
-        static const float uF = 1000 * 1000;
+        static const float pF = 1.;
+        static const float nF = 1000.;
+        static const float uF = 1000. * 1000;
+
+        static const float V  = 1.;
+        static const float mV = 1./1000.;
+        static const float kV = 1000.;
 
         enum Cquality_t {
             Q_S     = 3,

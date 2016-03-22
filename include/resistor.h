@@ -14,6 +14,9 @@ class resistor : public component {
         static const float kOhm = 1./1000.;
         static const float Ohm = 1./(1000*1000);
 
+        static const float mW = 1./1000.;
+        static const float kW = 1000.;
+
         enum Rquality_t {
             Q_S     = 3,
             Q_R     = 10,
@@ -25,24 +28,32 @@ class resistor : public component {
 
         /**
          * Resistor
-         * \param value     capacity value in pF
-         * \param usedPower     used voltage / applied voltage
-         * \param ratedPower    rated voltage
+         * \param value     capacity value in MegaOhm
+         * \param usedPower used power / applied power in Watt
+         * \param ratedPower rated power in Watt
          * \param ratedT    rated temperature
          * \param qual      part quality
          */
         resistor(std::string name, float value, float usedP, float ratedP, Rquality_t qual);
         virtual ~resistor();
 
+        /**
+         * @return resistance in MegaOhm
+         */
         float getResistance() { return resistance; }
+
+        /**
+         * set resistance
+         * @param val resistance in Mega Ohm
+         */
         void setResistance(float val) { resistance = val; }
 
         virtual float getFIT();
 
     protected:
-        float resistance;
-        float usedPower;
-        float ratedPower;
+        float resistance;   ///< resistance
+        float usedPower;    ///< used Power in W
+        float ratedPower;   ///< rated Power in W
 
     private:
 };

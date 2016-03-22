@@ -19,9 +19,7 @@ IC::~IC()
 }
 
 float IC::getFIT(){
-    float EA = 0.7;     //binding energy electron in Silicium = 0.7eV
-    float k = 8.617e-5; //Boltzmann constant
-    float AF = exp(EA/k*(1/(ambientTemperature)-1/(FIT_temperature+273)));    //aging factor
+    float AF = exp(EA/kB*(1/(ambientTemperature)-1/(FIT_temperature+273)));    //aging factor
     FIT *= AF;
     std::cout << "\tCalculating FIT for " << name << "\tFIT: " << FIT << " / " << component::FITunit << std::endl;
     return FIT;
