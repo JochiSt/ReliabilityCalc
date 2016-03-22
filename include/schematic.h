@@ -68,6 +68,13 @@ class schematic : public component {
          */
         virtual void importFromFile(std::string filename);
 
+        /**
+         * clear parts stored in schematic
+         */
+        virtual void clear(){
+            parts.clear();
+        };
+
     protected:
         /// store components of this schematic
         std::vector<component* > parts;
