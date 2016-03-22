@@ -42,6 +42,7 @@ class capacitor : public component {
          * \param qual      part quality
          */
         capacitor(std::string name, float value, float usedU, float ratedU, float ratedT, Cquality_t qual = capacitor::Q_LESS);
+        capacitor(){};
         virtual ~capacitor();
 
         /// @return capacity in pF
@@ -55,7 +56,11 @@ class capacitor : public component {
         virtual float getFIT();
 
         virtual std::string toString();
-        virtual void fromString(std::string value);
+        virtual int fromString(std::string value);
+
+        static std::string getIdentifier(){
+            return identifier;
+        }
 
     protected:
         float capacity;     ///< capacity in pF
@@ -63,6 +68,7 @@ class capacitor : public component {
         float ratedVoltage; ///< rated voltage of the capacitor
 
     private:
+        static std::string identifier;
 };
 
 #endif // CAPACITOR_H

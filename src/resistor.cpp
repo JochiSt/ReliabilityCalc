@@ -1,7 +1,11 @@
 #include "resistor.h"
 
+#include <sstream>
 #include <iostream>
 #include <cmath>
+
+std::string resistor::identifier = "R";
+
 resistor::resistor(std::string name, float value, float usedP, float ratedP, Rquality_t qual) : component(name){
     resistance = value;
     usedPower = usedP;
@@ -75,3 +79,28 @@ float resistor::getFIT(){
     std::cout << "\tCalculating FIT for " << name << "\tFIT: " << FIT << " / " << component::FITunit << std::endl;
     return FIT;
 }
+
+std::string resistor::toString(){
+    std::ostringstream os;
+    os << identifier << "\t";
+    os << name << "\t";
+    os << resistance << "\t";
+    os << usedPower << "\t";
+    os << ratedPower << "\t";
+    os << qualityFactor;
+    return os.str();
+}
+
+int resistor::fromString(std::string value){
+    std::istringstream is;
+    is.str(value);
+    std::string ident;
+    is >> ident;
+    if(ident == identifier){
+        is >> name >> resistance >> usedPower >> ratedPower >> qualityFactor;
+        return 0;
+    }else{
+        return -1;
+    }
+}
+

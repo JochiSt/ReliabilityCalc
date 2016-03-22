@@ -35,6 +35,7 @@ class resistor : public component {
          * \param qual      part quality
          */
         resistor(std::string name, float value, float usedP, float ratedP, Rquality_t qual = resistor::Q_LESS);
+        resistor(){ };
         virtual ~resistor();
 
         /**
@@ -50,12 +51,21 @@ class resistor : public component {
 
         virtual float getFIT();
 
+        virtual std::string toString();
+        virtual int fromString(std::string value);
+
+        static std::string getIdentifier(){
+            return identifier;
+        }
+
     protected:
         float resistance;   ///< resistance
         float usedPower;    ///< used Power in W
         float ratedPower;   ///< rated Power in W
 
     private:
+        static std::string identifier;
+
 };
 
 #endif // RESISTOR_H

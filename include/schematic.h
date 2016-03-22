@@ -44,6 +44,10 @@ class schematic : public component {
             parts.push_back(part);
         }
 
+        component* lastAddedComponent(){
+            return parts.at( parts.size() - 1 );
+        }
+
         /**
          * convert a given FIT into a failure rate after a given number of device hours
          * @param deviceHours device hours

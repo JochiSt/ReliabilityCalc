@@ -42,6 +42,7 @@ class component
         };
 
         component(std::string name);
+        component(){};
         virtual ~component(){ };
 
         static float getAmbientTemperature() {
@@ -64,8 +65,16 @@ class component
         /**
          * set all relevant informations from one string
          */
-        virtual void fromString(std::string value) {
+        virtual int fromString(std::string value) {
             name = value;
+            return 0;
+        }
+
+        /**
+         * @return identifier for im- and export
+         */
+        static std::string getIdentifier(){
+            return identifier;
         }
 
     public:
@@ -81,6 +90,8 @@ class component
         std::string name;
 
     private:
+        static std::string identifier;
+
 };
 
 #endif // COMPONENT_H

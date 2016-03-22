@@ -4,6 +4,8 @@
 #include <iostream>
 #include <cmath>
 
+std::string capacitor::identifier = "C";
+
 capacitor::capacitor(std::string name, float value, float usedU, float ratedU, float ratedT, Cquality_t qual) : component(name){
     capacity = value;
     usedVoltage = usedU;
@@ -73,6 +75,7 @@ float capacitor::getFIT(){
 
 std::string capacitor::toString(){
     std::ostringstream os;
+    os << identifier << "\t";
     os << name << "\t";
     os << capacity << "\t";
     os << usedVoltage << "\t";
@@ -82,8 +85,15 @@ std::string capacitor::toString(){
     return os.str();
 }
 
-void capacitor::fromString(std::string value){
+int capacitor::fromString(std::string value){
     std::istringstream is;
     is.str(value);
-    is >> name >> capacity >> usedVoltage >> ratedVoltage >> ratedTemperature >> qualityFactor;
+    std::string ident;
+    is >> ident;
+    if(ident == identifier ){
+        is >> name >> capacity >> usedVoltage >> ratedVoltage >> ratedTemperature >> qualityFactor;
+        return 0;
+    }else{
+        return -1;
+    }
 }
