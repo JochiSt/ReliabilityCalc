@@ -31,6 +31,15 @@ class component
             CL      ///< Cannon, Launch
         };
 
+        /**
+         * calculation methods
+         */
+        enum calc_method_t{
+            MIL_HDBK_217F,          ///< using MIL Handbook 217F without notice
+            MIL_HDBK_217F_NOTICE1,  ///< using MIL Handbook 217F notice 1
+            MIL_HDBK_217F_NOTICE2   ///< using MIL Handbook 217F notice 2
+        };
+
         component(std::string name);
         virtual ~component();
 
@@ -45,9 +54,10 @@ class component
         virtual float getFIT() = 0;
 
     public:
-        static float ambientTemperature;    ///< define operating temperature for all parts
-        static environment_t environment;   ///< operating environment
-        static std::string FITunit;         ///< string of FIT unit
+        static calc_method_t calculation_method;    ///< used calculation method
+        static float ambientTemperature;            ///< define operating temperature for all parts
+        static environment_t environment;           ///< operating environment
+        static std::string FITunit;                 ///< string of FIT unit
 
     protected:
         float qualityFactor;                ///< quality factor
