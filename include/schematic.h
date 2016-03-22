@@ -13,7 +13,7 @@
 class schematic : public component {
     public:
         schematic(std::string name);
-        virtual ~schematic();
+        virtual ~schematic() { };
 
         /**
          * calculate failures in time for this schematic
@@ -76,7 +76,7 @@ class schematic : public component {
         };
 
         /**
-         * remove last part
+         * remove last part, the latest part added
          */
         virtual void removeLastComponent(){
             parts.pop_back();

@@ -14,10 +14,6 @@ schematic::schematic(std::string name) : component(name){
     //ctor
 }
 
-schematic::~schematic(){
-    //dtor
-}
-
 float schematic::getFIT(){
     std::cout << "Calculating FIT for " << name << std::endl;
     double FIT = 0;
@@ -38,7 +34,7 @@ void schematic::exportToFile(std::string filename){
     std::ofstream outF;
     outF.open(filename.c_str());
     for(unsigned int i = 0; i< parts.size(); i++){
-            std::cout << i << "\t" << parts.at(i)->toString() << std::endl;
+ //           std::cout << i << "\t" << parts.at(i)->toString() << std::endl;
             outF << i << "\t" << parts.at(i)->toString() << std::endl;
     }
     outF.close();
@@ -56,7 +52,6 @@ void schematic::importFromFile(std::string filename){
         std::getline(inF, line);
         if(!inF.good()) break;
 
-        std::cout << line << std::endl;
         std::istringstream iss;
         iss.str(line);
         iss >> linecnt >> identifier;
@@ -67,28 +62,24 @@ void schematic::importFromFile(std::string filename){
         }
 
         if(identifier == resistor::getIdentifier() ){
-            std::cout << "new resistor" << std::endl;
             addComponent(new resistor());
             if( lastAddedComponent() -> fromString( line.substr( line.find(resistor::getIdentifier()), std::string::npos) ) < 0 ){
                     std::cerr << "unable to add component" << std::endl;
                     removeLastComponent();
             }
         }else if(identifier == capacitor::getIdentifier() ){
-            std::cout << "new capacitor" << std::endl;
             addComponent(new capacitor());
             if( lastAddedComponent() -> fromString( line.substr( line.find(capacitor::getIdentifier()), std::string::npos) ) < 0){
                     std::cerr << "unable to add component" << std::endl;
                     removeLastComponent();
             }
         }else if(identifier == "U"){
-            std::cout << "new IC" << std::endl;
             addComponent(new IC());
             if( lastAddedComponent() -> fromString( line.substr( line.find(IC::getIdentifier()), std::string::npos) ) < 0){
                     std::cerr << "unable to add component" << std::endl;
                     removeLastComponent();
             }
         }else if(identifier == "L"){
-            std::cout << "new inductor" << std::endl;
             addComponent(new inductor());
             if( lastAddedComponent() -> fromString( line.substr( line.find(inductor::getIdentifier()), std::string::npos) ) < 0){
                     std::cerr << "unable to add component" << std::endl;

@@ -44,11 +44,10 @@ int main(){
 
 //######################################################################################################################
 
-    CLKdecoupling -> exportToFile("test");
-    cout << endl << endl << endl;
-    CLKdecoupling -> clear();
-    CLKdecoupling -> importFromFile("test");
-    CLKdecoupling -> exportToFile("test2");
+    CLKdecoupling -> exportToFile("test");      // save schematic in 'test'
+    CLKdecoupling -> clear();                   // clear all parts
+    CLKdecoupling -> importFromFile("test");    // re-import from 'test'
+    CLKdecoupling -> exportToFile("test2");     // export to 'test2' -> at the end 'test' and 'test2' should be the same
 
     return 0;
 }
