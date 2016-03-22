@@ -7,6 +7,7 @@ using namespace std;
 #include "capacitor.h"
 #include "resistor.h"
 #include "IC.h"
+#include "inductor.h"
 
 int main(){
     cout << "Reliability Calculator" << endl;
@@ -21,7 +22,7 @@ int main(){
     CLKdecoupling -> addComponent(new capacitor("C2", 10*capacitor::nF, 5, 10, 85, capacitor::Q_M ));
     CLKdecoupling -> addComponent(new resistor("R1", 10*resistor::kOhm, 0.1, 0.5, resistor::Q_M ));
     CLKdecoupling -> addComponent(new IC("IC1", 1.76e9, 55, IC::MTTF ));
-    //CLKdecoupling -> addComponent(new coil("L1", 125, coil::Q_M ));
+    CLKdecoupling -> addComponent(new inductor("L1", 125, inductor::Q_M ));
 
 
     cout << "###############################################################################" << endl;

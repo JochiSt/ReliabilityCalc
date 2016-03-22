@@ -1,54 +1,53 @@
-#include "capacitor.h"
+#include "inductor.h"
 
 #include <iostream>
 #include <cmath>
 
-capacitor::capacitor(std::string name, float value, float usedU, float ratedU, float ratedT, Cquality_t qual) : component(name){
-    capacity = value;
-    usedVoltage = usedU;
-    ratedVoltage = ratedU;
+inductor::inductor(std::string name, float ratedT, Iquality_t qual) : component(name)
+{
     ratedTemperature = ratedT;
     qualityFactor = (float)qual / 100.;
 }
 
-capacitor::~capacitor(){
+inductor::~inductor()
+{
     //dtor
 }
 
-float capacitor::getFIT(){
+float inductor::getFIT(){
     switch(environment){
         case GB:
             environmentFactor = 1.0;
             break;
         case GF:
-            environmentFactor = 2.0;
+            environmentFactor = 4.0;
             break;
         case GM:
-            environmentFactor = 9.0;
+            environmentFactor = 12.0;
             break;
         case NS:
             environmentFactor = 5.0;
             break;
         case NU:
-            environmentFactor = 15.0;
+            environmentFactor = 16.0;
             break;
         case AIC:
-            environmentFactor = 4.0;
+            environmentFactor = 5.0;
             break;
         case AIF:
-            environmentFactor = 4.0;
+            environmentFactor = 7.0;
             break;
         case AUC:
-            environmentFactor = 8.0;
+            environmentFactor = 6.0;
             break;
         case AUF:
-            environmentFactor = 12;
+            environmentFactor = 8;
             break;
         case ARW:
-            environmentFactor = 20;
+            environmentFactor = 24;
             break;
         case SF:
-            environmentFactor = 0.4;
+            environmentFactor = 0.5;
             break;
         case MF:
             environmentFactor = 13;
@@ -61,11 +60,19 @@ float capacitor::getFIT(){
             break;
     }
 
-    float stress = usedVoltage / ratedVoltage;
-    double FIT = 0.0003 * ( pow(stress/0.3, 3) + 1) * exp( ambientTemperature / (ratedTemperature+273.));
-    FIT *= 0.41 * pow(capacity, 0.11);
+    double FIT;
+    if(ratedTemperature>125){
+        FIT = 0.000335*exp(pow((ambientTemperature)/329.,15.6));
+    }else if(ratedTemperature>105){
+        FIT = 0.000379*exp(pow((ambientTemperature)/352.,14));
+    }else if(ratedTemperature>85){
+        FIT = 0.000319*exp(pow((ambientTemperature)/364.,6.7));
+    }else{
+        FIT = 0.00035*exp(pow((ambientTemperature)/409.,10));
+    }
     FIT *= qualityFactor;
     FIT *= environmentFactor;
     std::cout << "\tCalculating FIT for " << name << "\tFIT: " << FIT << " / " << component::FITunit << std::endl;
     return FIT;
 }
+
