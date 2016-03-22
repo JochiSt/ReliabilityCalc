@@ -90,8 +90,12 @@ int capacitor::fromString(std::string value){
     is.str(value);
     std::string ident;
     is >> ident;
+
+    std::cout << "To be build from " << value << std::endl;
+
     if(ident == identifier ){
         is >> name >> capacity >> usedVoltage >> ratedVoltage >> ratedTemperature >> qualityFactor;
+        std::cout << "name: " << name << std::endl;
         return 0;
     }else{
         return -1;

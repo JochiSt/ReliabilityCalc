@@ -24,9 +24,8 @@ class IC : public component{
          * @param fit_temperature temperature of the given FIT
          * @param fit_unit  Unit of the given FIT
          */
-        IC(std::string name, float fit, float fit_temperature, Unit_t fit_unit);     //fit temperature is the temperature the fit-value is normalized to
-        virtual~ IC(){};
-
+        IC(std::string name, float fit, float fit_temperature, Unit_t fit_unit);     //fit temperature is the temperature the fit-value is normalized to        virtual~ IC(){};
+        IC(){ };
         /// set the FIT value
         void setFIT(float val) { FIT = val; }
 

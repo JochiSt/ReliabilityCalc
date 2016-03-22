@@ -46,7 +46,9 @@ int main(){
 
     CLKdecoupling -> exportToFile("test");
     cout << endl << endl << endl;
+    CLKdecoupling -> clear();
     CLKdecoupling -> importFromFile("test");
+    CLKdecoupling -> exportToFile("test2");
 
     return 0;
 }

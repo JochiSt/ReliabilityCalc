@@ -75,6 +75,13 @@ class schematic : public component {
             parts.clear();
         };
 
+        /**
+         * remove last part
+         */
+        virtual void removeLastComponent(){
+            parts.pop_back();
+        };
+
     protected:
         /// store components of this schematic
         std::vector<component* > parts;

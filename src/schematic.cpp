@@ -67,15 +67,33 @@ void schematic::importFromFile(std::string filename){
         }
 
         if(identifier == resistor::getIdentifier() ){
+            std::cout << "new resistor" << std::endl;
             addComponent(new resistor());
-            lastAddedComponent() -> fromString( line.substr( line.find(resistor::getIdentifier()) + resistor::getIdentifier().size(), std::string::npos) );
+            if( lastAddedComponent() -> fromString( line.substr( line.find(resistor::getIdentifier()), std::string::npos) ) < 0 ){
+                    std::cerr << "unable to add component" << std::endl;
+                    removeLastComponent();
+            }
         }else if(identifier == capacitor::getIdentifier() ){
+            std::cout << "new capacitor" << std::endl;
             addComponent(new capacitor());
-            lastAddedComponent() -> fromString( line.substr( line.find(capacitor::getIdentifier()) + capacitor::getIdentifier().size(), std::string::npos) );
+            if( lastAddedComponent() -> fromString( line.substr( line.find(capacitor::getIdentifier()), std::string::npos) ) < 0){
+                    std::cerr << "unable to add component" << std::endl;
+                    removeLastComponent();
+            }
         }else if(identifier == "U"){
-
+            std::cout << "new IC" << std::endl;
+            addComponent(new IC());
+            if( lastAddedComponent() -> fromString( line.substr( line.find(IC::getIdentifier()), std::string::npos) ) < 0){
+                    std::cerr << "unable to add component" << std::endl;
+                    removeLastComponent();
+            }
         }else if(identifier == "L"){
-
+            std::cout << "new inductor" << std::endl;
+            addComponent(new inductor());
+            if( lastAddedComponent() -> fromString( line.substr( line.find(inductor::getIdentifier()), std::string::npos) ) < 0){
+                    std::cerr << "unable to add component" << std::endl;
+                    removeLastComponent();
+            }
         }else{
             std::cerr << "Oops, something wrent wrong" << std::endl;
             std::cerr << "\tidentifier '" << identifier << "' unknown" << std::endl;
