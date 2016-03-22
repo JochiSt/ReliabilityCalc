@@ -1,3 +1,9 @@
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ FIT calculation based on MIL-HDBK-217F
+ Calculation for fixed, ceramic general purpose capacitors (MIL-C-11015, MIL-C-39014)
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
 #ifndef CAPACITOR_H
 #define CAPACITOR_H
 

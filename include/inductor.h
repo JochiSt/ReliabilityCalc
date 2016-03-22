@@ -1,3 +1,9 @@
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ FIT calculation based on MIL-HDBK-217F
+ Calculation for fixed inductive devices (MIL-C-15305, MIL-C-39010)
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
 #ifndef INDUCTOR_H
 #define INDUCTOR_H
 
