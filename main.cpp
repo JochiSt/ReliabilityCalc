@@ -8,6 +8,7 @@ using namespace std;
 #include "resistor.h"
 #include "IC.h"
 #include "inductor.h"
+#include "diode.h"
 
 int main(){
     cout << "Reliability Calculator" << endl;
