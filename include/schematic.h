@@ -41,11 +41,22 @@ class schematic : public component {
          * \param part component, which should be added
          */
         void addComponent(component* part){
-            parts.push_back(part);
+            if(part != NULL){
+                parts.push_back(part);
+            }
         }
 
+        /**
+         * get pointer to latest add component
+         * @return pointer to last added component
+         * @return NULL if there is no last element
+         */
         component* lastAddedComponent(){
-            return parts.at( parts.size() - 1 );
+            if(parts.size() > 0){
+                return parts.at( parts.size() - 1 );
+            }else{
+                return NULL;
+            }
         }
 
         /**
@@ -79,14 +90,16 @@ class schematic : public component {
          * remove last part, the latest part added
          */
         virtual void removeLastComponent(){
-            parts.pop_back();
+            if(!parts.empty()){
+                parts.pop_back();
+            }
         };
 
     protected:
-        /// store components of this schematic
-        std::vector<component* > parts;
 
     private:
+        /// store components of this schematic
+        std::vector<component*> parts;
 };
 
 #endif // SCHEMATIC_H

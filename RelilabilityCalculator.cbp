@@ -34,12 +34,20 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="include/IC.h" />
 		<Unit filename="include/capacitor.h" />
 		<Unit filename="include/component.h" />
+		<Unit filename="include/diode.h" />
+		<Unit filename="include/inductor.h" />
+		<Unit filename="include/resistor.h" />
 		<Unit filename="include/schematic.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/IC.cpp" />
 		<Unit filename="src/capacitor.cpp" />
 		<Unit filename="src/component.cpp" />
+		<Unit filename="src/diode.cpp" />
+		<Unit filename="src/inductor.cpp" />
+		<Unit filename="src/resistor.cpp" />
 		<Unit filename="src/schematic.cpp" />
 		<Extensions>
 			<code_completion />
