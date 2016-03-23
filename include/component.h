@@ -84,9 +84,9 @@ class component
         static std::string FITunit;                 ///< string of FIT unit
 
     protected:
-        float qualityFactor;                ///< quality factor
-        float environmentFactor;            ///< environment factor
-        float ratedTemperature;             ///< rated temperature
+        float qualityFactor;                        ///< quality factor
+        float environmentFactor;                    ///< environment factor
+        float ratedTemperature;                     ///< rated temperature
         std::string name;
 
     private:
