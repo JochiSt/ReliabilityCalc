@@ -3,17 +3,12 @@
 #include <iostream>
 #include <cmath>
 
-diode::diode(std::string name, float ratedU, float usedU, Application app, Dquality_t qual ) : component(name)
+diode::diode(std::string name, float ratedU, float usedU, application_t app, quality_t qual ) : component(name)
 {
     usedVoltage = usedU;
     ratedVoltage = ratedU;
-    applicationFactor = (float)app/10000.;
+    application = app;
     qualityFactor = (float)qual;
-}
-
-diode::~diode()
-{
-    //dtor
 }
 
 float diode::getFIT(){
@@ -62,28 +57,31 @@ float diode::getFIT(){
             break;
     }
 
-    double FIT;
+    float applicationFactor = (float)application/10000.;
+
+    double FIT = 0;
     if(
-       applicationFactor == 0.0038 || //general purpose analog
-       applicationFactor == 0.0010 || //switching
-       applicationFactor == 0.0690 || //power rectifier
-       applicationFactor == 0.0030 || //Schottky Power Diode
-       applicationFactor == 0.0013   //Transient Suppressor
+       application == GENERAL_PURPOSE_ANALOG || // general purpose analog
+       application == SWITCHING ||              // switching
+       application == POWER_RECTIFIER ||        // power rectifier
+       application == SCHOTTKY ||               // Schottky Power Diode
+       application == TRANSIENT_SUPPRESSOR      // Transient Suppressor
     ){
         FIT = exp(-3091*(1./(ambientTemperature)-1./298.))*applicationFactor;
     }else if(
-        applicationFactor == 0.0034 || //Current Regulator
-        applicationFactor == 0.0020   //Voltage Regulator
+        application == CURRENT_REGULATOR ||     // Current Regulator
+        application == VOLTAGE_REGULATOR        // Voltage Regulator
     ){
         FIT = exp(-1925*(1./(ambientTemperature)-1./298.))*applicationFactor;
     }
+
     FIT *= qualityFactor;
     FIT *= environmentFactor;
 
     if(
-        applicationFactor == 0.0013 ||  //Transient Suppressor
-        applicationFactor == 0.0034 ||  //Current Regulator
-        applicationFactor == 0.0020    //Voltage Regulator
+        application == TRANSIENT_SUPPRESSOR ||  // Transient Suppressor
+        application == CURRENT_REGULATOR    ||  // Current Regulator
+        application == VOLTAGE_REGULATOR        // Voltage Regulator
     ){
         FIT *= 1.;                      //for completion
     }else{
