@@ -15,6 +15,7 @@ class resistor : public component {
         static const float Ohm = 1./(1000*1000);
 
         static const float mW = 1./1000.;
+        static const float W = 1.;
         static const float kW = 1000.;
 
         enum Rquality_t {

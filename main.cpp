@@ -24,6 +24,7 @@ int main(){
     CLKdecoupling -> addComponent(new resistor("R1", 10*resistor::kOhm, 0.1, 0.5, resistor::Q_M ));
     CLKdecoupling -> addComponent(new IC("IC1", 1.76e9, 55, IC::MTTF ));
     CLKdecoupling -> addComponent(new inductor("L1", 125, inductor::Q_M ));
+    CLKdecoupling -> addComponent(new diode("D1",2,5,diode::SCHOTTKY,diode::Q_JAN));
 
 
     cout << "###############################################################################" << endl;

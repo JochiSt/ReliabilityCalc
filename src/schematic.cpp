@@ -9,6 +9,7 @@
 #include "capacitor.h"
 #include "inductor.h"
 #include "IC.h"
+#include "diode.h"
 
 schematic::schematic(std::string name) : component(name){
     //ctor
@@ -85,8 +86,14 @@ void schematic::importFromFile(std::string filename){
                     std::cerr << "unable to add component" << std::endl;
                     removeLastComponent();
             }
+        }else if(identifier == "D"){
+            addComponent(new diode());
+            if( lastAddedComponent() -> fromString( line.substr( line.find(diode::getIdentifier()), std::string::npos) ) < 0){
+                    std::cerr << "unable to add component" << std::endl;
+                    removeLastComponent();
+            }
         }else{
-            std::cerr << "Oops, something wrent wrong" << std::endl;
+            std::cerr << "Oops, something went wrong" << std::endl;
             std::cerr << "\tidentifier '" << identifier << "' unknown" << std::endl;
             break;
         }

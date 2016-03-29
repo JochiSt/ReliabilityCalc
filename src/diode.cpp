@@ -1,14 +1,18 @@
 #include "diode.h"
 
+#include <sstream>
 #include <iostream>
 #include <cmath>
 
-diode::diode(std::string name, float ratedU, float usedU, application_t app, quality_t qual ) : component(name)
+std::string diode::identifier = "D";
+
+diode::diode(std::string name, float usedU, float ratedU, application_t app, quality_t qual ) : component(name)
 {
     usedVoltage = usedU;
     ratedVoltage = ratedU;
     application = app;
-    qualityFactor = (float)qual;
+    applicationFactor = (float)app/10000.;
+    qualityFactor = (float)qual/100.;
 }
 
 float diode::getFIT(){
@@ -57,7 +61,7 @@ float diode::getFIT(){
             break;
     }
 
-    float applicationFactor = (float)application/10000.;
+    //float applicationFactor = (float)application/10000.;
 
     double FIT = 0;
     if(
@@ -65,7 +69,8 @@ float diode::getFIT(){
        application == SWITCHING ||              // switching
        application == POWER_RECTIFIER ||        // power rectifier
        application == SCHOTTKY ||               // Schottky Power Diode
-       application == TRANSIENT_SUPPRESSOR      // Transient Suppressor
+       application == TRANSIENT_SUPPRESSOR ||   // Transient Suppressor
+       application == PR_HIGH_VOLTAGE
     ){
         FIT = exp(-3091*(1./(ambientTemperature)-1./298.))*applicationFactor;
     }else if(
@@ -91,4 +96,28 @@ float diode::getFIT(){
 
     std::cout << "\tCalculating FIT for " << name << "\tFIT: " << FIT << " / " << component::FITunit << std::endl;
     return FIT;     //This output was not tested!!!!
+}
+
+std::string diode::toString(){
+    std::ostringstream os;
+    os << identifier << "\t";
+    os << name << "\t";
+    os << usedVoltage << "\t";
+    os << ratedVoltage << "\t";
+    os << applicationFactor << "\t";
+    os << qualityFactor;
+    return os.str();
+}
+
+int diode::fromString(std::string value){
+    std::istringstream is;
+    is.str(value);
+    std::string ident;
+    is >> ident;
+    if(ident == identifier){
+        is >> name >> usedVoltage >> ratedVoltage >> applicationFactor >> qualityFactor;
+        return 0;
+    }else{
+        return -1;
+    }
 }

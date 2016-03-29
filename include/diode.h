@@ -37,11 +37,18 @@ class diode : public component
             VOLTAGE_REFERENCE       = 20    ///<
         };
 
-        diode(std::string name, float ratedU, float usedU, application_t app, quality_t qual);
-        virtual ~diode() { };
+        diode(std::string name, float usedU, float ratedU, application_t app, quality_t qual);
+        diode(){};
+        virtual ~diode(){};
 
         virtual float getFIT();
 
+        virtual std::string toString();
+        virtual int fromString(std::string value);
+
+        static std::string getIdentifier(){
+            return identifier;
+        }
     protected:
         /// used voltage
         float usedVoltage;
@@ -49,8 +56,11 @@ class diode : public component
         float ratedVoltage;
         /// application of the diode
         application_t application;
+        /// application factor for the calculation
+        float applicationFactor;
 
     private:
+        static std::string identifier;
 };
 
 #endif // DIODE_H
