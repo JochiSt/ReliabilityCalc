@@ -19,12 +19,27 @@ int main(){
     cout << endl;
 
     schematic* CLKdecoupling = new schematic("Clock Decoupling");
-    CLKdecoupling -> addComponent(new capacitor("C1", 10*capacitor::nF, 5, 10, 85, capacitor::Q_M ));
-    CLKdecoupling -> addComponent(new capacitor("C2", 10*capacitor::nF, 5, 10, 85, capacitor::Q_M ));
-    CLKdecoupling -> addComponent(new resistor("R1", 10*resistor::kOhm, 0.1, 0.5, resistor::Q_M ));
-    CLKdecoupling -> addComponent(new IC("IC1", 1.76e9, 55, IC::MTTF ));
-    CLKdecoupling -> addComponent(new inductor("L1", 125, inductor::Q_M ));
-    CLKdecoupling -> addComponent(new diode("D1",2,5,diode::SCHOTTKY,diode::Q_JAN));
+    CLKdecoupling -> addComponent(new IC("IC1", 3.23e9, 55, IC::MTTF ));    ///AD8058
+    CLKdecoupling -> addComponent(new IC("IC2", 3.23e9, 55, IC::MTTF ));    ///ADCMP553
+
+    CLKdecoupling -> addComponent(new capacitor("C1", 100*capacitor::nF, 3.3, 25, 85, capacitor::Q_S ));
+    CLKdecoupling -> addComponent(new capacitor("C2", 47*capacitor::pF, 24, 100, 85, capacitor::Q_S ));
+    CLKdecoupling -> addComponent(new capacitor("C3", 100*capacitor::nF, 3.3, 25, 85, capacitor::Q_S ));
+    CLKdecoupling -> addComponent(new capacitor("C4", 47*capacitor::pF, 24, 100, 85, capacitor::Q_S ));
+    CLKdecoupling -> addComponent(new capacitor("C5", 1*capacitor::nF, 3.3, 25, 85, capacitor::Q_S ));
+    CLKdecoupling -> addComponent(new capacitor("C6", 100*capacitor::nF, 3.3, 25, 85, capacitor::Q_S ));
+    CLKdecoupling -> addComponent(new capacitor("C7", 100*capacitor::nF, 3.3, 25, 85, capacitor::Q_S ));
+    CLKdecoupling -> addComponent(new capacitor("C9", 1*capacitor::nF, 3.3, 25, 85, capacitor::Q_S ));
+    CLKdecoupling -> addComponent(new capacitor("C10", 1*capacitor::nF, 1.65, 25, 85, capacitor::Q_S ));
+    CLKdecoupling -> addComponent(new capacitor("C11", 1*capacitor::nF, 3.3, 25, 85, capacitor::Q_S ));
+
+    CLKdecoupling -> addComponent(new resistor("R2", 100*resistor::kOhm, 2.75e-5, 0.125, resistor::Q_S ));
+    CLKdecoupling -> addComponent(new resistor("R3", 100*resistor::kOhm, 2.75e-5, 0.125, resistor::Q_S ));
+    CLKdecoupling -> addComponent(new resistor("R4", 100*resistor::kOhm, 2.75e-5, 0.125, resistor::Q_S ));
+    CLKdecoupling -> addComponent(new resistor("R5", 100*resistor::kOhm, 2.75e-5, 0.125, resistor::Q_S ));
+
+    //CLKdecoupling -> addComponent(new inductor("L1", 125, inductor::Q_M ));
+    //CLKdecoupling -> addComponent(new diode("D1",2,5,diode::SCHOTTKY,diode::Q_JAN));
 
 
     cout << "###############################################################################" << endl;
