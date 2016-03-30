@@ -102,8 +102,9 @@ void schematic::importFromFile(std::string filename){
 }
 
 float schematic::getAccelerationFactor(float testT, float refT){
-    //TODO fill function
-    return 1;
+    float deviceHours = 1E6;
+    float AF = getFailureRate(deviceHours, getFIT(testT)) / getFailureRate(deviceHours, getFIT(refT));
+    return AF;
 }
 
 void schematic::temperatureScan(int points, float startT, float stopT, std::vector<float> &temp, std::vector<float> &FIT){
@@ -121,4 +122,12 @@ void schematic::temperatureScan(int points, float startT, float stopT, std::vect
     setAmbientTemperature(tempT);
 }
 
+void schematic::exportToFile(std::string filename, std::vector<float> vec1, std::vector<float>vec2){
+    std::ofstream output;
+    output.open(filename.c_str());
+    for(unsigned int i=0; ( i < vec1.size() && i < vec2.size() ); i++ ){
+        output << vec1[i] << "\t" << vec2[i] << std::endl;
+    }
+    output.close();
+}
 

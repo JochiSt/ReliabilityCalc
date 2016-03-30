@@ -125,6 +125,14 @@ class schematic : public component {
          */
         virtual void temperatureScan(int points, float startT, float stopT, std::vector<float> &temp, std::vector<float> &FIT);
 
+        /**
+         * export two vectors into a tab separated output file
+         * @param filename full filename of output file
+         * @param vec1 first vector
+         * @param vec2 second vector
+         */
+        virtual void exportToFile(std::string filename, std::vector<float> vec1, std::vector<float>vec2);
+
     protected:
 
     private:
