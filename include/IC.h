@@ -15,7 +15,6 @@ class IC : public component{
          * @{
          */
         static const float EA = 0.7;        ///< binding energy electron in Silicium = 0.7eV
-        static const float kB = 8.617e-5;   ///< Boltzmann constant
         ///@}
 
         /**

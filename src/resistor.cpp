@@ -14,10 +14,6 @@ resistor::resistor(std::string name, float value, float usedP, float ratedP, Rqu
     style = styl;
 }
 
-resistor::~resistor(){
-    //dtor
-}
-
 float resistor::getFIT(){
 
     float stress = usedPower / ratedPower;
@@ -100,7 +96,7 @@ float resistor::getFIT(){
                 // use column 1
                 EA = -0.2;
             }
-            pi_T = exp( EA / 8.617E-5 * ( 1./ambientTemperature - 1./298.) );
+            pi_T = exp( EA / kB * ( 1./ambientTemperature - 1./298.) );
         }
         FIT *= pi_T;
 //######################################################

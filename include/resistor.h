@@ -86,7 +86,7 @@ class resistor : public component {
          */
         resistor(std::string name, float value, float usedP, float ratedP, Rquality_t qual = resistor::Q_LESS, Rstyle_t styl = resistor::S_RL);
         resistor(){ };
-        virtual ~resistor();
+        virtual ~resistor() {};
 
         /**
          * @return resistance in MegaOhm
