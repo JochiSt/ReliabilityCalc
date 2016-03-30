@@ -34,3 +34,4 @@ html
 
 *.depend
 *.layout
+*.log
