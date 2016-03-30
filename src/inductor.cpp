@@ -10,9 +10,21 @@ inductor::inductor(std::string name, float ratedT, Iquality_t qual) : component(
 {
     ratedTemperature = ratedT;
     qualityFactor = (float)qual / 100.;
+    fit = 0;
+}
+
+inductor::inductor(std::string name, float fit_value, Unit_t fit_unit) : component(name){
+    if((float)fit_unit<1000000.){       ///always if the UNIT is not MTTF
+        fit = fit_value*(float)fit_unit;
+    }else{
+        fit = (float)fit_unit/fit_value;
+    }
 }
 
 float inductor::getFIT(){
+    if(fit!=0){
+        return fit;
+    }
     switch(environment){
         case GB:
             environmentFactor = 1.0;

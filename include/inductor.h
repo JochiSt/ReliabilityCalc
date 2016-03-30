@@ -21,6 +21,11 @@ class inductor : public component
             Q_MIL   = 400,
             Q_LESS  = 2000
         };
+        enum Unit_t {
+            FITe6   = 1,        ///< FIT value as defined in the MIL-HDBK-217
+            FITe9   = 1000,     ///< FIT as defined by most other sources
+            MTTF    = 1000000   ///< Mean Time To Failure
+        };
 
         /**
          * Constructor of Inductor
@@ -29,6 +34,7 @@ class inductor : public component
          * \param qual      quality of inductor
          */
         inductor(std::string name, float ratedT, Iquality_t qual = inductor::Q_LESS);
+        inductor(std::string name, float fit_value, Unit_t fit_unit);
         inductor(){ };
         virtual ~inductor(){ };
 
@@ -41,6 +47,7 @@ class inductor : public component
             return identifier;
         }
     protected:
+        float fit;
 
     private:
         static std::string identifier;
