@@ -8,7 +8,7 @@ std::string IC::identifier = "U";
 
 IC::IC(std::string name, float fit_value, float fit_temperature_value, Unit_t fit_unit) : component(name){
     if((float)fit_unit<1000000.){       ///always if the UNIT is not MTTF
-        FIT = fit_value*(float)fit_unit;
+        FIT = fit_value/(float)fit_unit;
     }else{
         FIT = (float)fit_unit/fit_value;
     }

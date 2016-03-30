@@ -47,7 +47,7 @@ class inductor : public component
             return identifier;
         }
     protected:
-        float fit;
+        float FIT;
 
     private:
         static std::string identifier;
