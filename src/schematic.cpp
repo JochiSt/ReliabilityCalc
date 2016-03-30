@@ -97,7 +97,28 @@ void schematic::importFromFile(std::string filename){
             std::cerr << "\tidentifier '" << identifier << "' unknown" << std::endl;
             break;
         }
-
         cnt ++;
     }
 }
+
+float schematic::getAccelerationFactor(float testT, float refT){
+    //TODO fill function
+    return 1;
+}
+
+void schematic::temperatureScan(int points, float startT, float stopT, std::vector<float> &temp, std::vector<float> &FIT){
+    // clear vectors
+    temp.clear();
+    FIT.clear();
+
+    float tempT = getAmbientTemperature();
+
+    for(float T = startT; T<= stopT; T += (stopT - startT)/(float)points ){
+        FIT.push_back( getFIT(T) );
+        temp.push_back(T);
+    }
+
+    setAmbientTemperature(tempT);
+}
+
+

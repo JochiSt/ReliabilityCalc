@@ -95,6 +95,36 @@ class schematic : public component {
             }
         };
 
+        /**
+         * calculate acceleration factor of schematic
+         * @return acceleration factor
+         * @param testT test temperature (temperature, which should be used in test)
+         * @param refT reference temperature (temperature, the electronics is operating)
+         */
+        virtual float getAccelerationFactor(float testT, float refT);
+
+        /**
+         * calculate FIT for a given temperature
+         * @return FIT value at temperature
+         * @param temperature temperature, at which FIT is evaluated
+         */
+        virtual float getFIT(float temperature){
+            float tempT = getAmbientTemperature();
+            float FIT = getFIT();
+            setAmbientTemperature(tempT);
+            return FIT;
+        }
+
+        /**
+         * do a temperature scan to see the effect of different temperatures on reliability
+         * @param points number of points, equally distributed
+         * @param startT start point of temperature
+         * @param stopT stop point of temperature
+         * @param temp vector with temperature points
+         * @param FIT vector with FIT values at the corresponding temperatures
+         */
+        virtual void temperatureScan(int points, float startT, float stopT, std::vector<float> &temp, std::vector<float> &FIT);
+
     protected:
 
     private:
