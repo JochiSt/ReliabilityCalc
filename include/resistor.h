@@ -25,13 +25,51 @@ class resistor : public component {
         static const float kW = 1000.;
         ///@}
 
+        /**
+         * @enum Rquality_t Quality of resistors
+         */
         enum Rquality_t {
-            Q_S     = 3,
-            Q_R     = 10,
-            Q_P     = 30,
-            Q_M     = 100,
-            Q_MIL   = 500,
-            Q_LESS  = 1500
+            Q_S          = 3,    ///<
+            Q_R          = 10,   ///<
+            Q_P          = 30,   ///<
+            Q_M          = 100,  ///<
+            Q_NONEST     = 300,  ///< non established reliability (Most two letter styles)
+            Q_MIL        = 500,  ///<
+            Q_COMMERCIAL = 1000, ///< commercial or unknown screening level
+            Q_LESS       = 1500  ///<
+        };
+
+        /**
+         * @enum Rstyle_t Resistor Style according to MIL-HDBK-217F Notice 2 9-1
+         */
+        enum Rstyle_t {
+            RC,             ///< Resistor Fixed, Composition (insulated)
+            RCR,            ///<
+            RL,             ///<
+            RLR,            ///<
+            RNR, RNC, RNN,  ///<
+            RM,             ///< Resistor Fixed, Film, Chip, Established Reliability
+            RN,             ///<
+            RD,             ///<
+            RZ,             ///<
+            RB,             ///<
+            RBR,            ///<
+            RW,             ///<
+            RWR,            ///<
+            RE,             ///<
+            RER,            ///<
+            RTH,            ///<
+            RT,             ///<
+            RTR,            ///<
+            RR,             ///<
+            RA,             ///<
+            RK,             ///<
+            RP,             ///<
+            RJ,             ///<
+            RJR,            ///<
+            RV,             ///<
+            RQ,             ///<
+            RVC             ///<
         };
 
         /**
@@ -41,8 +79,10 @@ class resistor : public component {
          * \param usedP     used power / applied power in Watt
          * \param ratedP    rated power in Watt
          * \param qual      part quality
+         * \param styl      resistor style (only used in Notice 2 calculation)
          */
-        resistor(std::string name, float value, float usedP, float ratedP, Rquality_t qual = resistor::Q_LESS);
+ //       resistor(std::string name, float value, float usedP, float ratedP, Rquality_t qual = resistor::Q_LESS);
+        resistor(std::string name, float value, float usedP, float ratedP, Rquality_t qual = resistor::Q_LESS, Rstyle_t styl = resistor::RC);
         resistor(){ };
         virtual ~resistor();
 
@@ -70,6 +110,8 @@ class resistor : public component {
         float resistance;   ///< resistance
         float usedPower;    ///< used Power in W
         float ratedPower;   ///< rated Power in W
+
+        Rstyle_t style;     ///< resistor style
 
     private:
         static std::string identifier;
