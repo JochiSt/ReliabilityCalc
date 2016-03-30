@@ -36,10 +36,10 @@ class resistor : public component {
 
         /**
          * Resistor
+         * \param name      part name e.g. R1
          * \param value     capacity value in MegaOhm
-         * \param usedPower used power / applied power in Watt
-         * \param ratedPower rated power in Watt
-         * \param ratedT    rated temperature
+         * \param usedP     used power / applied power in Watt
+         * \param ratedP    rated power in Watt
          * \param qual      part quality
          */
         resistor(std::string name, float value, float usedP, float ratedP, Rquality_t qual = resistor::Q_LESS);
