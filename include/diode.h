@@ -12,7 +12,7 @@ class diode : public component
     public:
 
         /**
-         * quality of the diode
+         * @enum diode::quality_t quality of the diode
          */
         enum quality_t {
             Q_JANTXV    = 70,
@@ -23,7 +23,7 @@ class diode : public component
         };
 
         /**
-         * Application of the diode, please have a look at the MIL-HDBK-217F
+         * @enum diode::application_t Application of the diode, please have a look at the MIL-HDBK-217F
          */
         enum application_t {
             GENERAL_PURPOSE_ANALOG  = 38,   ///<

@@ -7,9 +7,15 @@
 #define RESISTOR_H
 
 #include "component.h"
-
+/**
+ * @brief Implementation of calculation for fixed film resistors (MIL-R-22684, MIL-R-10509)
+ */
 class resistor : public component {
     public:
+        /**
+         * @ingroup convUnits
+         * @{
+         */
         static const float MOhm = 1;
         static const float kOhm = 1./1000.;
         static const float Ohm = 1./(1000*1000);
@@ -17,6 +23,7 @@ class resistor : public component {
         static const float mW = 1./1000.;
         static const float W = 1.;
         static const float kW = 1000.;
+        ///@}
 
         enum Rquality_t {
             Q_S     = 3,

@@ -6,7 +6,9 @@
 #include "component.h"
 
 /**
- * schematic consists of multiple parts of various kind
+ * A schematic consists of multiple components. Using this class, the parts can be
+ * added to the schematic and when the FIT value should be calculated, the schematic
+ * calculates the overall reliability.
  *
  * @brief calculate reliability of multiple components
  */
@@ -138,6 +140,7 @@ class schematic : public component {
          * @param FIT vector with FIT values at the corresponding temperatures
          */
         virtual void temperatureScan(int points, float startT, float stopT, std::vector<float> &temp, std::vector<float> &FIT);
+        ///@}
 
         /**
          * export two vectors into a tab separated output file
@@ -146,7 +149,6 @@ class schematic : public component {
          * @param vec2 second vector
          */
         static void exportDataToFile(std::string filename, std::vector<float> vec1, std::vector<float>vec2);
-        ///@}
     protected:
 
     private:
