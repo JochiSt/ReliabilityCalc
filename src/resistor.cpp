@@ -87,9 +87,10 @@ float resistor::getFIT(){
         }
 //######################################################
         // calculate pi_T
+        float pi_T = 0;
         if(style == S_RTH || style == S_RD) {
             // N/A
-            FIT *= 1;
+            pi_T = 1;
         }else{
             float EA = - 0.08;  // use column 2
             if(style == S_RC || style == S_RCR ||
@@ -99,23 +100,27 @@ float resistor::getFIT(){
                 // use column 1
                 EA = -0.2;
             }
-            FIT *= exp( EA / 8.617E-5 * ( 1./ambientTemperature - 1./298.) );
+            pi_T = exp( EA / 8.617E-5 * ( 1./ambientTemperature - 1./298.) );
         }
+        FIT *= pi_T;
 //######################################################
 // calculate pi_S
+        float pi_S = 0;
         if(style == S_RZ || style == S_RTH){
-            FIT *= 1;
+            pi_S = 1;
         }else if(style == S_RC || style == S_RCR ||
                  style == S_RW || style == S_RWR ||
                  style == S_RE || style == S_RER ){
             // column 2
-            FIT *= 0.54 * exp( 2.04 * stress);
+            pi_S = 0.54 * exp( 2.04 * stress);
         }else{
             // column 1
-            FIT *= 0.71 * exp( 1.1 * stress );
+            pi_S = 0.71 * exp( 1.1 * stress );
         }
+        FIT *= pi_S;
 // calculate pi_P
-        FIT *= pow(usedPower, 0.39);
+        float pi_P = pow(usedPower, 0.39);
+        FIT *= pi_P;
 //######################################################
 // pi_Q
         FIT *= qualityFactor;
@@ -124,6 +129,9 @@ float resistor::getFIT(){
         FIT *= environmentFactor;
 
         return FIT;
+
+//######################################################
+//######################################################
     }else{
         switch(environment){
             case GB:

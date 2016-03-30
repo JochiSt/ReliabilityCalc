@@ -9,6 +9,9 @@
 #include "component.h"
 /**
  * @brief Implementation of calculation for fixed film resistors (MIL-R-22684, MIL-R-10509)
+ *
+ * Implementation of Notice 2 (partially) checked using
+ *  http://www.sqconline.com/resistor-failure-rate-model-mil-hdbk-217-rev-f-notice-2
  */
 class resistor : public component {
     public:
@@ -81,8 +84,7 @@ class resistor : public component {
          * \param qual      part quality
          * \param styl      resistor style (only used in Notice 2 calculation)
          */
- //       resistor(std::string name, float value, float usedP, float ratedP, Rquality_t qual = resistor::Q_LESS);
-        resistor(std::string name, float value, float usedP, float ratedP, Rquality_t qual = resistor::Q_LESS, Rstyle_t styl = resistor::S_RM);
+        resistor(std::string name, float value, float usedP, float ratedP, Rquality_t qual = resistor::Q_LESS, Rstyle_t styl = resistor::S_RL);
         resistor(){ };
         virtual ~resistor();
 
