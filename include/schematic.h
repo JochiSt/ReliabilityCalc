@@ -6,7 +6,9 @@
 #include "component.h"
 
 /**
- * schematic consists of multiple parts of various kind
+ * A schematic consists of multiple components. Using this class, the parts can be
+ * added to the schematic and when the FIT value should be calculated, the schematic
+ * calculates the overall reliability.
  *
  * @brief calculate reliability of multiple components
  */
@@ -14,12 +16,6 @@ class schematic : public component {
     public:
         schematic(std::string name);
         virtual ~schematic() { };
-
-        /**
-         * calculate failures in time for this schematic
-         * @return FIT value of this schematic
-         */
-        virtual float getFIT();
 
         /**
          * sets the ambient temperature
@@ -36,6 +32,10 @@ class schematic : public component {
             return component::getAmbientTemperature();
         }
 
+        /** @name Schematic Handling
+         *  Functions needed to add and remove parts from the schematic
+         */
+        ///@{
         /**
          * add component to schematic
          * \param part component, which should be added
@@ -60,26 +60,6 @@ class schematic : public component {
         }
 
         /**
-         * convert a given FIT into a failure rate after a given number of device hours
-         * @param deviceHours device hours
-         * @param FIT failures in time
-         * @return failure rate in 1 (to get it into percent multiply by 100)
-         */
-        static float getFailureRate(float deviceHours, double FIT);
-
-        /**
-         * export schematic into file
-         * @param filename path and filename of file, into which should be exported
-         */
-        virtual void exportToFile(std::string filename);
-
-        /**
-         * import schematic from file
-         * @param filename path and filename of file, which should be imported
-         */
-        virtual void importFromFile(std::string filename);
-
-        /**
          * clear parts stored in schematic
          */
         virtual void clear(){
@@ -94,14 +74,30 @@ class schematic : public component {
                 parts.pop_back();
             }
         };
+        ///@}
+
+        /** @name Schematic Import and Export
+         *  Schematics can be exported into a plain text file and they can also be imported
+         */
+        ///@{
+        /**
+         * export schematic into file
+         * @param filename path and filename of file, into which should be exported
+         */
+        virtual void exportToFile(std::string filename);
 
         /**
-         * calculate acceleration factor of schematic
-         * @return acceleration factor
-         * @param testT test temperature (temperature, which should be used in test)
-         * @param refT reference temperature (temperature, the electronics is operating)
+         * import schematic from file
+         * @param filename path and filename of file, which should be imported
          */
-        virtual float getAccelerationFactor(float testT, float refT);
+        virtual void importFromFile(std::string filename);
+        ///@}
+
+        /**
+         * calculate failures in time for this schematic
+         * @return FIT value of this schematic
+         */
+        virtual float getFIT();
 
         /**
          * calculate FIT for a given temperature
@@ -116,6 +112,26 @@ class schematic : public component {
         }
 
         /**
+         * convert a given FIT into a failure rate after a given number of device hours
+         * @param deviceHours device hours
+         * @param FIT failures in time
+         * @return failure rate in 1 (to get it into percent multiply by 100)
+         */
+        static float getFailureRate(float deviceHours, double FIT);
+
+        /**
+         * calculate acceleration factor of schematic
+         * @return acceleration factor
+         * @param testT test temperature (temperature, which should be used in test)
+         * @param refT reference temperature (temperature, the electronics is operating)
+         */
+        virtual float getAccelerationFactor(float testT, float refT);
+
+        /** @name Special Scans
+         *  to evaluate the impact of various changes, e.g. the temperature special functions can be used
+         */
+        ///@{
+        /**
          * do a temperature scan to see the effect of different temperatures on reliability
          * @param points number of points, equally distributed
          * @param startT start point of temperature
@@ -124,7 +140,15 @@ class schematic : public component {
          * @param FIT vector with FIT values at the corresponding temperatures
          */
         virtual void temperatureScan(int points, float startT, float stopT, std::vector<float> &temp, std::vector<float> &FIT);
+        ///@}
 
+        /**
+         * export two vectors into a tab separated output file
+         * @param filename full filename of output file
+         * @param vec1 first vector
+         * @param vec2 second vector
+         */
+        static void exportDataToFile(std::string filename, std::vector<float> vec1, std::vector<float>vec2);
     protected:
 
     private:
