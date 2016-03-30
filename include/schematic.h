@@ -131,7 +131,7 @@ class schematic : public component {
          * @param vec1 first vector
          * @param vec2 second vector
          */
-        virtual void exportToFile(std::string filename, std::vector<float> vec1, std::vector<float>vec2);
+        virtual void exportDataToFile(std::string filename, std::vector<float> vec1, std::vector<float>vec2);
 
     protected:
 

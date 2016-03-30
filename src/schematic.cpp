@@ -122,7 +122,7 @@ void schematic::temperatureScan(int points, float startT, float stopT, std::vect
     setAmbientTemperature(tempT);
 }
 
-void schematic::exportToFile(std::string filename, std::vector<float> vec1, std::vector<float>vec2){
+void schematic::exportDataToFile(std::string filename, std::vector<float> vec1, std::vector<float>vec2){
     std::ofstream output;
     output.open(filename.c_str());
     for(unsigned int i=0; ( i < vec1.size() && i < vec2.size() ); i++ ){
