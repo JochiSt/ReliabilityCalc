@@ -71,31 +71,31 @@ float resistor::getFIT(){
         float FIT = 0;
 //######################################################
         // lambda_B
-        if(style == RC || style == RCR){
+        if(style == S_RC || style == S_RCR){
             FIT = 0.0017;
-        }else if(style == RZ || style == RTH ){
+        }else if(style == S_RZ || style == S_RTH ){
             FIT = 0.0019;
-        }else if(style == RB || style == RBR ||
-                 style == RW || style == RWR ||
-                 style == RE || style == RER ||
-                 style == RT || style == RTR ||
-                 style == RR || style ==  RA ||
-                 style == RK || style ==  RP ){
+        }else if(style == S_RB || style == S_RBR ||
+                 style == S_RW || style == S_RWR ||
+                 style == S_RE || style == S_RER ||
+                 style == S_RT || style == S_RTR ||
+                 style == S_RR || style ==  S_RA ||
+                 style == S_RK || style ==  S_RP ){
             FIT = 0.0024;
         }else{
             FIT = 0.0037;
         }
 //######################################################
         // calculate pi_T
-        if(style == RTH || style == RD) {
+        if(style == S_RTH || style == S_RD) {
             // N/A
             FIT *= 1;
         }else{
             float EA = - 0.08;  // use column 2
-            if(style == RC || style == RCR ||
-                 style == RZ || style ==  RA ||
-                 style == RK || style ==  RQ ||
-                 style == RVC ){
+            if(style == S_RC || style == S_RCR ||
+                 style == S_RZ || style ==  S_RA ||
+                 style == S_RK || style ==  S_RQ ||
+                 style == S_RVC ){
                 // use column 1
                 EA = -0.2;
             }
@@ -103,11 +103,11 @@ float resistor::getFIT(){
         }
 //######################################################
 // calculate pi_S
-        if(style == RZ || style == RTH){
+        if(style == S_RZ || style == S_RTH){
             FIT *= 1;
-        }else if(style == RC || style == RCR ||
-                 style == RW || style == RWR ||
-                 style == RE || style == RER ){
+        }else if(style == S_RC || style == S_RCR ||
+                 style == S_RW || style == S_RWR ||
+                 style == S_RE || style == S_RER ){
             // column 2
             FIT *= 0.54 * exp( 2.04 * stress);
         }else{

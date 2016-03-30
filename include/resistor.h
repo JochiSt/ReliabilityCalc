@@ -43,33 +43,33 @@ class resistor : public component {
          * @enum Rstyle_t Resistor Style according to MIL-HDBK-217F Notice 2 9-1
          */
         enum Rstyle_t {
-            RC,             ///< Resistor Fixed, Composition (insulated)
-            RCR,            ///<
-            RL,             ///<
-            RLR,            ///<
-            RNR, RNC, RNN,  ///<
-            RM,             ///< Resistor Fixed, Film, Chip, Established Reliability
-            RN,             ///<
-            RD,             ///<
-            RZ,             ///<
-            RB,             ///<
-            RBR,            ///<
-            RW,             ///<
-            RWR,            ///<
-            RE,             ///<
-            RER,            ///<
-            RTH,            ///<
-            RT,             ///<
-            RTR,            ///<
-            RR,             ///<
-            RA,             ///<
-            RK,             ///<
-            RP,             ///<
-            RJ,             ///<
-            RJR,            ///<
-            RV,             ///<
-            RQ,             ///<
-            RVC             ///<
+            S_RC,             ///< Resistor Fixed, Composition (insulated)
+            S_RCR,            ///<
+            S_RL,             ///<
+            S_RLR,            ///<
+            S_RNR, S_RNC, S_RNN,  ///<
+            S_RM,             ///< Resistor Fixed, Film, Chip, Established Reliability
+            S_RN,             ///<
+            S_RD,             ///<
+            S_RZ,             ///<
+            S_RB,             ///<
+            S_RBR,            ///<
+            S_RW,             ///<
+            S_RWR,            ///<
+            S_RE,             ///<
+            S_RER,            ///<
+            S_RTH,            ///<
+            S_RT,             ///<
+            S_RTR,            ///<
+            S_RR,             ///<
+            S_RA,             ///<
+            S_RK,             ///<
+            S_RP,             ///<
+            S_RJ,             ///<
+            S_RJR,            ///<
+            S_RV,             ///<
+            S_RQ,             ///<
+            S_RVC             ///<
         };
 
         /**
@@ -82,7 +82,7 @@ class resistor : public component {
          * \param styl      resistor style (only used in Notice 2 calculation)
          */
  //       resistor(std::string name, float value, float usedP, float ratedP, Rquality_t qual = resistor::Q_LESS);
-        resistor(std::string name, float value, float usedP, float ratedP, Rquality_t qual = resistor::Q_LESS, Rstyle_t styl = resistor::RC);
+        resistor(std::string name, float value, float usedP, float ratedP, Rquality_t qual = resistor::Q_LESS, Rstyle_t styl = resistor::S_RM);
         resistor(){ };
         virtual ~resistor();
 
