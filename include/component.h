@@ -15,6 +15,7 @@ class component
          */
         static const float YEAR = 365. * 24;    ///< hours of one year
         static const float kB = 8.6173303E-5;   ///< Boltzmann constant
+        static const float KELVIN = 273.15;     ///< convert Celsius into Kelvin
         ///@}
 
         /**
