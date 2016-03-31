@@ -120,8 +120,6 @@ void schematic::printPartCount(){
 float schematic::getAccelerationFactor(float testT, float refT){
     float fitTest = getFIT(testT, false);
     float fitRef = getFIT(refT, false);
-    std::cout << "FIT @ testT (" << testT << "): " << fitTest << std::endl;
-    std::cout << "FIT @ refT (" << refT << "): " << fitRef << std::endl;
     return fitRef / fitTest;
 }
 
@@ -140,6 +138,20 @@ void schematic::temperatureScan(int points, float startT, float stopT, std::vect
     setAmbientTemperature(tempT);
 }
 
+void schematic::temperatureScanAF(int points, float startT, float stopT, std::vector<float> &temp, std::vector<float> &AF){
+    // clear vectors
+    temp.clear();
+    AF.clear();
+
+    float tempT = getAmbientTemperature();
+
+    for(float T = startT; T<= stopT; T += (stopT - startT)/(float)points ){
+        AF.push_back( getAccelerationFactor( T, tempT ) );
+        temp.push_back(T);
+    }
+
+    setAmbientTemperature(tempT);
+}
 
 float schematic::getFIT(float temperature, bool output){
     temperature += KELVIN;

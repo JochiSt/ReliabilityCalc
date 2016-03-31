@@ -145,6 +145,16 @@ class schematic : public component {
          * @param FIT vector with FIT values at the corresponding temperatures
          */
         virtual void temperatureScan(int points, float startT, float stopT, std::vector<float> &temp, std::vector<float> &FIT);
+
+        /**
+         * do a temperature scan to see the effect of different temperatures on the accelerated aging factor
+         * @param points number of points, equally distributed
+         * @param startT start point of temperature
+         * @param stopT stop point of temperature
+         * @param temp vector with temperature points
+         * @param AF vector with AF values at the corresponding temperatures
+         */
+        virtual void temperatureScanAF(int points, float startT, float stopT, std::vector<float> &temp, std::vector<float> &AF);
         ///@}
 
         /**
