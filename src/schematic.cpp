@@ -28,7 +28,8 @@ float schematic::getFIT(bool output){
         }
         FIT += partFIT;
     }
-    std::cout << std::endl;
+    std::cout << "total FIT: " << FIT << std::endl;
+//    std::cout << std::endl;
     return FIT;
 }
 
@@ -118,9 +119,9 @@ void schematic::printPartCount(){
 }
 
 float schematic::getAccelerationFactor(float testT, float refT){
-    float fitTest = getFIT(testT, false);
-    float fitRef = getFIT(refT, false);
-    return fitRef / fitTest;
+    float fitTest = getFIT(testT, true);
+    float fitRef = getFIT(refT, true);
+    return fitTest / fitRef;
 }
 
 void schematic::temperatureScan(int points, float startT, float stopT, std::vector<float> &temp, std::vector<float> &FIT){
