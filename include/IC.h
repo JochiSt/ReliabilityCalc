@@ -34,7 +34,9 @@ class IC : public component{
          * @param fit_unit  Unit of the given FIT
          */
         IC(std::string name, float fit, float fit_temperature, Unit_t fit_unit);
-        IC(){ };
+        IC(){
+            partcnt--;
+        };
 
         /// set the FIT value
         void setFIT(float val) { FIT = val; }
@@ -48,6 +50,10 @@ class IC : public component{
             return identifier;
         }
 
+        static unsigned int getPartCount(){
+            return partcnt;
+        }
+
     protected:
         /// given FIT value
         float FIT;
@@ -56,6 +62,7 @@ class IC : public component{
 
     private:
         static std::string identifier;
+        static unsigned int partcnt;
 };
 
 #endif // IC_H

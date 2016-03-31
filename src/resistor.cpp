@@ -5,6 +5,7 @@
 #include <cmath>
 
 std::string resistor::identifier = "R";
+unsigned int resistor::partcnt = 0;
 
 resistor::resistor(std::string name, float value, float usedP, float ratedP, Rquality_t qual, Rstyle_t styl) : component(name){
     resistance = value;
@@ -12,6 +13,7 @@ resistor::resistor(std::string name, float value, float usedP, float ratedP, Rqu
     ratedPower = ratedP;
     qualityFactor = (float)qual / 100.;
     style = styl;
+    partcnt++;
 }
 
 float resistor::getFIT(){

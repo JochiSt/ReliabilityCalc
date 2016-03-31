@@ -35,7 +35,9 @@ class inductor : public component
          */
         inductor(std::string name, float ratedT, Iquality_t qual = inductor::Q_LESS);
         inductor(std::string name, float fit_value, Unit_t fit_unit);
-        inductor(){ };
+        inductor(){
+            partcnt--;
+        };
         virtual ~inductor(){ };
 
         virtual float getFIT();
@@ -46,11 +48,15 @@ class inductor : public component
         static std::string getIdentifier(){
             return identifier;
         }
+        static unsigned int getPartCount(){
+            return partcnt;
+        }
     protected:
         float FIT;
 
     private:
         static std::string identifier;
+        static unsigned int partcnt;
 };
 
 #endif // INDUCTOR_H

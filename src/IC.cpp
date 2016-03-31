@@ -5,6 +5,7 @@
 #include <sstream>
 
 std::string IC::identifier = "U";
+unsigned int IC::partcnt = 0;
 
 IC::IC(std::string name, float fit_value, float fit_temperature_value, Unit_t fit_unit) : component(name){
     if((float)fit_unit<1000000.){       ///always if the UNIT is not MTTF
@@ -14,6 +15,7 @@ IC::IC(std::string name, float fit_value, float fit_temperature_value, Unit_t fi
     }
 
     FIT_temperature = fit_temperature_value;
+    partcnt++;
 }
 
 float IC::getFIT(){

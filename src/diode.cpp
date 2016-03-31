@@ -5,6 +5,7 @@
 #include <cmath>
 
 std::string diode::identifier = "D";
+unsigned int diode::partcnt = 0;
 
 diode::diode(std::string name, float usedU, float ratedU, application_t app, quality_t qual ) : component(name)
 {
@@ -13,6 +14,8 @@ diode::diode(std::string name, float usedU, float ratedU, application_t app, qua
     application = app;
     applicationFactor = (float)app/10000.;
     qualityFactor = (float)qual/100.;
+
+    partcnt++;
 }
 
 float diode::getFIT(){

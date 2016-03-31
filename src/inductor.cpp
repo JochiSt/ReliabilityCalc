@@ -5,12 +5,14 @@
 #include <sstream>
 
 std::string inductor::identifier = "L";
+unsigned int inductor::partcnt = 0;
 
 inductor::inductor(std::string name, float ratedT, Iquality_t qual) : component(name)
 {
     ratedTemperature = ratedT;
     qualityFactor = (float)qual / 100.;
     FIT = 0;
+    partcnt++;
 }
 
 inductor::inductor(std::string name, float fit_value, Unit_t fit_unit) : component(name){

@@ -112,6 +112,11 @@ class schematic : public component {
         }
 
         /**
+         * Display the part count for this schematic.
+         */
+        static void printPartCount();
+
+        /**
          * convert a given FIT into a failure rate after a given number of device hours
          * @param deviceHours device hours
          * @param FIT failures in time

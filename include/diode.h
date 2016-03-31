@@ -38,7 +38,9 @@ class diode : public component
         };
 
         diode(std::string name, float usedU, float ratedU, application_t app, quality_t qual);
-        diode(){};
+        diode(){
+            partcnt--;
+        };
         virtual ~diode(){};
 
         virtual float getFIT();
@@ -48,6 +50,9 @@ class diode : public component
 
         static std::string getIdentifier(){
             return identifier;
+        }
+        static unsigned int getPartCount(){
+            return partcnt;
         }
     protected:
         /// used voltage
@@ -61,6 +66,7 @@ class diode : public component
 
     private:
         static std::string identifier;
+        static unsigned int partcnt;
 };
 
 #endif // DIODE_H

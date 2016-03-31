@@ -104,6 +104,15 @@ void schematic::importFromFile(std::string filename){
     }
 }
 
+void schematic::printPartCount(){
+    std::cout << "parts used to calculate reliability "<< std::endl;
+    std::cout << "\t" << diode::getPartCount() << " Diodes" << std::endl;
+    std::cout << "\t" << resistor::getPartCount() << " Resistors" << std::endl;
+    std::cout << "\t" << capacitor::getPartCount() << " Capacitors" << std::endl;
+    std::cout << "\t" << IC::getPartCount() << " ICs" << std::endl;
+    std::cout << "\t" << inductor::getPartCount() << " inductors" << std::endl;
+}
+
 float schematic::getAccelerationFactor(float testT, float refT){
     float deviceHours = 1E6;
     float AF = getFailureRate(deviceHours, getFIT(testT)) / getFailureRate(deviceHours, getFIT(refT));

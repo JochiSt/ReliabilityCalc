@@ -90,6 +90,13 @@ class component
             return identifier;
         }
 
+        /**
+         * @return get part count
+         */
+        static unsigned int getPartCount(){
+            return partcnt;
+        }
+
     public:
         static calc_method_t calculation_method;    ///< used calculation method
         static float ambientTemperature;            ///< define operating temperature for all parts
@@ -104,6 +111,7 @@ class component
 
     private:
         static std::string identifier;
+        static unsigned int partcnt;
 
 };
 

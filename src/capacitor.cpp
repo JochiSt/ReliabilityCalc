@@ -5,6 +5,7 @@
 #include <cmath>
 
 std::string capacitor::identifier = "C";
+unsigned int capacitor::partcnt = 0;
 
 capacitor::capacitor(std::string name, float value, float usedU, float ratedU, float ratedT, Cquality_t qual, Cstyle_t styl) : component(name){
     capacity = value;
@@ -13,6 +14,7 @@ capacitor::capacitor(std::string name, float value, float usedU, float ratedU, f
     ratedTemperature = ratedT;
     quality = qual;
     style = styl;
+    partcnt++;
 }
 
 capacitor::~capacitor(){

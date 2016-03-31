@@ -86,7 +86,9 @@ class capacitor : public component {
          * \param qual      part quality
          */
         capacitor(std::string name, float value, float usedU, float ratedU, float ratedT, Cquality_t qual = capacitor::Q_LESS, Cstyle_t styl = capacitor::S_CQ);
-        capacitor(){};
+        capacitor(){
+            partcnt--;
+        };
         virtual ~capacitor();
 
         /// @return capacity in pF
@@ -106,6 +108,10 @@ class capacitor : public component {
             return identifier;
         }
 
+        static unsigned int getPartCount(){
+            return partcnt;
+        }
+
     protected:
         float capacity;     ///< capacity in pF
         float usedVoltage;  ///< voltage applied to the capacitor
@@ -115,6 +121,7 @@ class capacitor : public component {
 
     private:
         static std::string identifier;
+        static unsigned int partcnt;
 };
 
 #endif // CAPACITOR_H

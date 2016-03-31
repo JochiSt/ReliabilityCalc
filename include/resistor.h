@@ -85,7 +85,9 @@ class resistor : public component {
          * \param styl      resistor style (only used in Notice 2 calculation)
          */
         resistor(std::string name, float value, float usedP, float ratedP, Rquality_t qual = resistor::Q_LESS, Rstyle_t styl = resistor::S_RL);
-        resistor(){ };
+        resistor(){
+            partcnt--;
+        };
         virtual ~resistor() {};
 
         /**
@@ -108,6 +110,10 @@ class resistor : public component {
             return identifier;
         }
 
+        static unsigned int getPartCount(){
+            return partcnt;
+        }
+
     protected:
         float resistance;   ///< resistance
         float usedPower;    ///< used Power in W
@@ -117,6 +123,7 @@ class resistor : public component {
 
     private:
         static std::string identifier;
+        static unsigned int partcnt;
 
 };
 

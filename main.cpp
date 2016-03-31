@@ -32,6 +32,11 @@ int main(){
     component::calculation_method = component::MIL_HDBK_217F_NOTICE2;
     FIT = CLKdecoupling -> getFIT();
     cout << "Total FIT " << FIT << " / " << component::FITunit << endl;
+
+    cout << endl;
+
+    schematic::printPartCount();
+
     cout << endl;
     cout << "###############################################################################" << endl;
     cout << endl;
