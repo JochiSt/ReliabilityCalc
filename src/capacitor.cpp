@@ -235,7 +235,7 @@ float capacitor::getFIT(){
         FIT *= 0.41 * pow(capacity, 0.11);
         FIT *= (float)quality / 1000.;
         FIT *= environmentFactor;
-        std::cout << "\tCalculating FIT for " << name << "\tFIT: " << FIT << " / " << component::FITunit << std::endl;
+ //       std::cout << "\tCalculating FIT for " << name << "\tFIT: " << FIT << " / " << component::FITunit << std::endl;
         return FIT;
     }
 }

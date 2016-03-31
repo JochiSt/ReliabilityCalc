@@ -69,6 +69,13 @@ class component
         }
 
         /**
+         * return internal name of part
+         */
+        virtual std::string getName(){
+            return name;
+        }
+
+        /**
          * set all relevant informations from one string
          */
         virtual int fromString(std::string value) {

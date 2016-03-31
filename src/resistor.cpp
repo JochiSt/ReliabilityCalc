@@ -185,7 +185,7 @@ float resistor::getFIT(){
         }
         FIT *= qualityFactor;
         FIT *= environmentFactor;
-        std::cout << "\tCalculating FIT for " << name << "\tFIT: " << FIT << " / " << component::FITunit << std::endl;
+ //       std::cout << "\tCalculating FIT for " << name << "\tFIT: " << FIT << " / " << component::FITunit << std::endl;
         return FIT;
     }
 }

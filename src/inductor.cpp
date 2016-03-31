@@ -23,7 +23,7 @@ inductor::inductor(std::string name, float fit_value, Unit_t fit_unit) : compone
 
 float inductor::getFIT(){
     if(FIT!=0){
-        std::cout << "\tCalculating FIT for " << name << "\tFIT: " << FIT << " / " << component::FITunit << std::endl;
+//        std::cout << "\tCalculating FIT for " << name << "\tFIT: " << FIT << " / " << component::FITunit << std::endl;
         return FIT;
     }
     switch(environment){
@@ -83,7 +83,7 @@ float inductor::getFIT(){
     }
     FIT *= qualityFactor;
     FIT *= environmentFactor;
-    std::cout << "\tCalculating FIT for " << name << "\tFIT: " << FIT << " / " << component::FITunit << std::endl;
+//    std::cout << "\tCalculating FIT for " << name << "\tFIT: " << FIT << " / " << component::FITunit << std::endl;
     return FIT;
 }
 

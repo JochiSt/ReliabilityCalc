@@ -1,6 +1,7 @@
 #include "schematic.h"
 
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <sstream>
 #include <cmath>
@@ -19,7 +20,9 @@ float schematic::getFIT(){
     std::cout << "Calculating FIT for " << name << std::endl;
     double FIT = 0;
     for(unsigned int i = 0; i < parts.size(); i++ ){
-        FIT += parts.at(i) -> getFIT();
+        float partFIT = parts.at(i) -> getFIT();
+        std::cout << "  " << std::setw(20) << parts.at(i)->getName() << "\t" << std::setprecision(7)  << std::setw(12) << partFIT << " / " << component::FITunit << std::endl;
+        FIT += partFIT;
     }
     std::cout << std::endl;
     return FIT;
