@@ -10,6 +10,8 @@ using namespace std;
 #include "inductor.h"
 #include "diode.h"
 
+#include <cmath>
+
 int main(){
     cout << "Reliability Calculator" << endl;
     cout << "\tcompiled @ " << __DATE__ << " " << __TIME__ << " using GCC " << __VERSION__ << endl;
@@ -20,6 +22,8 @@ int main(){
 
     schematic* CLKdecoupling = new schematic("Clock Decoupling");
     CLKdecoupling -> addComponent(new resistor("R1", 1*resistor::kOhm, 10*resistor::mW, 100*resistor::mW, resistor::Q_M, resistor::S_RM) );
+    CLKdecoupling -> addComponent(new capacitor("C1", 15*capacitor::nF, 200+sqrt(2)*50., 400., 85 , capacitor::Q_MIL, capacitor::S_CQ));
+
 
     cout << "###############################################################################" << endl;
     cout << endl;
