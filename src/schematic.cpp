@@ -16,12 +16,16 @@ schematic::schematic(std::string name) : component(name){
     //ctor
 }
 
-float schematic::getFIT(){
-    std::cout << "Calculating FIT for " << name << std::endl;
+float schematic::getFIT(bool output){
+    if(output){
+        std::cout << "Calculating FIT for " << name << std::endl;
+    }
     double FIT = 0;
     for(unsigned int i = 0; i < parts.size(); i++ ){
         float partFIT = parts.at(i) -> getFIT();
-        std::cout << "  " << std::setw(20) << parts.at(i)->getName() << "\t" << std::setprecision(7)  << std::setw(12) << partFIT << " / " << component::FITunit << std::endl;
+        if(output) {
+                std::cout << "  " << std::setw(20) << parts.at(i)->getName() << "\t" << std::setprecision(7)  << std::setw(12) << partFIT << " / " << component::FITunit << std::endl;
+        }
         FIT += partFIT;
     }
     std::cout << std::endl;
@@ -114,9 +118,11 @@ void schematic::printPartCount(){
 }
 
 float schematic::getAccelerationFactor(float testT, float refT){
-    float deviceHours = 1E6;
-    float AF = getFailureRate(deviceHours, getFIT(testT)) / getFailureRate(deviceHours, getFIT(refT));
-    return AF;
+    float fitTest = getFIT(testT, false);
+    float fitRef = getFIT(refT, false);
+    std::cout << "FIT @ testT (" << testT << "): " << fitTest << std::endl;
+    std::cout << "FIT @ refT (" << refT << "): " << fitRef << std::endl;
+    return fitRef / fitTest;
 }
 
 void schematic::temperatureScan(int points, float startT, float stopT, std::vector<float> &temp, std::vector<float> &FIT){
@@ -132,6 +138,16 @@ void schematic::temperatureScan(int points, float startT, float stopT, std::vect
     }
 
     setAmbientTemperature(tempT);
+}
+
+
+float schematic::getFIT(float temperature, bool output){
+    temperature += KELVIN;
+    float tempT = getAmbientTemperature();
+    setAmbientTemperature(temperature);
+    float FIT = getFIT(output);
+    setAmbientTemperature(tempT);
+    return FIT;
 }
 
 void schematic::exportDataToFile(std::string filename, std::vector<float> vec1, std::vector<float>vec2){

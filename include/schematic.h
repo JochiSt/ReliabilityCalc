@@ -97,19 +97,19 @@ class schematic : public component {
          * calculate failures in time for this schematic
          * @return FIT value of this schematic
          */
-        virtual float getFIT();
+        virtual float getFIT(bool output);
+
+        virtual float getFIT(){
+            return getFIT(true);
+        };
+
 
         /**
          * calculate FIT for a given temperature
          * @return FIT value at temperature
          * @param temperature temperature, at which FIT is evaluated
          */
-        virtual float getFIT(float temperature){
-            float tempT = getAmbientTemperature();
-            float FIT = getFIT();
-            setAmbientTemperature(tempT);
-            return FIT;
-        }
+        virtual float getFIT(float temperature, bool output = true);
 
         /**
          * Display the part count for this schematic.

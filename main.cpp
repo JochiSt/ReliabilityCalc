@@ -40,6 +40,7 @@ int main(){
     cout << endl;
     cout << "###############################################################################" << endl;
     cout << endl;
+    cout << "Acceleration Factor for 120 degC " << CLKdecoupling -> getAccelerationFactor(120, 40) << endl;
 
 
 
