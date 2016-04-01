@@ -28,8 +28,9 @@ float schematic::getFIT(bool output){
         }
         FIT += partFIT;
     }
-    std::cout << "total FIT: " << FIT << std::endl;
-//    std::cout << std::endl;
+    if(output){
+        std::cout << "total FIT: " << FIT << std::endl;
+    }
     return FIT;
 }
 
@@ -43,7 +44,6 @@ void schematic::exportToFile(std::string filename){
     std::ofstream outF;
     outF.open(filename.c_str());
     for(unsigned int i = 0; i< parts.size(); i++){
- //           std::cout << i << "\t" << parts.at(i)->toString() << std::endl;
             outF << i << "\t" << parts.at(i)->toString() << std::endl;
     }
     outF.close();
@@ -119,8 +119,9 @@ void schematic::printPartCount(){
 }
 
 float schematic::getAccelerationFactor(float testT, float refT){
-    float fitTest = getFIT(testT, true);
-    float fitRef = getFIT(refT, true);
+    float fitTest = getFIT(testT, false);
+    float fitRef = getFIT(refT, false);
+
     return fitTest / fitRef;
 }
 
@@ -132,7 +133,7 @@ void schematic::temperatureScan(int points, float startT, float stopT, std::vect
     float tempT = getAmbientTemperature();
 
     for(float T = startT; T<= stopT; T += (stopT - startT)/(float)points ){
-        FIT.push_back( getFIT(T) );
+        FIT.push_back( getFIT(T, false) );
         temp.push_back(T);
     }
 
@@ -155,7 +156,9 @@ void schematic::temperatureScanAF(int points, float startT, float stopT, std::ve
 }
 
 float schematic::getFIT(float temperature, bool output){
-    temperature += KELVIN;
+    if(temperature < KELVIN){
+        temperature += KELVIN;
+    }
     float tempT = getAmbientTemperature();
     setAmbientTemperature(temperature);
     float FIT = getFIT(output);

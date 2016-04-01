@@ -76,8 +76,9 @@ class schematic : public component {
         };
         ///@}
 
-        /** @name Schematic Import and Export
-         *  Schematics can be exported into a plain text file and they can also be imported
+        /**
+         * @name Schematic Import and Export
+         * Schematics can be exported into a plain text file and they can also be imported
          */
         ///@{
         /**
@@ -107,7 +108,7 @@ class schematic : public component {
         /**
          * calculate FIT for a given temperature
          * @return FIT value at temperature
-         * @param temperature temperature, at which FIT is evaluated
+         * @param temperature temperature in deg C, at which FIT is evaluated
          */
         virtual float getFIT(float temperature, bool output = true);
 
@@ -127,8 +128,8 @@ class schematic : public component {
         /**
          * calculate acceleration factor of schematic
          * @return acceleration factor
-         * @param testT test temperature (temperature, which should be used in test)
-         * @param refT reference temperature (temperature, the electronics is operating)
+         * @param testT test temperature (temperature, which should be used in test) in deg C
+         * @param refT reference temperature (temperature, the electronics is operating) in deg C
          */
         virtual float getAccelerationFactor(float testT, float refT);
 
