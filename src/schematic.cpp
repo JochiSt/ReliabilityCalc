@@ -20,7 +20,7 @@ float schematic::getFIT(bool output){
     if(output){
         std::cout << "Calculating FIT for " << name << std::endl;
     }
-    double FIT = 0;
+    float FIT = 0;
     for(unsigned int i = 0; i < parts.size(); i++ ){
         float partFIT = parts.at(i) -> getFIT();
         if(output) {

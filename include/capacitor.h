@@ -84,6 +84,7 @@ class capacitor : public component {
          * \param ratedU    rated voltage
          * \param ratedT    rated temperature
          * \param qual      part quality
+         * \param styl      part style
          */
         capacitor(std::string name, float value, float usedU, float ratedU, float ratedT, Cquality_t qual = capacitor::Q_LESS, Cstyle_t styl = capacitor::S_CQ);
         capacitor(){
