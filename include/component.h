@@ -55,6 +55,9 @@ class component
             return ambientTemperature;
         }
         static void setAmbientTemperature(float val) {
+            if(val < KELVIN){
+                val += KELVIN;
+            }
             ambientTemperature = val;
         }
 

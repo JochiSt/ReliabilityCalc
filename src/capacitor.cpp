@@ -74,7 +74,7 @@ float capacitor::getFIT(){
         }
         float pi_T = 0;
         if((ambientTemperature < ratedTemperature+KELVIN) && (ratedTemperature < 150.) ){
-            pi_T = exp( EA / kB * ( 1./ambientTemperature - 1./298. ) );
+            pi_T = exp( EA / kB * ( 1./ambientTemperature - 1./(25. + KELVIN) ) );
         }else if(ambientTemperature < ratedTemperature+KELVIN){
             // use equation for applications above 150 degC
             pi_T = 0;
@@ -233,7 +233,7 @@ float capacitor::getFIT(){
                 environmentFactor = 610;
                 break;
         }
-        float FIT = 0.0003 * ( pow(stress/0.3, 3) + 1) * exp( ambientTemperature / (ratedTemperature+273.));
+        float FIT = 0.0003 * ( pow(stress/0.3, 3) + 1) * exp( ambientTemperature / (ratedTemperature + KELVIN));
         FIT *= 0.41 * pow(capacity, 0.11);
         FIT *= (float)quality / 1000.;
         FIT *= environmentFactor;

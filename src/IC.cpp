@@ -23,7 +23,7 @@ IC::IC(std::string name, float fit_value, float fit_temperature_value, Unit_t fi
 
 float IC::getFIT(){
     std::cout << ambientTemperature << "\t" << FIT_temperature << std::endl;
-    float AF = exp(EA/kB*(1/(ambientTemperature)-1/(FIT_temperature)));    //aging factor
+    float AF = exp(-1.*(EA/kB)*(1/(ambientTemperature)-1/(FIT_temperature)));    //aging factor
     return FIT * AF;
 }
 

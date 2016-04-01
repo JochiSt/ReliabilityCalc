@@ -98,7 +98,12 @@ float resistor::getFIT(){
                 // use column 1
                 EA = -0.2;
             }
-            pi_T = exp( EA / kB * ( 1./ambientTemperature - 1./298.) );
+            if( ambientTemperature < 150. + KELVIN ){
+                pi_T = exp( EA / kB * ( 1./ambientTemperature - 1./(25+KELVIN) ));
+            }else{
+                // use equation for applications above 150 degC
+                pi_T = 0;
+            }
         }
         FIT *= pi_T;
 //######################################################
