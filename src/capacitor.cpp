@@ -233,7 +233,7 @@ float capacitor::getFIT(){
                 environmentFactor = 610;
                 break;
         }
-        double FIT = 0.0003 * ( pow(stress/0.3, 3) + 1) * exp( ambientTemperature / (ratedTemperature+273.));
+        float FIT = 0.0003 * ( pow(stress/0.3, 3) + 1) * exp( ambientTemperature / (ratedTemperature+273.));
         FIT *= 0.41 * pow(capacity, 0.11);
         FIT *= (float)quality / 1000.;
         FIT *= environmentFactor;
