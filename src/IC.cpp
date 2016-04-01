@@ -13,16 +13,18 @@ IC::IC(std::string name, float fit_value, float fit_temperature_value, Unit_t fi
     }else{
         FIT = (float)fit_unit/fit_value;
     }
-
     FIT_temperature = fit_temperature_value;
+
+    if(FIT_temperature < KELVIN){
+        FIT_temperature += KELVIN;
+    }
     partcnt++;
 }
 
 float IC::getFIT(){
-    float AF = exp(EA/kB*(1/(ambientTemperature)-1/(FIT_temperature+273)));    //aging factor
-    FIT *= AF;
-//    std::cout << "\tCalculating FIT for " << name << "\tFIT: " << FIT << " / " << component::FITunit << std::endl;
-    return FIT;
+    std::cout << ambientTemperature << "\t" << FIT_temperature << std::endl;
+    float AF = exp(EA/kB*(1/(ambientTemperature)-1/(FIT_temperature)));    //aging factor
+    return FIT * AF;
 }
 
 std::string IC::toString(){
