@@ -17,8 +17,12 @@ int main(){
     cout << "\tcompiled @ " << __DATE__ << " " << __TIME__ << " using GCC " << __VERSION__ << endl << endl;
 
     schematic* CLKdecoupling = new schematic("Clock Decoupling");
-    CLKdecoupling -> addComponent(new resistor("R1", 1*resistor::kOhm, 10*resistor::mW, 100*resistor::mW, resistor::Q_M, resistor::S_RM) );
-    CLKdecoupling -> addComponent(new capacitor("C1", 15*capacitor::nF, 200+sqrt(2)*50., 400., 85 , capacitor::Q_MIL, capacitor::S_CQ));
+
+    component::setAmbientTemperature(55);
+
+//   CLKdecoupling -> addComponent(new resistor("R1", 1*resistor::kOhm, 10*resistor::mW, 100*resistor::mW, resistor:: Q_S, resistor::S_RM) );
+//    CLKdecoupling -> addComponent(new capacitor("C1", 15*capacitor::nF, 200+sqrt(2)*50., 400., 125 , capacitor::Q_S, capacitor::S_CQ));
+    CLKdecoupling -> addComponent( new IC("U1", 1E8, 55, IC::MTTF) );
 
     cout << "###############################################################################" << endl;
     cout << endl;
@@ -40,9 +44,19 @@ int main(){
     cout << endl;
     cout << "###############################################################################" << endl;
     cout << endl;
-    cout << "Acceleration Factor for 120 degC " << CLKdecoupling -> getAccelerationFactor(120, 40) << endl;
+    float testT = 120;
+    cout << "Acceleration Factor for "<< testT << " degC " << CLKdecoupling -> getAccelerationFactor(testT, 40) << endl;
 
 
+
+/*
+    vector<float> v_temp, v_data;
+    CLKdecoupling -> temperatureScan(10, 40, 120, v_temp, v_data);
+    schematic::exportDataToFile("temp_FIT", v_temp, v_data);
+
+    CLKdecoupling -> temperatureScanAF(10, 40, 120, v_temp, v_data);
+    schematic::exportDataToFile("temp_AF", v_temp, v_data);
+*/
 
     return 0;
 }
