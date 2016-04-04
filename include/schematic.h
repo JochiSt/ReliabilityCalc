@@ -109,6 +109,7 @@ class schematic : public component {
          * calculate FIT for a given temperature
          * @return FIT value at temperature
          * @param temperature temperature in deg C, at which FIT is evaluated
+         * @param output defined whether output is printed or not
          */
         virtual float getFIT(float temperature, bool output = true);
 
