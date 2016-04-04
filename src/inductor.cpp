@@ -16,6 +16,7 @@ inductor::inductor(std::string name, float ratedT, Iquality_t qual) : component(
 }
 
 inductor::inductor(std::string name, float fit_value, Unit_t fit_unit) : component(name){
+    partcnt++;
     if((float)fit_unit<1000000.){       ///always if the UNIT is not MTTF
         FIT = fit_value/(float)fit_unit;
     }else{
