@@ -27,6 +27,12 @@ class capacitor : public component {
         static const float kV = 1000.;
         ///@}
 
+        enum Unit_t {
+            FITe6   = 1,        ///< FIT value as defined in the MIL-HDBK-217
+            FITe9   = 1000,     ///< FIT as defined by most other sources
+            MTTF    = 1000000   ///< Mean Time To Failure
+        };
+
         /** \enum capacitor::Cquality_t
          * quality of the capacitor for an exact definition have a look at the MIL HDBK
          */
@@ -87,6 +93,8 @@ class capacitor : public component {
          * \param styl      part style
          */
         capacitor(std::string name, float value, float usedU, float ratedU, float ratedT, Cquality_t qual = capacitor::Q_LESS, Cstyle_t styl = capacitor::S_CQ);
+        capacitor(std::string name, float fit_value, float fit_temperature_value, float fit_testvalue, float test_temperature_value, Unit_t fit_unit);
+
         capacitor(){
             partcnt--;
         };
@@ -118,7 +126,14 @@ class capacitor : public component {
         float usedVoltage;  ///< voltage applied to the capacitor
         float ratedVoltage; ///< rated voltage of the capacitor
         Cquality_t quality; ///< quality of the capacitor
-        Cstyle_t style;     ///< capacitor style
+        Cstyle_t style;     ///< capacitor
+
+        float FIT_ambient;
+        float FIT_test;
+        float FIT_temperature;
+        float FIT_testTemperature;
+
+        bool FIT_given;
 
     private:
         static std::string identifier;

@@ -28,6 +28,12 @@ class resistor : public component {
         static const float kW = 1000.;
         ///@}
 
+        enum Unit_t {
+            FITe6   = 1,        ///< FIT value as defined in the MIL-HDBK-217
+            FITe9   = 1000,     ///< FIT as defined by most other sources
+            MTTF    = 1000000   ///< Mean Time To Failure
+        };
+
         /**
          * @enum Rquality_t Quality of resistors
          */
@@ -85,6 +91,7 @@ class resistor : public component {
          * \param styl      resistor style (only used in Notice 2 calculation)
          */
         resistor(std::string name, float value, float usedP, float ratedP, Rquality_t qual = resistor::Q_LESS, Rstyle_t styl = resistor::S_RL);
+        resistor(std::string name, float fit_value, float fit_temperature_value, Unit_t fit_unit);
         resistor(){
             partcnt--;
         };
@@ -120,6 +127,11 @@ class resistor : public component {
         float ratedPower;   ///< rated Power in W
 
         Rstyle_t style;     ///< resistor style
+
+        float FIT_ambient;
+        float FIT_temperature;
+
+        bool FIT_given;
 
     private:
         static std::string identifier;

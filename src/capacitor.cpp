@@ -14,6 +14,21 @@ capacitor::capacitor(std::string name, float value, float usedU, float ratedU, f
     ratedTemperature = ratedT;
     quality = qual;
     style = styl;
+    FIT_given = false;
+    partcnt++;
+}
+
+capacitor::capacitor(std::string name, float fit_value, float fit_temperature_value, float fit_testvalue, float test_temperature_value, Unit_t fit_unit) : component(name){
+    if((float)fit_unit<1000000.){       ///always if the UNIT is not MTTF
+        FIT_ambient = fit_value/(float)fit_unit;
+        FIT_test = fit_testvalue/(float)fit_unit;
+    }else{
+        FIT_ambient = (float)fit_unit/fit_value;
+        FIT_test = (float)fit_unit/fit_testvalue;
+    }
+    FIT_temperature = fit_temperature_value+KELVIN;
+    FIT_testTemperature = test_temperature_value+KELVIN;
+    FIT_given = true;
     partcnt++;
 }
 
@@ -22,9 +37,14 @@ capacitor::~capacitor(){
 }
 
 float capacitor::getFIT(){
+    float FIT = 0;
+    if(FIT_given){
+        ///assume linear FIT change between two values
+        return ((FIT_test-FIT_ambient)/(FIT_testTemperature-FIT_temperature)*(ambientTemperature-FIT_temperature) + FIT_ambient);
+    }
     float stress = usedVoltage / ratedVoltage;
     if(calculation_method == MIL_HDBK_217F_NOTICE2){
-        float FIT = 0;
+
 //#################################################
 // set lambda_B
         float lambda_B = 0;

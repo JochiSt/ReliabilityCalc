@@ -15,9 +15,26 @@ resistor::resistor(std::string name, float value, float usedP, float ratedP, Rqu
     style = styl;
     partcnt++;
 }
+resistor::resistor(std::string name, float fit_value, float fit_temperature_value, Unit_t fit_unit) : component(name){
+    if((float)fit_unit<1000000.){       ///always if the UNIT is not MTTF
+        FIT_ambient = fit_value/(float)fit_unit;
+    }else{
+        FIT_ambient = (float)fit_unit/fit_value;
+    }
+    FIT_temperature = fit_temperature_value+KELVIN;
+    FIT_given = true;
+    partcnt++;
+}
 
 float resistor::getFIT(){
-
+    float FIT = 0;
+    if(FIT_given){
+        float pi_T;
+        if( ambientTemperature < 150. + KELVIN ){
+            pi_T = exp( -0.08 / kB * ( 1./ambientTemperature - 1./(FIT_temperature) ));
+        }
+        return pi_T*FIT_ambient;
+    }
     float stress = usedPower / ratedPower;
 
     if(calculation_method == MIL_HDBK_217F_NOTICE2){
@@ -66,7 +83,7 @@ float resistor::getFIT(){
                 break;
         }
 
-        float FIT = 0;
+
 //######################################################
         // lambda_B
         if(style == S_RC || style == S_RCR){
