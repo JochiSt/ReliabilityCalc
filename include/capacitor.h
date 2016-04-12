@@ -1,6 +1,6 @@
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  FIT calculation based on MIL-HDBK-217F
- Calculation for fixed, ceramic general purpose capacitors (MIL-C-11015, MIL-C-39014)
+ Calculation for fixed, ceramic general purpose capacitors (MIL-C-11015, MIL-C-39014),if Notice 1 is used
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
@@ -73,7 +73,7 @@ class capacitor : public component {
             S_CWR,          ///<
             S_CL,           ///<
             S_CLR,          ///<
-            S_CRL,
+            S_CRL,          ///<
             S_CU, S_CUR,    ///<
             S_CE,           ///<
             S_CV,           ///<
@@ -128,12 +128,12 @@ class capacitor : public component {
         Cquality_t quality; ///< quality of the capacitor
         Cstyle_t style;     ///< capacitor
 
-        float FIT_ambient;
-        float FIT_test;
-        float FIT_temperature;
-        float FIT_testTemperature;
+        float FIT_ambient;          ///< FIT value at used temperature
+        float FIT_test;             ///< Fit value at test temperature (needed to calculate the aging factor for higher temperatures).
+        float FIT_temperature;      ///< Temperature in °C of the first FIT value
+        float FIT_testTemperature;  ///< Temperature in °C of the test FIT value
 
-        bool FIT_given;
+        bool FIT_given;             ///< Is set to true, if the FIT is not calculated with the MIL-Hbk
 
     private:
         static std::string identifier;
