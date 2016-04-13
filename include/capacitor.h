@@ -104,7 +104,7 @@ class capacitor : public component {
          * \param fit_temperature2  Temperature related to FIT value 2. If no change of FIT with temperature is assuemd please insert a temperature different from fit_temperature1.
          * \param fit_unit          Unit of the FIT values: FITe9, FITe6 (MIL-standard), MTTF, MTBF.
          */
-        capacitor(std::string name, float fit_value1, float fit_temperature1, float fit_value2, float test_temperature2, Unit_t fit_unit);
+        capacitor(std::string name, float fit_value1, float fit_temperature1, float fit_value2, float fit_temperature2, Unit_t fit_unit);
 
         capacitor(){
             partcnt--;
