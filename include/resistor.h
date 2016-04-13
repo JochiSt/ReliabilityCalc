@@ -128,10 +128,10 @@ class resistor : public component {
 
         Rstyle_t style;     ///< resistor style
 
-        float FIT_ambient;
-        float FIT_temperature;
+        float FIT_ambient;  ///< FIT value of the resistor. Is used if FIT/MTTF/MTBF is given.
+        float FIT_temperature;  ///< Corresponding test temperature of the FIT value. Corrections for higher temperatures are done with the MIL standard.
 
-        bool FIT_given;
+        bool FIT_given;     ///< Boolean that is set internaly, depending on which constructor is used.
 
     private:
         static std::string identifier;

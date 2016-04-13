@@ -30,7 +30,8 @@ class capacitor : public component {
         enum Unit_t {
             FITe6   = 1,        ///< FIT value as defined in the MIL-HDBK-217
             FITe9   = 1000,     ///< FIT as defined by most other sources
-            MTTF    = 1000000   ///< Mean Time To Failure
+            MTTF    = 1000000,  ///< Mean Time To Failure
+            MTBF    = 1000000   ///< Mean Time between Failure
         };
 
         /** \enum capacitor::Cquality_t
@@ -93,7 +94,17 @@ class capacitor : public component {
          * \param styl      part style
          */
         capacitor(std::string name, float value, float usedU, float ratedU, float ratedT, Cquality_t qual = capacitor::Q_LESS, Cstyle_t styl = capacitor::S_CQ);
-        capacitor(std::string name, float fit_value, float fit_temperature_value, float fit_testvalue, float test_temperature_value, Unit_t fit_unit);
+
+        /**
+         * Second Constructor of Capacitor
+         * \param name              internal naming of capacitor, e.g. C1, C2
+         * \param fit_value1        FIT value 1
+         * \param fit_temperature1  Temperature related to FIT value 1.
+         * \param fit_value2        Fit value 2. If no change of FIT with temperature is assumed please insert FIT value 1. Linear interpolation between given FIT values is assumed.
+         * \param fit_temperature2  Temperature related to FIT value 2. If no change of FIT with temperature is assuemd please insert a temperature different from fit_temperature1.
+         * \param fit_unit          Unit of the FIT values: FITe9, FITe6 (MIL-standard), MTTF, MTBF.
+         */
+        capacitor(std::string name, float fit_value1, float fit_temperature1, float fit_value2, float test_temperature2, Unit_t fit_unit);
 
         capacitor(){
             partcnt--;
@@ -128,12 +139,12 @@ class capacitor : public component {
         Cquality_t quality; ///< quality of the capacitor
         Cstyle_t style;     ///< capacitor
 
-        float FIT_ambient;          ///< FIT value at used temperature
-        float FIT_test;             ///< Fit value at test temperature (needed to calculate the aging factor for higher temperatures).
-        float FIT_temperature;      ///< Temperature in °C of the first FIT value
-        float FIT_testTemperature;  ///< Temperature in °C of the test FIT value
+        float FIT1;             ///< FIT value 1. It is recommended to use the ambient temperature FIT value.
+        float FIT2;             ///< FIT value 2. It is recommended to use the test temperature FIT value. The interpolation between the FIT values is linear.
+        float FIT_temperature1; ///< Temperature in °C of the FIT value 1.
+        float FIT_temperature2; ///< Temperature in °C of the FIT value 2.
 
-        bool FIT_given;             ///< Is set to true, if the FIT is not calculated with the MIL-Hbk
+        bool FIT_given;         ///< Is set to true, if the FIT is not calculated with the MIL-Hbk
 
     private:
         static std::string identifier;

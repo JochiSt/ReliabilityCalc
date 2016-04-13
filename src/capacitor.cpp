@@ -18,16 +18,16 @@ capacitor::capacitor(std::string name, float value, float usedU, float ratedU, f
     partcnt++;
 }
 
-capacitor::capacitor(std::string name, float fit_value, float fit_temperature_value, float fit_testvalue, float test_temperature_value, Unit_t fit_unit) : component(name){
-    if((float)fit_unit<1000000.){       ///always if the UNIT is not MTTF
-        FIT_ambient = fit_value/(float)fit_unit;
-        FIT_test = fit_testvalue/(float)fit_unit;
+capacitor::capacitor(std::string name, float fit_value1, float fit_temperature1, float fit_value2, float test_temperature2, Unit_t fit_unit) : component(name){
+    if((float)fit_unit<1000000.){       ///always if the UNIT is not MTTF or MTBF
+        FIT1 = fit_value1/(float)fit_unit;
+        FIT2 = fit_value2/(float)fit_unit;
     }else{
-        FIT_ambient = (float)fit_unit/fit_value;
-        FIT_test = (float)fit_unit/fit_testvalue;
+        FIT1 = (float)fit_unit/fit_value1;
+        FIT2 = (float)fit_unit/fit_value2;
     }
-    FIT_temperature = fit_temperature_value+KELVIN;
-    FIT_testTemperature = test_temperature_value+KELVIN;
+    FIT_temperature1 = FIT_temperature1+KELVIN;
+    FIT_temperature2 = FIT_temperature2+KELVIN;
     FIT_given = true;
     partcnt++;
 }
@@ -39,8 +39,8 @@ capacitor::~capacitor(){
 float capacitor::getFIT(){
     float FIT = 0;
     if(FIT_given){
-        ///assume linear FIT change between two values
-        return ((FIT_test-FIT_ambient)/(FIT_testTemperature-FIT_temperature)*(ambientTemperature-FIT_temperature) + FIT_ambient);
+        //assume linear FIT change between two values
+        return ((FIT2-FIT1)/(FIT_temperature2-FIT_temperature1)*(ambientTemperature-FIT_temperature1) + FIT1);
     }
     float stress = usedVoltage / ratedVoltage;
     if(calculation_method == MIL_HDBK_217F_NOTICE2){
