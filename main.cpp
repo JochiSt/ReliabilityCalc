@@ -36,7 +36,7 @@ int main(){
     ///Example for a Capacitor implemented for MIL-HDBK-Calculation. Last Value is only needed for notice 2. For notice 1 ceramic general purpose capacitors are assumed.
     example -> addComponent(new capacitor("C1", 1*capacitor::uF, 24, 250, 125, Cqual, capacitor::S_CQ));
     ///Example for a resistor implemented for MIL-HDBK-Calculation. Last value is only needed for notice 2. For notice 1fixed film resistors are assumed.
-    example -> addComponent(new resistor("R1", 1*resistor::MOhm, 1.6e-5, 0.1, Rqual, resistor::S_RM));
+    example -> addComponent(new resistor("R1", 1*resistor::MOhm, 1.6e-5, 0.1, Rqual));//, resistor::S_RM));
     ///Example for an inductor implemented for MIL-HDBK-Calculation. Inductor not jet implemented for notice 2.
     example -> addComponent(new inductor("L1", 1.1,inductor::FITe9));
     ///Example for a diode implemented for MIL-HDBK-Calculation. Diode not jet implemented for notice 2.
@@ -52,11 +52,13 @@ int main(){
     ///Example for a resistor with given FIT value (E.g. vishay)
     example2 -> addComponent(new resistor("R2", 0.1, 40, resistor::FITe9));
     ///Example for a inductor with given FIT value. (E.g. WE)
-    example -> addComponent(new inductor("L2", 1.1,inductor::FITe9));
+    example2 -> addComponent(new inductor("L2", 1.1,inductor::FITe9));
 
     ///Complete Board. Schematics of different parts can be added up to a main board
 
     schematic* example_board = new schematic("Complete Board");
+    example_board -> addComponent(example);
+    example_board -> addComponent(example2);
 
     cout << "###############################################################################" << endl;
     cout << endl;
@@ -71,7 +73,7 @@ int main(){
     cout << endl;
     ///Change from notice 1 to notice 2
     component::calculation_method = component::MIL_HDBK_217F_NOTICE2;
-    FIT = example -> getFIT();
+    FIT = example_board -> getFIT();
     cout << "Fit with Notice 2 HDBK:" << endl;
     cout << "Total FIT " << FIT << " / " << component::FITunit << endl;
 

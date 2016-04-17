@@ -14,6 +14,7 @@ resistor::resistor(std::string name, float value, float usedP, float ratedP, Rqu
     qualityFactor = (float)qual / 100.;
     style = styl;
     partcnt++;
+    FIT_given = false;
 }
 resistor::resistor(std::string name, float fit_value, float fit_temperature_value, Unit_t fit_unit) : component(name){
     if((float)fit_unit<1000000.){       ///always if the UNIT is not MTTF
@@ -147,7 +148,6 @@ float resistor::getFIT(){
 //######################################################
 // pi_E
         FIT *= environmentFactor;
-
         return FIT;
 
 //######################################################
