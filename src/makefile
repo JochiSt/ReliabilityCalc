@@ -17,10 +17,6 @@ OBJS=$(SRCS:.cpp=.o )
 all:	$(OBJS)
 	@echo " ALL DONE. $@"
 
-$(PROGRAM):	$(PROGRAM).o $(OBJECTS) $(BUSSES)
-	@echo -n ">>> Linking   "
-	$(GPP)  -o $(PROGRAM) $(OBJECTS) $(PROGRAM).o $(LDFLAGS)
-
 $(BUSSES):
 	@cd $@; $(MAKE);
 
@@ -40,18 +36,8 @@ $(BUSSES):
 	@echo -e -n " CC $<:\t";
 	$(GPP) -c $< $(CFLAGS)
 
-doc:
-	@echo " creating documentation"
-	doxygen ../Doxyfile
-
 clean:
 	@echo " CLEAN"
 	@rm -f *.o
 	@echo " CLEAN."
 
-allclean:
-	@echo " CLEAN ALL"
-	@for dir in $(BUSSES); do ( cd $$dir; $(MAKE) allclean; ); done
-	@rm -f $(LIBNAME)
-	@rm -f *.o
-	@echo " CLEAN."
