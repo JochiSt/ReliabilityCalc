@@ -44,9 +44,9 @@ int main(){
 
 
     ///Example for a Board with components were the producer provides reliability data
-    schematic* example2 = new schematic("JUNO Exmaple Board 2");
+    schematic* example2 = new schematic("JUNO Example Board 2");
     ///Example for a IC
-    example2 -> addComponent(new IC("LT8614", 6.498e8, 55,IC::MTTF));
+    example2 -> addComponent(new IC("LT8614", 0, IC::DPPM, 6.498e8, 55,IC::MTTF)); // TODO: find ELFR value
     ///Example for a Capacitor with given FIT value. (E.g. WE)
     example2 -> addComponent(new capacitor("C2", 0.04, 40, 0.07, 120, capacitor::FITe9));
     ///Example for a resistor with given FIT value (E.g. vishay)

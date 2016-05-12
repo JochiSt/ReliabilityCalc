@@ -23,17 +23,19 @@ class IC : public component{
         enum Unit_t {
             FITe6   = 1,        ///< FIT value as defined in the MIL-HDBK-217
             FITe9   = 1000,     ///< FIT as defined by most other sources
-            MTTF    = 1000000   ///< Mean Time To Failure
+            MTTF    = 1000000,  ///< Mean Time To Failure
+            DPPM    = 1000000   ///< Defective Parts Per Million
         };
 
         /**
          * Constructor of the IC
          * @param name
+         * @param fit ELFR (in DPPM) value itself
          * @param fit FIT value itself
          * @param fit_temperature temperature of the given FIT
          * @param fit_unit  Unit of the given FIT
          */
-        IC(std::string name, float fit, float fit_temperature, Unit_t fit_unit);
+        IC(std::string name, float elfr_value, Unit_t elfr_unit, float fit, float fit_temperature, Unit_t fit_unit);
         IC(){
             partcnt--;
         };
@@ -55,6 +57,9 @@ class IC : public component{
         }
 
     protected:
+        /// given ELFR value
+        float ELFR;
+
         /// given FIT value
         float FIT;
         /// temperature the FIT value is valid

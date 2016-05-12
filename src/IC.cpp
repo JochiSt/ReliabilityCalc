@@ -7,7 +7,9 @@
 std::string IC::identifier = "U";
 unsigned int IC::partcnt = 0;
 
-IC::IC(std::string name, float fit_value, float fit_temperature_value, Unit_t fit_unit) : component(name){
+IC::IC(std::string name, float elfr_value, Unit_t elfr_unit, float fit_value, float fit_temperature_value, Unit_t fit_unit) : component(name){
+    ELFR = elfr_value / elfr_unit;
+    
     if((float)fit_unit<1000000.){       ///always if the UNIT is not MTTF
         FIT = fit_value/(float)fit_unit;
     }else{

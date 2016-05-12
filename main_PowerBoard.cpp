@@ -34,7 +34,10 @@ int main(){
 
     schematic* CLKrecevier = new schematic("JUNO Clock Receiver");
 
-    CLKrecevier -> addComponent(new IC("DS30EA101", 3.23e8, 55,IC::MTTF));
+    // http://www.ti.com/quality/docs/estimator.tsp?OPN=DS30EA101SQ/NOPB&CPN=&partNumber=DS30EA101#resultstable
+    // http://www.ti.com/quality/docs/estimator.tsp?OPN=DS30EA101SQE/NOPB&CPN=&partNumber=DS30EA101#resultstable
+    // http://www.ti.com/quality/docs/estimator.tsp?OPN=DS30EA101SQX/NOPB&CPN=&partNumber=DS30EA101#resultstable
+    CLKrecevier -> addComponent(new IC("DS30EA101", 330, IC::DPPM, 3.23e8, 55, IC::MTTF));
 
     CLKrecevier -> addComponent(new capacitor("C200", 0.1, 40, 0.16, 120, capacitor::FITe9));
     CLKrecevier -> addComponent(new capacitor("C201", 0.1, 40, 0.16, 120, capacitor::FITe9));
@@ -60,7 +63,10 @@ int main(){
 
     schematic* TriggerDriver = new schematic("JUNO Trigger Driver");
 
-    TriggerDriver -> addComponent(new IC("DS30BA101", 1.552e8, 55,IC::MTTF));
+    // http://www.ti.com/quality/docs/estimator.tsp?OPN=DS30BA101SQ/NOPB&CPN=&partNumber=DS30BA101#resultstable
+    // http://www.ti.com/quality/docs/estimator.tsp?OPN=DS30BA101SQE/NOPB&CPN=&partNumber=DS30BA101#resultstable
+    // http://www.ti.com/quality/docs/estimator.tsp?OPN=DS30BA101SQX/NOPB&CPN=&partNumber=DS30BA101#resultstable
+    TriggerDriver -> addComponent(new IC("DS30BA101", 182, IC::DPPM, 1.552e8, 55,IC::MTTF));
 
     TriggerDriver -> addComponent(new capacitor("C300",  0.04, 40, 0.07, 120, capacitor::FITe9));
     TriggerDriver -> addComponent(new capacitor("C301",  0.04, 40, 0.07, 120, capacitor::FITe9));
@@ -79,7 +85,9 @@ int main(){
 
     schematic* DCDCinternal = new schematic("JUNO DC/DC internal voltage");
 
-    DCDCinternal -> addComponent(new IC("LT8614", 6.498e8, 55,IC::MTTF));
+    // http://cds.linear.com/docs/en/datasheet/8614fb.pdf
+    // TODO: find ELFR value
+    DCDCinternal -> addComponent(new IC("LT8614", 0, IC::DPPM, 6.498e8, 55,IC::MTTF));
 
     DCDCinternal -> addComponent(new capacitor("C900", 0.1, 40, 0.16, 120, capacitor::FITe9));
     DCDCinternal -> addComponent(new capacitor("C901", 0.1, 40, 0.16, 120, capacitor::FITe9));
@@ -98,7 +106,16 @@ int main(){
     ///DCDC 1.8V for Analog Part
 
     schematic* DCDC18 = new schematic("JUNO 1.8 DC/DC for Analog Part");
-    DCDC18 -> addComponent(new IC("LM3673TL", 1.42e8, 55, IC::MTTF));
+
+    // http://www.ti.com/quality/docs/estimator.tsp?OPN=LM3673TL-1.2/NOPB&CPN=&partNumber=LM3673TL#resultstable
+    // http://www.ti.com/quality/docs/estimator.tsp?OPN=LM3673TL-1.5/NOPB&CPN=&partNumber=LM3673TL#resultstable
+    // http://www.ti.com/quality/docs/estimator.tsp?OPN=LM3673TL-1.8/NOPB&CPN=&partNumber=LM3673TL#resultstable
+    // http://www.ti.com/quality/docs/estimator.tsp?OPN=LM3673TL-ADJ/NOPB&CPN=&partNumber=LM3673TL#resultstable
+    // http://www.ti.com/quality/docs/estimator.tsp?OPN=LM3673TLX-1.2/NOPB&CPN=&partNumber=LM3673TL#resultstable
+    // http://www.ti.com/quality/docs/estimator.tsp?OPN=LM3673TLX-1.5/NOPB&CPN=&partNumber=LM3673TL#resultstable
+    // http://www.ti.com/quality/docs/estimator.tsp?OPN=LM3673TLX-1.8/NOPB&CPN=&partNumber=LM3673TL#resultstable
+    // http://www.ti.com/quality/docs/estimator.tsp?OPN=LM3673TLX-ADJ/NOPB&CPN=&partNumber=LM3673TL#resultstable
+    DCDC18 -> addComponent(new IC("LM3673TL", 41, IC::DPPM, 1.42e8, 55, IC::MTTF));
 
     DCDC18 -> addComponent(new capacitor("C500", 0.04, 40, 0.07, 120, capacitor::FITe9));
     DCDC18 -> addComponent(new capacitor("C501", 0.04, 40, 0.07, 120, capacitor::FITe9));
@@ -108,7 +125,10 @@ int main(){
     ///DCDC 3.3V for Analog Part
 
     schematic* DCDC33A = new schematic("JUNO DC/DC 3.3V for Analog Part");
-    DCDC33A -> addComponent(new IC("TPS5432DDA", 1e10, 55, IC::MTTF));
+
+    // http://www.ti.com/quality/docs/estimator.tsp?OPN=TPS5432DDA&CPN=&partNumber=TPS5432DDA#resultstable
+    // http://www.ti.com/quality/docs/estimator.tsp?OPN=TPS5432DDAR&CPN=&partNumber=TPS5432DDA#resultstable
+    DCDC33A -> addComponent(new IC("TPS5432DDA", 18, IC::DPPM, 1e10, 55, IC::MTTF));
 
     DCDC33A -> addComponent(new capacitor("C600", 0.04, 40, 0.07, 120, capacitor::FITe9));
     DCDC33A -> addComponent(new capacitor("C601", 0.04, 40, 0.07, 120, capacitor::FITe9));
@@ -131,7 +151,7 @@ int main(){
 
     schematic* DCDC33C = new schematic("JUNO DC/DC 3.3V for cable handling");
 
-    DCDC33C -> addComponent(new IC("LM3673TL", 1.42e8, 55, IC::MTTF));
+    DCDC33C -> addComponent(new IC("LM3673TL", 41, IC::DPPM, 1.42e8, 55, IC::MTTF));
 
     DCDC33C -> addComponent(new capacitor("C800", 0.04, 40, 0.07, 120, capacitor::FITe9));
     DCDC33C -> addComponent(new capacitor("C801", 0.04, 40, 0.07, 120, capacitor::FITe9));
@@ -147,7 +167,7 @@ int main(){
 
     schematic* DCDC25C = new schematic("JUNO DC/DC 1.8V for cable handling");
 
-    DCDC25C -> addComponent(new IC("LM3673TL", 1.42e8, 55, IC::MTTF));
+    DCDC25C -> addComponent(new IC("LM3673TL", 41, IC::DPPM, 1.42e8, 55, IC::MTTF));
 
     DCDC25C -> addComponent(new capacitor("C700", 0.04, 40, 0.07, 120, capacitor::FITe9));
     DCDC25C -> addComponent(new capacitor("C701", 0.04, 40, 0.07, 120, capacitor::FITe9));
@@ -163,7 +183,9 @@ int main(){
 
     schematic* DCDCPOE = new schematic("POE DCDC Converter");
 
-    DCDCPOE -> addComponent(new IC("LMR24220", 5.54e8, 55 , IC::MTTF));
+    // http://www.ti.com/quality/docs/estimator.tsp?OPN=LMR24220TL/NOPB&CPN=&partNumber=LMR24220#resultstable
+    // http://www.ti.com/quality/docs/estimator.tsp?OPN=LMR24220TLX/NOPB&CPN=&partNumber=LMR24220#resultstable
+    DCDCPOE -> addComponent(new IC("LMR24220", 19, IC::DPPM, 5.54e8, 55 , IC::MTTF));
 
     DCDCPOE -> addComponent(new capacitor("C1000", 0.04, 40, 0.07, 120, capacitor::FITe9));
     DCDCPOE -> addComponent(new capacitor("C1001",0.1, 40, 0.16, 120, capacitor::FITe9));
