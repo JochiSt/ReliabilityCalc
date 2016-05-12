@@ -35,3 +35,6 @@ html
 *.depend
 *.layout
 *.log
+
+main
+main_PowerBoard
