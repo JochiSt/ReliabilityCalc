@@ -30,7 +30,8 @@ class IC : public component{
         /**
          * Constructor of the IC
          * @param name
-         * @param fit ELFR (in DPPM) value itself
+         * @param elfr_value ELFR value itself
+         * @param elfr_unit ELFR unit
          * @param fit FIT value itself
          * @param fit_temperature temperature of the given FIT
          * @param fit_unit  Unit of the given FIT
@@ -44,6 +45,8 @@ class IC : public component{
         void setFIT(float val) { FIT = val; }
 
         virtual float getFIT();
+
+        virtual float estimateWeibullExponent(float earlyLifetimeHours=3000.);
 
         virtual std::string toString();
         virtual int fromString(std::string value);

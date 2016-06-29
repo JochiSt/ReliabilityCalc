@@ -21,12 +21,18 @@ IC::IC(std::string name, float elfr_value, Unit_t elfr_unit, float fit_value, fl
         FIT_temperature += KELVIN;
     }
     partcnt++;
+    //estimateWeibullExponent();
 }
 
 float IC::getFIT(){
     float AF = exp(-1.*(EA/kB)*(1/(ambientTemperature)-1/(FIT_temperature)));    //aging factor
     std::cout << "AF: " << AF << std::endl;
     return FIT * AF;
+}
+
+float IC::estimateWeibullExponent(float earlyLifetimeHours){
+	//std::cout << "log(-log(1. - " << ELFR << ")) / (log(" << getFIT()/1E6 << " * " << earlyLifetimeHours << ")) = " << log(-log(1. - ELFR)) / (log(getFIT()/1E6 * earlyLifetimeHours)) << std::endl;
+    return log(-log(1. - ELFR)) / (log(getFIT()/1E6 * earlyLifetimeHours));
 }
 
 std::string IC::toString(){
