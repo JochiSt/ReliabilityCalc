@@ -69,8 +69,8 @@ float schematic::estimateWeibullExponent(float earlyLifetimeHours, estimation_t 
     return -1.;
 }
 
-float schematic::getFailureRate(float deviceHours, double FIT){
-    return 1. - exp( -1. * FIT / 1E6 * deviceHours );
+float schematic::getFailureRate(float deviceHours, double FIT, float weibullExponent){
+    return 1. - exp( -1. * std::pow(FIT / 1E6 * deviceHours, weibullExponent) );
 }
 
 void schematic::exportToFile(std::string filename){

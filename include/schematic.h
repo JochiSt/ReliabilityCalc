@@ -134,7 +134,7 @@ class schematic : public component {
          * @param FIT failures in time
          * @return failure rate in 1 (to get it into percent multiply by 100)
          */
-        static float getFailureRate(float deviceHours, double FIT);
+        static float getFailureRate(float deviceHours, double FIT, float weibullExponent=1.);
 
         /**
          * calculate acceleration factor of schematic

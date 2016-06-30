@@ -297,10 +297,15 @@ int main(){
 
     cout << "Failures of the Power Board within 6 years: \t" << schematic::getFailureRate( 6 * component::YEAR, FITPowerBoard ) * 100. << " %" << endl;
     
-    cout << "min:    " << PowerBoard->estimateWeibullExponent(3000, schematic::MINIMUM) << std::endl;
-    cout << "max:    " << PowerBoard->estimateWeibullExponent(3000, schematic::MAXIMUM) << std::endl;
-    cout << "mean:   " << PowerBoard->estimateWeibullExponent(3000, schematic::MEAN) << std::endl;
-    cout << "stddev: " << PowerBoard->estimateWeibullExponent(3000, schematic::STDDEV) << std::endl;
+    cout << endl;
+    cout << "###############################################################################" << endl;
+    cout << "EARLY FAILURES" << endl;
+    cout << endl;
+    
+    float weibullExponentMean = PowerBoard->estimateWeibullExponent(3000, schematic::MEAN);
+    cout << "Weibull exponent determined from ICs: " << weibullExponentMean <<
+                                             " +/- " << PowerBoard->estimateWeibullExponent(3000, schematic::STDDEV) << std::endl;
+    cout << "Early failures of the Power Board within 3000h: " << schematic::getFailureRate(3000., FITPowerBoard, weibullExponentMean) * 100. << " %" << endl;
 
 
     //float testT = 125;
