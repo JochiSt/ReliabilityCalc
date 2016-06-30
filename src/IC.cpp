@@ -21,7 +21,6 @@ IC::IC(std::string name, float elfr_value, Unit_t elfr_unit, float fit_value, fl
         FIT_temperature += KELVIN;
     }
     partcnt++;
-    //estimateWeibullExponent();
 }
 
 float IC::getFIT(){
@@ -31,8 +30,12 @@ float IC::getFIT(){
 }
 
 float IC::estimateWeibullExponent(float earlyLifetimeHours){
-	//std::cout << "log(-log(1. - " << ELFR << ")) / (log(" << getFIT()/1E6 << " * " << earlyLifetimeHours << ")) = " << log(-log(1. - ELFR)) / (log(getFIT()/1E6 * earlyLifetimeHours)) << std::endl;
-    return log(-log(1. - ELFR)) / (log(getFIT()/1E6 * earlyLifetimeHours));
+    if (ELFR > 0.){
+        // std::cout << "log(-log(1. - " << ELFR << ")) / (log(" << getFIT()/1E6 << " * " << earlyLifetimeHours << ")) = " << log(-log(1. - ELFR)) / (log(getFIT()/1E6 * earlyLifetimeHours)) << std::endl;
+        return log(-log(1. - ELFR)) / (log(getFIT()/1E6 * earlyLifetimeHours));
+    } else {
+        return -1.;
+    }
 }
 
 std::string IC::toString(){
