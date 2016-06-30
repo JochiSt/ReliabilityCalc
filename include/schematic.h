@@ -135,6 +135,8 @@ class schematic : public component {
          * @return failure rate in 1 (to get it into percent multiply by 100)
          */
         static float getFailureRate(float deviceHours, double FIT, float weibullExponent=1.);
+        
+        static float getFailureRateError(float deviceHours, double FIT, float weibullExponent=1., float weibullExponentError=0.);
 
         /**
          * calculate acceleration factor of schematic

@@ -73,6 +73,14 @@ float schematic::getFailureRate(float deviceHours, double FIT, float weibullExpo
     return 1. - exp( -1. * std::pow(FIT / 1E6 * deviceHours, weibullExponent) );
 }
 
+float schematic::getFailureRateError(float deviceHours, double FIT, float weibullExponent, float weibullExponentError){
+    // https://www.wolframalpha.com/input/?i=D%5B1+-+Exp%5B-(f+*+t)%5Em%5D,+m%5D
+    return std::abs(exp( -1. * std::pow(FIT / 1E6 * deviceHours, weibullExponent) ) *
+                    std::pow(FIT / 1E6 * deviceHours, weibullExponent) *
+                    std::log(FIT / 1E6 * deviceHours) *
+                    weibullExponentError);
+}
+
 void schematic::exportToFile(std::string filename){
     std::cout << std::endl << std::endl;
     std::cout << "Exporting to: " << filename << std::endl;

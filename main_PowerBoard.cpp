@@ -303,9 +303,12 @@ int main(){
     cout << endl;
     
     float weibullExponentMean = PowerBoard->estimateWeibullExponent(3000, schematic::MEAN);
-    cout << "Weibull exponent determined from ICs: " << weibullExponentMean <<
-                                             " +/- " << PowerBoard->estimateWeibullExponent(3000, schematic::STDDEV) << std::endl;
-    cout << "Early failures of the Power Board within 3000h: " << schematic::getFailureRate(3000., FITPowerBoard, weibullExponentMean) * 100. << " %" << endl;
+    float weibullExponentError = PowerBoard->estimateWeibullExponent(3000, schematic::STDDEV);
+    cout << "Weibull exponent determined from ICs: " << weibullExponentMean << " +/- " << weibullExponentError << std::endl;
+    
+    float earlyFailureRate = schematic::getFailureRate(3000., FITPowerBoard, weibullExponentMean);
+    float earlyFailureRateError = schematic::getFailureRateError(3000., FITPowerBoard, weibullExponentMean, weibullExponentError);
+    cout << "Early failures of the Power Board within 3000h: (" << earlyFailureRate*100. << " +/- " << earlyFailureRateError*100. << ") %" << endl;
 
 
     //float testT = 125;
