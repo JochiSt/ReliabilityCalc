@@ -25,7 +25,7 @@ IC::IC(std::string name, float elfr_value, Unit_t elfr_unit, float fit_value, fl
 
 float IC::getFIT(){
     float AF = exp(-1.*(EA/kB)*(1/(ambientTemperature)-1/(FIT_temperature)));    //aging factor
-    std::cout << "AF: " << AF << std::endl;
+    //std::cout << "AF: " << AF << std::endl;
     return FIT * AF;
 }
 
