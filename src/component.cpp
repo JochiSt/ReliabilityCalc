@@ -9,3 +9,7 @@ unsigned int component::partcnt = 0;
 component::component(std::string val){
     name = val;
 }
+
+float component::estimateWeibullExponent(float earlyLifetimeHours){
+    return -1.; // no result available
+}

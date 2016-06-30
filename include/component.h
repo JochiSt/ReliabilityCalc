@@ -64,6 +64,8 @@ class component
         /// pure virtual function, which should be implemented inside each sub component
         virtual float getFIT() = 0;
 
+        virtual float estimateWeibullExponent(float earlyLifetimeHours=3000.);
+
         /**
          * put all relevant informations into one string
          */
