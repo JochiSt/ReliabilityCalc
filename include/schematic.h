@@ -14,6 +14,13 @@
  */
 class schematic : public component {
     public:
+        enum estimation_t{
+            MINIMUM,
+            MAXIMUM,
+            MEAN,
+            STDDEV
+        };
+        
         schematic(std::string name);
         virtual ~schematic() { };
 
@@ -112,6 +119,9 @@ class schematic : public component {
          * @param output defined whether output is printed or not
          */
         virtual float getFIT(float temperature, bool output = true);
+
+        virtual float estimateWeibullExponent(float earlyLifetimeHours=3000.);
+        virtual float estimateWeibullExponent(float earlyLifetimeHours=3000., estimation_t type=MEAN);
 
         /**
          * Display the part count for this schematic.

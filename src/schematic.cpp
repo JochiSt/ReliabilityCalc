@@ -1,10 +1,12 @@
 #include "schematic.h"
 
+#include <algorithm>
+#include <cmath>
 #include <iostream>
 #include <iomanip>
 #include <fstream>
+#include <numeric>
 #include <sstream>
-#include <cmath>
 
 #include "resistor.h"
 #include "capacitor.h"
@@ -32,6 +34,39 @@ float schematic::getFIT(bool output){
         std::cout << "total FIT: " << FIT << std::endl;
     }
     return FIT;
+}
+
+float schematic::estimateWeibullExponent(float earlyLifetimeHours){
+    return estimateWeibullExponent(earlyLifetimeHours, MEAN);
+}
+
+float schematic::estimateWeibullExponent(float earlyLifetimeHours, estimation_t type){
+    std::vector<float> validWeibullExponents;
+    for (std::vector<component*>::iterator part = parts.begin(); part != parts.end(); ++part){
+        float m = (*part)->estimateWeibullExponent(earlyLifetimeHours);
+        if (m >= 0.){
+            validWeibullExponents.push_back(m);
+        }
+    }
+    
+    if (type == MINIMUM){
+        return *std::min_element(validWeibullExponents.begin(), validWeibullExponents.end());
+    } else if (type == MAXIMUM){
+        return *std::max_element(validWeibullExponents.begin(), validWeibullExponents.end());
+    } else {
+        float mean = std::accumulate(validWeibullExponents.begin(), validWeibullExponents.end(), 0.) / validWeibullExponents.size();
+        if (type == MEAN){
+            return mean;
+        } else {
+            float stddev = 0.;
+            for (std::vector<float>::iterator m = validWeibullExponents.begin(); m != validWeibullExponents.end(); ++m){
+                stddev += (*m - mean)*(*m - mean);
+            }
+            stddev = std::sqrt(stddev / (validWeibullExponents.size() - 1.));
+            return stddev;
+        }
+    }
+    return -1.;
 }
 
 float schematic::getFailureRate(float deviceHours, double FIT){
