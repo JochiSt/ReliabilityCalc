@@ -3,6 +3,7 @@
 	<FileVersion major="1" minor="6" />
 	<Project>
 		<Option title="RelilabilityCalculator" />
+		<Option makefile="makefile" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
@@ -42,11 +43,11 @@
 		<Unit filename="include/inductor.h" />
 		<Unit filename="include/resistor.h" />
 		<Unit filename="include/schematic.h" />
-		<Unit filename="main - Power Board.cpp">
-			<Option target="Release" />
-		</Unit>
 		<Unit filename="main.cpp">
 			<Option target="Debug" />
+		</Unit>
+		<Unit filename="main_PowerBoard.cpp">
+			<Option target="Release" />
 		</Unit>
 		<Unit filename="src/IC.cpp" />
 		<Unit filename="src/capacitor.cpp" />
