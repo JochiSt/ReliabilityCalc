@@ -304,6 +304,8 @@ int main(){
     
     float weibullExponentMean = PowerBoard->estimateWeibullExponent(3000, schematic::MEAN);
     float weibullExponentError = PowerBoard->estimateWeibullExponent(3000, schematic::STDDEV);
+    
+    cout << endl;
     cout << "Weibull exponent determined from ICs: " << weibullExponentMean << " +/- " << weibullExponentError << std::endl;
     
     float earlyFailureRate = schematic::getFailureRate(3000., FITPowerBoard, weibullExponentMean);

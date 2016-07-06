@@ -45,6 +45,7 @@ float schematic::estimateWeibullExponent(float earlyLifetimeHours, estimation_t 
     for (std::vector<component*>::iterator part = parts.begin(); part != parts.end(); ++part){
         float m = (*part)->estimateWeibullExponent(earlyLifetimeHours);
         if (m >= 0.){
+            std::cout << "Weibull exponent for " << (*part)->getName() << " is " << m << "." << std::endl;
             validWeibullExponents.push_back(m);
         }
     }
