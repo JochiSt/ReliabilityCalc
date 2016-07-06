@@ -256,8 +256,6 @@ int main(){
     PowerBoard -> addComponent(new capacitor("C13", 0.04, 40, 0.07, 120, capacitor::FITe9));
     PowerBoard -> addComponent(new capacitor("C14", 0.04, 40, 0.07, 120, capacitor::FITe9));
 
-
-
     PowerBoard -> addComponent(CLKrecevier);
     PowerBoard -> addComponent(CLKPowerSplitting);
     PowerBoard -> addComponent(TriggerDriver);
@@ -271,9 +269,6 @@ int main(){
     component::environment = component::GF;
     component::calculation_method = component::MIL_HDBK_217F_NOTICE2;
 
-
-
-
     /*double FITCLKrecevier = CLKrecevier -> getFIT();
     double FITCLKPowerSplitting = CLKPowerSplitting -> getFIT();
     double FITTriggerDriver = TriggerDriver -> getFIT();
@@ -286,22 +281,20 @@ int main(){
     schematic::printPartCount();
 
     cout << "\nTotal FIT of the Power Board:\t" << FITPowerBoard << " / " << component::FITunit << endl;
-
-
-
+    cout << "\nTotal FIT of the Power Board:\t" << FITPowerBoard*1000. << " / 1E9h " << endl;
 
     cout << endl;
     cout << "###############################################################################" << endl;
     cout << endl;
-
 
     cout << "Failures of the Power Board within 6 years: \t" << schematic::getFailureRate( 6 * component::YEAR, FITPowerBoard ) * 100. << " %" << endl;
-    
+
     cout << endl;
     cout << "###############################################################################" << endl;
+    cout << endl;
     cout << "EARLY FAILURES" << endl;
     cout << endl;
-    
+
     float weibullExponentMean = PowerBoard->estimateWeibullExponent(3000, schematic::MEAN);
     float weibullExponentError = PowerBoard->estimateWeibullExponent(3000, schematic::STDDEV);
     
@@ -310,16 +303,15 @@ int main(){
     
     float earlyFailureRate = schematic::getFailureRate(3000., FITPowerBoard, weibullExponentMean);
     float earlyFailureRateError = schematic::getFailureRateError(3000., FITPowerBoard, weibullExponentMean, weibullExponentError);
-    cout << "Early failures of the Power Board within 3000h: (" << earlyFailureRate*100. << " +/- " << earlyFailureRateError*100. << ") %" << endl;
+    cout << "Early failures of the Power Board within 3000h:\t(" << earlyFailureRate*100. << " +/- " << earlyFailureRateError*100. << ") %" << endl;
 
+    cout << endl;
+    cout << "###############################################################################" << endl;
+    cout << endl;
 
     //float testT = 125;
     //cout << "Acceleration Factor for "<< testT << " degC: " << PowerBoard -> getAccelerationFactor(testT, 40) << endl;
     //cout << "\nTotal FIT of the Power Board:\t" << FITPowerBoard*1000 << " / " << "10^9h" << endl;
-
-
-
-
 
 //######################################################################################################################
 
