@@ -27,6 +27,8 @@ if __name__ == "__main__":
 	parser.add_argument("--test-times", nargs="+", type=float, default=[24.0, 48.0],
 	                    help="Test time values.")
 	
+	parser.add_argument("--screening-strength-bins", default="10000,1e-4,1e0",
+	                    help="Binning for axes showing the screening strength.")
 	parser.add_argument("--temp-range-bins", default="100,50,150",
 	                    help="Binning for axes showing the temperature range.")
 	parser.add_argument("--temp-rate-bins", default="100,2,6",
@@ -103,6 +105,8 @@ if __name__ == "__main__":
 	# plots per fixed values of the temperature rate of change
 	plots_per_temp_rate = [
 		"TC_ss_over_time_range_for_rate",
+		"TC_cycles_over_range_ss_for_rate",
+		"TC_time_over_range_ss_for_rate",
 	]
 	plot_configs_per_temp_rate = {}
 	for plot in plots_per_temp_rate:
@@ -117,6 +121,12 @@ if __name__ == "__main__":
 	for plot_config in plot_configs_per_temp_rate["TC_ss_over_time_range_for_rate"].values():
 		plot_config["x_bins"] = args.test_time_bins
 		plot_config["y_bins"] = args.temp_range_bins
+	for plot_config in plot_configs_per_temp_rate["TC_cycles_over_range_ss_for_rate"].values():
+		plot_config["x_bins"] = args.temp_range_bins
+		plot_config["y_bins"] = args.screening_strength_bins
+	for plot_config in plot_configs_per_temp_rate["TC_time_over_range_ss_for_rate"].values():
+		plot_config["x_bins"] = args.temp_range_bins
+		plot_config["y_bins"] = args.screening_strength_bins
 	
 	list_of_config_dicts = plot_configs.values()
 	for tmp_plot_configs_per_ss in plot_configs_per_ss.values():

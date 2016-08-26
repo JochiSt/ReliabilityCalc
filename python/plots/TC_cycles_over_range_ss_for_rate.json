@@ -1,0 +1,20 @@
+{
+    "filename": "TC_cycles_over_range_ss_for_rate", 
+    "input_modules": [
+        "InputInteractive"
+    ], 
+    "title": "Thermal Rate of Change = 4 K min^{-1}", 
+    "x_bins": [
+        "100,20,150"
+    ], 
+    "x_expressions": [
+        "log(y)/(-0.0017*((x+0.6)**0.6)*((log(exp(0.0)+4.0))**3.0))"
+    ], 
+    "x_label": "Temperature Range T_{max} - T_{min} / K", 
+    "y_bins": [
+        "100,1e-4,1e0"
+    ], 
+    "y_label": "Screening Strength 1-SS", 
+    "y_log": "true", 
+    "z_label": "Number of Cycles"
+}
