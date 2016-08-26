@@ -1,5 +1,5 @@
 {
-    "filename": "thermal_cycling_number_cycles", 
+    "filename": "TC_time_over_range_rate_for_ss", 
     "input_modules": [
         "InputInteractive"
     ], 
@@ -8,12 +8,12 @@
         "100,20,150"
     ], 
     "x_expressions": [
-        "log(0.01)/(-0.0017*((x+0.6)**0.6)*((log(exp(0.0)+y))**3.0))"
+        "2.0*x*y*log(0.01)/(-0.0017*((x+0.6)**0.6)*((log(exp(0.0)+y))**3.0))/60.0/24.0"
     ], 
     "x_label": "Temperature Range T_{max} - T_{min} / K", 
     "y_bins": [
         "100,2,10"
     ], 
     "y_label": "Thermal Rate of Change / K min^{-1}", 
-    "z_label": "Number of Cycles"
+    "z_label": "Test Time / d"
 }

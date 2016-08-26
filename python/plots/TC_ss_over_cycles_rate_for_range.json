@@ -1,5 +1,5 @@
 {
-    "filename": "thermal_cycling_screening_strength", 
+    "filename": "TC_ss_over_cycles_rate_for_range", 
     "input_modules": [
         "InputInteractive"
     ], 
