@@ -87,6 +87,7 @@ if __name__ == "__main__":
 	# plots per fixed values of the temperature range
 	plots_per_temp_range = [
 		"TC_ss_over_cycles_rate_for_range",
+		"TC_ss_over_time_rate_for_range",
 	]
 	plot_configs_per_temp_range = {}
 	for plot in plots_per_temp_range:
@@ -101,9 +102,13 @@ if __name__ == "__main__":
 	for plot_config in plot_configs_per_temp_range["TC_ss_over_cycles_rate_for_range"].values():
 		plot_config["x_bins"] = args.n_cycles_bins
 		plot_config["y_bins"] = args.temp_rate_bins
+	for plot_config in plot_configs_per_temp_range["TC_ss_over_time_rate_for_range"].values():
+		plot_config["x_bins"] = args.test_time_bins
+		plot_config["y_bins"] = args.temp_rate_bins
 	
 	# plots per fixed values of the temperature rate of change
 	plots_per_temp_rate = [
+		"TC_ss_over_cycles_range_for_rate",
 		"TC_ss_over_time_range_for_rate",
 		"TC_cycles_over_range_ss_for_rate",
 		"TC_time_over_range_ss_for_rate",
@@ -118,6 +123,9 @@ if __name__ == "__main__":
 			plot_configs_per_temp_rate[plot][temp_rate_string]["output_dir"] = args.output_dir
 			plot_configs_per_temp_rate[plot][temp_rate_string]["filename"] = plot_configs_per_temp_rate[plot][temp_rate_string]["filename"].replace("_for_rate", "_for_rate_"+temp_rate_string)
 	
+	for plot_config in plot_configs_per_temp_rate["TC_ss_over_cycles_range_for_rate"].values():
+		plot_config["x_bins"] = args.n_cycles_bins
+		plot_config["y_bins"] = args.temp_range_bins
 	for plot_config in plot_configs_per_temp_rate["TC_ss_over_time_range_for_rate"].values():
 		plot_config["x_bins"] = args.test_time_bins
 		plot_config["y_bins"] = args.temp_range_bins
