@@ -89,8 +89,12 @@ if __name__ == "__main__":
 		"TC_ss_over_cycles_rate_for_range",
 		"TC_ss_over_time_rate_for_range",
 	]
+	plots_per_temp_range_for_temp_rate = [
+		"TC_ss_over_cycles_for_rate_for_range",
+		"TC_ss_over_time_for_rate_for_range",
+	]
 	plot_configs_per_temp_range = {}
-	for plot in plots_per_temp_range:
+	for plot in plots_per_temp_range+plots_per_temp_range_for_temp_rate:
 		for temp_range, temp_range_string in zip(args.temp_ranges, temp_range_strings):
 			
 			plot_configs_per_temp_range.setdefault(plot, {})[temp_range_string] = jsonTools.JsonDict(os.path.join("plots", plot+".json"))
@@ -98,6 +102,13 @@ if __name__ == "__main__":
 			plot_configs_per_temp_range[plot][temp_range_string]["title"] = plot_configs_per_temp_range[plot][temp_range_string]["title"].replace("100K", str(temp_range)+"K")
 			plot_configs_per_temp_range[plot][temp_range_string]["output_dir"] = args.output_dir
 			plot_configs_per_temp_range[plot][temp_range_string]["filename"] = plot_configs_per_temp_range[plot][temp_range_string]["filename"].replace("_for_range", "_for_range_"+temp_range_string)
+			
+			if plot in plots_per_temp_range_for_temp_rate:
+				plot_configs_per_temp_range[plot][temp_range_string]["x_expressions"] = plot_configs_per_temp_range[plot][temp_range_string]["x_expressions"]*len(args.temp_ranges)
+				plot_configs_per_temp_range[plot][temp_range_string]["labels"] = plot_configs_per_temp_range[plot][temp_range_string]["labels"]*len(args.temp_ranges)
+				
+				plot_configs_per_temp_range[plot][temp_range_string]["x_expressions"] = [x.replace("4.0", temp_rate_strings[i]) for (i, x) in enumerate(plot_configs_per_temp_range[plot][temp_range_string]["x_expressions"])]
+				plot_configs_per_temp_range[plot][temp_range_string]["labels"] = [l.replace("4 K min", temp_rate_strings[i]+" K min") for (i, l) in enumerate(plot_configs_per_temp_range[plot][temp_range_string]["labels"])]
 	
 	for plot_config in plot_configs_per_temp_range["TC_ss_over_cycles_rate_for_range"].values():
 		plot_config["x_bins"] = args.n_cycles_bins
@@ -105,6 +116,10 @@ if __name__ == "__main__":
 	for plot_config in plot_configs_per_temp_range["TC_ss_over_time_rate_for_range"].values():
 		plot_config["x_bins"] = args.test_time_bins
 		plot_config["y_bins"] = args.temp_rate_bins
+	for plot_config in plot_configs_per_temp_range["TC_ss_over_cycles_for_rate_for_range"].values():
+		plot_config["x_bins"] = args.n_cycles_bins
+	for plot_config in plot_configs_per_temp_range["TC_ss_over_time_for_rate_for_range"].values():
+		plot_config["x_bins"] = args.test_time_bins
 	
 	# plots per fixed values of the temperature rate of change
 	plots_per_temp_rate = [
@@ -113,8 +128,12 @@ if __name__ == "__main__":
 		"TC_cycles_over_range_ss_for_rate",
 		"TC_time_over_range_ss_for_rate",
 	]
+	plots_per_temp_rate_for_temp_range = [
+		"TC_ss_over_cycles_for_range_for_rate",
+		"TC_ss_over_time_for_range_for_rate",
+	]
 	plot_configs_per_temp_rate = {}
-	for plot in plots_per_temp_rate:
+	for plot in plots_per_temp_rate+plots_per_temp_rate_for_temp_range:
 		for temp_rate, temp_rate_string in zip(args.temp_rates, temp_rate_strings):
 			
 			plot_configs_per_temp_rate.setdefault(plot, {})[temp_rate_string] = jsonTools.JsonDict(os.path.join("plots", plot+".json"))
@@ -122,6 +141,14 @@ if __name__ == "__main__":
 			plot_configs_per_temp_rate[plot][temp_rate_string]["title"] = plot_configs_per_temp_rate[plot][temp_rate_string]["title"].replace("4 K min", str(temp_rate)+" K min")
 			plot_configs_per_temp_rate[plot][temp_rate_string]["output_dir"] = args.output_dir
 			plot_configs_per_temp_rate[plot][temp_rate_string]["filename"] = plot_configs_per_temp_rate[plot][temp_rate_string]["filename"].replace("_for_rate", "_for_rate_"+temp_rate_string)
+			
+			if plot in plots_per_temp_rate_for_temp_range:
+				plot_configs_per_temp_rate[plot][temp_rate_string]["x_expressions"] = plot_configs_per_temp_rate[plot][temp_rate_string]["x_expressions"]*len(args.temp_ranges)
+				plot_configs_per_temp_rate[plot][temp_rate_string]["labels"] = plot_configs_per_temp_rate[plot][temp_rate_string]["labels"]*len(args.temp_ranges)
+				
+				plot_configs_per_temp_rate[plot][temp_rate_string]["x_expressions"] = [x.replace("100.0", temp_range_strings[i]) for (i, x) in enumerate(plot_configs_per_temp_rate[plot][temp_rate_string]["x_expressions"])]
+				plot_configs_per_temp_rate[plot][temp_rate_string]["labels"] = [l.replace("100K", temp_range_strings[i]+"K") for (i, l) in enumerate(plot_configs_per_temp_rate[plot][temp_rate_string]["labels"])]
+				
 	
 	for plot_config in plot_configs_per_temp_rate["TC_ss_over_cycles_range_for_rate"].values():
 		plot_config["x_bins"] = args.n_cycles_bins
@@ -135,6 +162,10 @@ if __name__ == "__main__":
 	for plot_config in plot_configs_per_temp_rate["TC_time_over_range_ss_for_rate"].values():
 		plot_config["x_bins"] = args.temp_range_bins
 		plot_config["y_bins"] = args.screening_strength_bins
+	for plot_config in plot_configs_per_temp_rate["TC_ss_over_cycles_for_range_for_rate"].values():
+		plot_config["x_bins"] = args.n_cycles_bins
+	for plot_config in plot_configs_per_temp_rate["TC_ss_over_time_for_range_for_rate"].values():
+		plot_config["x_bins"] = args.test_time_bins
 	
 	list_of_config_dicts = plot_configs.values()
 	for tmp_plot_configs_per_ss in plot_configs_per_ss.values():

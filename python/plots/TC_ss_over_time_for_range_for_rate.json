@@ -1,0 +1,24 @@
+{
+	"filename": "TC_ss_over_time_for_range_for_rate",
+	"input_modules": [
+		"InputInteractive"
+	],
+	"x_bins": [
+		"100,0,48"
+	],
+	"x_expressions": [
+		"exp(-0.0017*((100.0+0.6)**0.6)*((log(exp(0.0)+4.0))**3.0)*(x*60.0/(2.0*100.0*4.0)))"
+	],
+	"x_label": "Test time / h",
+	"y_label": "Screening Strength 1-SS",
+	"labels": [
+		"T_{max} - T_{min} = 100K"
+	],
+	"legend": [
+		0.2,
+		0.2,
+		0.7,
+		0.4
+	],
+	"title": "Thermal Rate of Change = 4 K min^{-1}"
+}
