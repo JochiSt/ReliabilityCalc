@@ -33,9 +33,9 @@ if __name__ == "__main__":
 	                    help="Binning for axes showing the temperature range.")
 	parser.add_argument("--temp-rate-bins", default="100,2,6",
 	                    help="Binning for axes showing the temperature rate of change.")
-	parser.add_argument("--n-cycles-bins", default="100,0,40",
+	parser.add_argument("--n-cycles-bins", default="100,1,40",
 	                    help="Binning for axes showing the number of cycles.")
-	parser.add_argument("--test-time-bins", default="100,0,48",
+	parser.add_argument("--test-time-bins", default="100,1,48",
 	                    help="Binning for axes showing the test time.")
 	
 	parser.add_argument("-a", "--args", default=" --plot-modules PlotRoot --www",
