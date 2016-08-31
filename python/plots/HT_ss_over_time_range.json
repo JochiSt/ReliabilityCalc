@@ -1,0 +1,18 @@
+{
+	"filename": "HT_ss_over_time_range",
+	"input_modules": [
+		"InputInteractive"
+	],
+	"x_bins": [
+		"100,0,48"
+	],
+	"x_expressions": [
+		"exp(-0.0017*((y+0.6)**0.6)*x)"
+	],
+	"x_label": "Test Time / h",
+	"y_bins": [
+		"100,50,150"
+	],
+	"y_label": "Temperature Range T_{max} - T_{amb} / K",
+	"z_label": "Screening Strength 1-SS"
+}

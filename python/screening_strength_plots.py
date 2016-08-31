@@ -56,11 +56,21 @@ if __name__ == "__main__":
 	test_time_strings = [str(s) for s in args.test_times]
 	
 	plots = [
+		"HT_ss_over_time_range",
+		"HT_time_over_range_ss",
+		"HT_range_over_time_ss",
 	]
 	plot_configs = {}
 	for plot in plots:
 		plot_configs[plot] = jsonTools.JsonDict(os.path.join("plots", plot+".json"))
 		plot_configs[plot]["output_dir"] = args.output_dir
+	
+	plot_configs["HT_ss_over_time_range"]["x_bins"] = args.test_time_bins
+	plot_configs["HT_ss_over_time_range"]["y_bins"] = args.temp_range_bins
+	plot_configs["HT_time_over_range_ss"]["x_bins"] = args.temp_range_bins
+	plot_configs["HT_time_over_range_ss"]["y_bins"] = args.screening_strength_bins
+	plot_configs["HT_range_over_time_ss"]["x_bins"] = args.test_time_bins
+	plot_configs["HT_range_over_time_ss"]["y_bins"] = args.screening_strength_bins
 	
 	# plots per fixed values of the screening strength
 	plots_per_ss = [
