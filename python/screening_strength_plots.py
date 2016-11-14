@@ -38,7 +38,7 @@ if __name__ == "__main__":
 	parser.add_argument("--test-time-bins", default="100,1,48",
 	                    help="Binning for axes showing the test time.")
 	
-	parser.add_argument("-a", "--args", default=" --plot-modules PlotRoot --www",
+	parser.add_argument("-a", "--args", default=" --plot-modules PlotRoot --formats pdf png --www",
 	                    help="Additional Arguments for HarryPlotter. [Default: %(default)s]")
 	parser.add_argument("-n", "--n-processes", type=int, default=1,
 	                    help="Number of (parallel) processes. [Default: %(default)s]")
