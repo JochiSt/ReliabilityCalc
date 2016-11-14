@@ -15,5 +15,6 @@
 	],
 	"y_label": "Temperature Range T_{max} - T_{min}",
 	"z_label": "Screening Strength 1-SS",
+	"z_log": true,
 	"title": "Thermal Rate of Change = 4 K min^{-1}"
 }

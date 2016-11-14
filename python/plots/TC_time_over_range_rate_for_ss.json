@@ -14,6 +14,6 @@
 		"100,2,10"
 	],
 	"y_label": "Thermal Rate of Change / K min^{-1}",
-	"z_label": "Test Time / d",
+	"z_label": "Test Time / h",
 	"title": "Screening Strength 1-SS = 1%"
 }

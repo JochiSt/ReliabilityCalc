@@ -29,13 +29,13 @@ if __name__ == "__main__":
 	
 	parser.add_argument("--screening-strength-bins", default="10000,1e-4,1e0",
 	                    help="Binning for axes showing the screening strength.")
-	parser.add_argument("--temp-range-bins", default="100,50,150",
+	parser.add_argument("--temp-range-bins", default="100,50,100",
 	                    help="Binning for axes showing the temperature range.")
-	parser.add_argument("--temp-rate-bins", default="100,2,6",
+	parser.add_argument("--temp-rate-bins", default="100,4,10",
 	                    help="Binning for axes showing the temperature rate of change.")
 	parser.add_argument("--n-cycles-bins", default="100,1,40",
-	                    help="Binning for axes showing the number of cycles.")
-	parser.add_argument("--test-time-bins", default="100,1,48",
+	                    help="Binning for axes showing the numbxer of cycles.")
+	parser.add_argument("--test-time-bins", default="100,1,12",
 	                    help="Binning for axes showing the test time.")
 	
 	parser.add_argument("-a", "--args", default=" --plot-modules PlotRoot --formats pdf png --www",

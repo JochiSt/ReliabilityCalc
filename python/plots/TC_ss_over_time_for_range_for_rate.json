@@ -11,6 +11,7 @@
 	],
 	"x_label": "Test time / h",
 	"y_label": "Screening Strength 1-SS",
+	"y_log": true,
 	"labels": [
 		"T_{max} - T_{min} = 100K"
 	],
