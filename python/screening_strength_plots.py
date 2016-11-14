@@ -117,8 +117,8 @@ if __name__ == "__main__":
 				plot_configs_per_temp_range[plot][temp_range_string]["x_expressions"] = plot_configs_per_temp_range[plot][temp_range_string]["x_expressions"]*len(args.temp_ranges)
 				plot_configs_per_temp_range[plot][temp_range_string]["labels"] = plot_configs_per_temp_range[plot][temp_range_string]["labels"]*len(args.temp_ranges)
 				
-				plot_configs_per_temp_range[plot][temp_range_string]["x_expressions"] = [x.replace("4.0", temp_rate_strings[i]) for (i, x) in enumerate(plot_configs_per_temp_range[plot][temp_range_string]["x_expressions"])]
-				plot_configs_per_temp_range[plot][temp_range_string]["labels"] = [l.replace("4 K min", temp_rate_strings[i]+" K min") for (i, l) in enumerate(plot_configs_per_temp_range[plot][temp_range_string]["labels"])]
+				plot_configs_per_temp_range[plot][temp_range_string]["x_expressions"] = [plot_configs_per_temp_range[plot][temp_range_string]["x_expressions"][0].replace("4.0", temp_rate_string) for temp_rate_string in temp_rate_strings]
+				plot_configs_per_temp_range[plot][temp_range_string]["labels"] = [plot_configs_per_temp_range[plot][temp_range_string]["labels"][0].replace("4 K min", temp_rate_string+" K min") for temp_rate_string in temp_rate_strings]
 	
 	for plot_config in plot_configs_per_temp_range["TC_ss_over_cycles_rate_for_range"].values():
 		plot_config["x_bins"] = args.n_cycles_bins
