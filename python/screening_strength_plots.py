@@ -27,7 +27,7 @@ if __name__ == "__main__":
 	parser.add_argument("--test-times", nargs="+", type=float, default=[24.0, 48.0],
 	                    help="Test time values.")
 	
-	parser.add_argument("--screening-strength-bins", default="10000,1e-4,1e0",
+	parser.add_argument("--screening-strength-bins", default="10000,1e-5,1e-1",
 	                    help="Binning for axes showing the screening strength.")
 	parser.add_argument("--temp-range-bins", default="100,50,100",
 	                    help="Binning for axes showing the temperature range.")
@@ -38,7 +38,7 @@ if __name__ == "__main__":
 	parser.add_argument("--test-time-bins", default="100,1,12",
 	                    help="Binning for axes showing the test time.")
 	
-	parser.add_argument("-a", "--args", default=" --plot-modules PlotRoot --formats pdf png --www",
+	parser.add_argument("-a", "--args", default=" --plot-modules PlotRoot --formats pdf png --www full",
 	                    help="Additional Arguments for HarryPlotter. [Default: %(default)s]")
 	parser.add_argument("-n", "--n-processes", type=int, default=1,
 	                    help="Number of (parallel) processes. [Default: %(default)s]")
@@ -98,6 +98,7 @@ if __name__ == "__main__":
 	plots_per_temp_range = [
 		"TC_ss_over_cycles_rate_for_range",
 		"TC_ss_over_time_rate_for_range",
+		"TC_time_over_rate_ss_for_range",
 	]
 	plots_per_temp_range_for_temp_rate = [
 		"TC_ss_over_cycles_for_rate_for_range",
@@ -126,6 +127,9 @@ if __name__ == "__main__":
 	for plot_config in plot_configs_per_temp_range["TC_ss_over_time_rate_for_range"].values():
 		plot_config["x_bins"] = args.test_time_bins
 		plot_config["y_bins"] = args.temp_rate_bins
+	for plot_config in plot_configs_per_temp_range["TC_time_over_rate_ss_for_range"].values():
+		plot_config["x_bins"] = args.temp_rate_bins
+		plot_config["y_bins"] = args.screening_strength_bins
 	for plot_config in plot_configs_per_temp_range["TC_ss_over_cycles_for_rate_for_range"].values():
 		plot_config["x_bins"] = args.n_cycles_bins
 	for plot_config in plot_configs_per_temp_range["TC_ss_over_time_for_rate_for_range"].values():

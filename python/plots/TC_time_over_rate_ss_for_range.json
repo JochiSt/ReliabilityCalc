@@ -1,0 +1,20 @@
+{
+	"filename": "TC_time_over_rate_ss_for_range",
+	"input_modules": [
+		"InputInteractive"
+	],
+	"x_bins": [
+		"100,1,10"
+	],
+	"x_expressions": [
+		"2*(100.0/x)*log(y)/(-0.0017*((100.0+0.6)**0.6)*((log(exp(0.0)+x))**3.0))/60"
+	],
+	"x_label": "Thermal Rate of Change / K min^{-1}",
+	"y_bins": [
+		"10000,1e-4,1e0"
+	],
+	"y_label": "Screening Strength 1-SS",
+	"y_log": "true",
+	"z_label": "Test Time / h",
+	"title": "Temperature Range T_{max} - T_{min} = 100K"
+}
