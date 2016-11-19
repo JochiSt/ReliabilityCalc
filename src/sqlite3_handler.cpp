@@ -7,7 +7,7 @@ sqlite3_handler::sqlite3_handler(std::string filename){
 	//int ret = sqlite3_open(filename.c_str(), db);
 	int ret = sqlite3_open_v2(filename.c_str(), &db, SQLITE_OPEN_READONLY, NULL);
 	if( ret ){
-		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+		fprintf(stderr, "Can't open database: %s\n\t\t%s\n", filename.c_str(), sqlite3_errmsg(db));
 		exit(-1);
 	}else{
 		fprintf(stdout, "Opened database %s successfully\n", filename.c_str());
@@ -19,7 +19,7 @@ sqlite3_handler::~sqlite3_handler(){
 }
 
 void sqlite3_handler::runSQL(std::string sql){
-	    int row = 0;
+	int row = 0;
         sqlite3_stmt *selectStmt;
         sqlite3_prepare(db, sql.c_str(), sql.length()+1, &selectStmt, NULL);
         while (1) {
@@ -39,5 +39,42 @@ void sqlite3_handler::runSQL(std::string sql){
             }
         }
         sqlite3_finalize(selectStmt);
+}
+
+void sqlite3_handler::runSQL_r1(std::string sql, std::string &ret1){
+	sqlite3_stmt *selectStmt;
+	sqlite3_prepare(db, sql.c_str(), sql.length()+1, &selectStmt, NULL);
+	int s = sqlite3_step (selectStmt);
+	ret1 = "-";
+	if (s == SQLITE_ROW) {
+		ret1 = std::string((const char*) sqlite3_column_text(selectStmt, 0));
+	}
+	sqlite3_finalize(selectStmt);
+}
+void sqlite3_handler::runSQL_r2(std::string sql, std::string &ret1, std::string &ret2){
+	sqlite3_stmt *selectStmt;
+	sqlite3_prepare(db, sql.c_str(), sql.length()+1, &selectStmt, NULL);
+	int s = sqlite3_step (selectStmt);
+	ret1 = "-";
+	ret2 = "-";
+	if (s == SQLITE_ROW) {
+		ret1 = std::string((const char*) sqlite3_column_text(selectStmt, 0));
+		ret2 = std::string((const char*) sqlite3_column_text(selectStmt, 0));
+	}
+	sqlite3_finalize(selectStmt);
+}
+void sqlite3_handler::runSQL_r3(std::string sql, std::string &ret1, std::string &ret2, std::string &ret3){
+	sqlite3_stmt *selectStmt;
+	sqlite3_prepare(db, sql.c_str(), sql.length()+1, &selectStmt, NULL);
+	int s = sqlite3_step (selectStmt);
+	ret1 = "-";
+	ret2 = "-";
+	ret3 = "-";
+	if (s == SQLITE_ROW) {
+		ret1 = std::string((const char*) sqlite3_column_text(selectStmt, 0));
+		ret2 = std::string((const char*) sqlite3_column_text(selectStmt, 0));
+		ret3 = std::string((const char*) sqlite3_column_text(selectStmt, 0));
+	}
+	sqlite3_finalize(selectStmt);
 }
 
