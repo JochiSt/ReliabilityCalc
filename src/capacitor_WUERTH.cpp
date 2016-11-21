@@ -17,7 +17,7 @@ float capacitor_WUERTH::getFIT(){
 	char curve = FIT_curve;
 
 	if( curve == '-' ){
-		printf("no curve found for %s\n", name);
+		printf("no curve found for %s\n", name.c_str());
 		return FLT_MAX;
 	}
 

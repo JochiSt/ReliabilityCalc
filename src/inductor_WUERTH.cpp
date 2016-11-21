@@ -14,7 +14,7 @@ inductor_WUERTH::~inductor_WUERTH(){
 float inductor_WUERTH::getFIT(){
 
 	if( FIT_curve == '-' ){
-		printf("no curve found for %s\n", name);
+		printf("no curve found for %s\n", name.c_str());
 		return FLT_MAX;
 	}
 //	printf("%s using table %s, curve %c @ %f K\n", matchcode.c_str(), FIT_table.c_str(), FIT_curve, ambientTemperature);
