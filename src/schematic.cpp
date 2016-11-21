@@ -74,9 +74,6 @@ float schematic::estimateWeibullExponent(float earlyLifetimeHours, estimation_t 
 }
 */
 /*
-float schematic::getFailureRate(float deviceHours, double FIT, float weibullExponent){
-    return 1. - exp( -1. * std::pow(FIT / 1E6 * deviceHours, weibullExponent) );
-}
 
 float schematic::getFailureRateError(float deviceHours, double FIT, float weibullExponent, float weibullExponentError){
     // https://www.wolframalpha.com/input/?i=D%5B1+-+Exp%5B-(f+*+t)%5Em%5D,+m%5D

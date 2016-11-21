@@ -91,10 +91,14 @@ class schematic : public component {
 
         /**
          * enable verbose output
+	 * \param[in] value enables or disabled verbose output
          */
          virtual void setVerboseOutput(bool value = true){
                 verbose_output = value;
          }
+	 /**
+	  * \return status of verbose output
+	  */
          virtual bool getVerboseOutput(){
                 return verbose_output;
          }
