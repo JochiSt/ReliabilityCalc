@@ -4,7 +4,12 @@
 #include <string>
 
 /**
- * @brief Basic component class
+ * \class component
+ * \brief Basic component class
+ * \author Jochen Steinmann
+ * \version 1.0
+ * 
+ * Basic class for reliability calculation
  */
 class component
 {
@@ -39,7 +44,11 @@ class component
             return ambientTemperature;
         }
 
-        /// set ambient temperature
+        /**
+	 * set ambient temperature
+	 * \param[in] val temperature (if temperature is smaller than 273.15, 
+	 * the temperature is automatically converted into Kelvin
+	 */
         static void setAmbientTemperature(float val) {
             if(val < KELVIN){
                 val += KELVIN;

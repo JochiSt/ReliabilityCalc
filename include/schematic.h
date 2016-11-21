@@ -20,7 +20,7 @@ class schematic : public component {
             MEAN,
             STDDEV
         };
-
+	/// constructor
         schematic(std::string name);
         virtual ~schematic() { };
 
