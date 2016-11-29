@@ -41,7 +41,7 @@ void sqlite3_handler::runSQL(std::string sql){
         sqlite3_finalize(selectStmt);
 }
 
-void sqlite3_handler::runSQL_r1(std::string sql, std::string &ret1){
+void sqlite3_handler::runSQL(std::string sql, std::string &ret1){
 	sqlite3_stmt *selectStmt;
 	sqlite3_prepare(db, sql.c_str(), sql.length()+1, &selectStmt, NULL);
 	int s = sqlite3_step (selectStmt);
@@ -51,7 +51,7 @@ void sqlite3_handler::runSQL_r1(std::string sql, std::string &ret1){
 	}
 	sqlite3_finalize(selectStmt);
 }
-void sqlite3_handler::runSQL_r2(std::string sql, std::string &ret1, std::string &ret2){
+void sqlite3_handler::runSQL(std::string sql, std::string &ret1, std::string &ret2){
 	sqlite3_stmt *selectStmt;
 	sqlite3_prepare(db, sql.c_str(), sql.length()+1, &selectStmt, NULL);
 	int s = sqlite3_step (selectStmt);
@@ -59,11 +59,11 @@ void sqlite3_handler::runSQL_r2(std::string sql, std::string &ret1, std::string 
 	ret2 = "-";
 	if (s == SQLITE_ROW) {
 		ret1 = std::string((const char*) sqlite3_column_text(selectStmt, 0));
-		ret2 = std::string((const char*) sqlite3_column_text(selectStmt, 0));
+		ret2 = std::string((const char*) sqlite3_column_text(selectStmt, 1));
 	}
 	sqlite3_finalize(selectStmt);
 }
-void sqlite3_handler::runSQL_r3(std::string sql, std::string &ret1, std::string &ret2, std::string &ret3){
+void sqlite3_handler::runSQL(std::string sql, std::string &ret1, std::string &ret2, std::string &ret3){
 	sqlite3_stmt *selectStmt;
 	sqlite3_prepare(db, sql.c_str(), sql.length()+1, &selectStmt, NULL);
 	int s = sqlite3_step (selectStmt);
@@ -72,9 +72,24 @@ void sqlite3_handler::runSQL_r3(std::string sql, std::string &ret1, std::string 
 	ret3 = "-";
 	if (s == SQLITE_ROW) {
 		ret1 = std::string((const char*) sqlite3_column_text(selectStmt, 0));
-		ret2 = std::string((const char*) sqlite3_column_text(selectStmt, 0));
-		ret3 = std::string((const char*) sqlite3_column_text(selectStmt, 0));
+		ret2 = std::string((const char*) sqlite3_column_text(selectStmt, 1));
+		ret3 = std::string((const char*) sqlite3_column_text(selectStmt, 2));
 	}
 	sqlite3_finalize(selectStmt);
 }
-
+void sqlite3_handler::runSQL(std::string sql, std::string &ret1, std::string &ret2, std::string &ret3, std::string &ret4){
+	sqlite3_stmt *selectStmt;
+	sqlite3_prepare(db, sql.c_str(), sql.length()+1, &selectStmt, NULL);
+	int s = sqlite3_step (selectStmt);
+	ret1 = "-";
+	ret2 = "-";
+	ret3 = "-";
+	ret4 = "-";
+	if (s == SQLITE_ROW) {
+		ret1 = std::string((const char*) sqlite3_column_text(selectStmt, 0));
+		ret2 = std::string((const char*) sqlite3_column_text(selectStmt, 1));
+		ret3 = std::string((const char*) sqlite3_column_text(selectStmt, 2));
+		ret4 = std::string((const char*) sqlite3_column_text(selectStmt, 3));
+	}
+	sqlite3_finalize(selectStmt);
+}
