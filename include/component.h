@@ -18,6 +18,18 @@ class component
         static const float KELVIN = 273.15;     ///< convert Celsius into Kelvin
         ///@}
 
+	/**
+ 	 * @addtogroup convUnits 
+ 	 * @{
+ 	 */
+        enum Unit_t {
+            FITe6   = 1,        ///< FIT value as defined in the MIL-HDBK-217
+            FITe9   = 1000,     ///< FIT as defined by most other sources
+            MTTF    = 1000000,  ///< Mean Time To Failure
+            MTBF    = 1000000   ///< Mean Time between Failure (threated as the same)
+        };
+	///@}
+
         /**
          * environment definition according to MIL HDBK
          */
@@ -51,9 +63,12 @@ class component
         component(){};
         virtual ~component(){ };
 
+	/// return the ambient temperature
         static float getAmbientTemperature() {
             return ambientTemperature;
         }
+
+	/// set ambient temperature
         static void setAmbientTemperature(float val) {
             if(val < KELVIN){
                 val += KELVIN;
@@ -63,7 +78,8 @@ class component
 
         /// pure virtual function, which should be implemented inside each sub component
         virtual float getFIT() = 0;
-
+	
+	/// estimate the Weibull Exponent, which can be used as a very preliminary estimator for the early failures
         virtual float estimateWeibullExponent(float earlyLifetimeHours=3000.);
 
         /**
@@ -103,20 +119,20 @@ class component
         }
 
     public:
-        static calc_method_t calculation_method;    ///< used calculation method
-        static float ambientTemperature;            ///< define operating temperature for all parts
-        static environment_t environment;           ///< operating environment
-        static std::string FITunit;                 ///< string of FIT unit
+        static calc_method_t calculation_method;///< used calculation method
+        static float ambientTemperature;	///< define operating temperature for all parts
+        static environment_t environment;	///< operating environment
+        static std::string FITunit;		///< string of FIT unit
 
     protected:
-        float qualityFactor;                        ///< quality factor
-        float environmentFactor;                    ///< environment factor
-        float ratedTemperature;                     ///< rated temperature
-        std::string name;
+        float qualityFactor;			///< quality factor
+        float environmentFactor;		///< environment factor
+        float ratedTemperature;			///< rated temperature
+        std::string name;			///< name of the component
 
     private:
-        static std::string identifier;
-        static unsigned int partcnt;
+        static std::string identifier;		///< which type of component is this
+        static unsigned int partcnt;		///< total part count
 
 };
 

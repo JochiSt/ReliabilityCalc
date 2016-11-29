@@ -20,7 +20,7 @@ class schematic : public component {
             MEAN,
             STDDEV
         };
-        
+
         schematic(std::string name);
         virtual ~schematic() { };
 
@@ -84,33 +84,10 @@ class schematic : public component {
         ///@}
 
         /**
-         * @name Schematic Import and Export
-         * Schematics can be exported into a plain text file and they can also be imported
-         */
-        ///@{
-        /**
-         * export schematic into file
-         * @param filename path and filename of file, into which should be exported
-         */
-        virtual void exportToFile(std::string filename);
-
-        /**
-         * import schematic from file
-         * @param filename path and filename of file, which should be imported
-         */
-        virtual void importFromFile(std::string filename);
-        ///@}
-
-        /**
          * calculate failures in time for this schematic
          * @return FIT value of this schematic
          */
-        virtual float getFIT(bool output);
-
-        virtual float getFIT(){
-            return getFIT(true);
-        };
-
+        virtual float getFIT();
 
         /**
          * calculate FIT for a given temperature
@@ -135,7 +112,7 @@ class schematic : public component {
          * @return failure rate in 1 (to get it into percent multiply by 100)
          */
         static float getFailureRate(float deviceHours, double FIT, float weibullExponent=1.);
-        
+
         static float getFailureRateError(float deviceHours, double FIT, float weibullExponent=1., float weibullExponentError=0.);
 
         /**
@@ -183,6 +160,9 @@ class schematic : public component {
     private:
         /// store components of this schematic
         std::vector<component*> parts;
+
+        /// verbose output
+        bool verbose_output;
 };
 
 #endif // SCHEMATIC_H

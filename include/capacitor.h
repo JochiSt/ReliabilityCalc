@@ -1,9 +1,3 @@
-/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- FIT calculation based on MIL-HDBK-217F
- Calculation for fixed, ceramic general purpose capacitors (MIL-C-11015, MIL-C-39014),if Notice 1 is used
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-*/
-
 #ifndef CAPACITOR_H
 #define CAPACITOR_H
 
@@ -27,88 +21,15 @@ class capacitor : public component {
         static const float kV = 1000.;
         ///@}
 
-        enum Unit_t {
-            FITe6   = 1,        ///< FIT value as defined in the MIL-HDBK-217
-            FITe9   = 1000,     ///< FIT as defined by most other sources
-            MTTF    = 1000000,  ///< Mean Time To Failure
-            MTBF    = 1000000   ///< Mean Time between Failure
-        };
-
-        /** \enum capacitor::Cquality_t
-         * quality of the capacitor for an exact definition have a look at the MIL HDBK
-         */
-        enum Cquality_t {
-            Q_D     = 1,
-            Q_C     = 10,
-            Q_S     = 30,
-            Q_R     = 100,
-            Q_P     = 300,
-            Q_M     = 1000,
-            Q_L     = 3001,
-            Q_MIL   = 3000,
-            Q_LESS  = 10000
-        };
-
-        /**
-         * @enum Cstyle_t Capacitor Style according to MIL-HDBK-217F Notice 2 10-1
-         */
-        enum Cstyle_t {
-            S_CP,           ///<
-            S_CA,           ///<
-            S_CZ, S_CZR,    ///<
-            S_CQ, S_CQR,    ///<
-            S_CH,           ///<
-            S_CHR,          ///<
-            S_CFR,          ///<
-            S_CRH,          ///<
-            S_CM,           ///<
-            S_CMR,          ///<
-            S_CB,           ///<
-            S_CY,           ///<
-            S_CYR,          ///<
-            S_CK,           ///< Capacitor, fixed, ceramic dielectric (General Purpose)
-            S_CKR,          ///< Capacitor, fixed, ceramic dielectric (General Purpose) established reliability
-            S_CC, S_CCR,    ///<
-            S_CDR,          ///<
-            S_CSR,          ///<
-            S_CWR,          ///<
-            S_CL,           ///<
-            S_CLR,          ///<
-            S_CRL,          ///<
-            S_CU, S_CUR,    ///<
-            S_CE,           ///<
-            S_CV,           ///<
-            S_PC,           ///<
-            S_CT,           ///<
-            S_CG            ///<
-        };
-
         /**
          * Constructor of Capacitor
          * \param name      internal naming of capacitor, e.g. C1, C2
          * \param value     capacity value in pF
          * \param usedU     used voltage / applied voltage
          * \param ratedU    rated voltage
-         * \param ratedT    rated temperature
-         * \param qual      part quality
-         * \param styl      part style
          */
-        capacitor(std::string name, float value, float usedU, float ratedU, float ratedT, Cquality_t qual = capacitor::Q_LESS, Cstyle_t styl = capacitor::S_CQ);
+        capacitor(std::string name, float value, float usedU, float ratedU);
 
-        /**
-         * Second Constructor of Capacitor
-         * \param name              internal naming of capacitor, e.g. C1, C2
-         * \param fit_value1        FIT value 1
-         * \param fit_temperature1  Temperature related to FIT value 1.
-         * \param fit_value2        Fit value 2. If no change of FIT with temperature is assumed please insert FIT value 1. Linear interpolation between given FIT values is assumed.
-         * \param fit_temperature2  Temperature related to FIT value 2. If no change of FIT with temperature is assuemd please insert a temperature different from fit_temperature1.
-         * \param fit_unit          Unit of the FIT values: FITe9, FITe6 (MIL-standard), MTTF, MTBF.
-         */
-        capacitor(std::string name, float fit_value1, float fit_temperature1, float fit_value2, float fit_temperature2, Unit_t fit_unit);
-
-        capacitor(){
-            partcnt--;
-        };
         virtual ~capacitor();
 
         /// @return capacity in pF
@@ -119,10 +40,7 @@ class capacitor : public component {
         void setCapacity(float val) { capacity = val; }
 
         /// @return FIT of this specific component
-        virtual float getFIT();
-
-        virtual std::string toString();
-        virtual int fromString(std::string value);
+        virtual float getFIT()=0;
 
         static std::string getIdentifier(){
             return identifier;
@@ -136,15 +54,6 @@ class capacitor : public component {
         float capacity;     ///< capacity in pF
         float usedVoltage;  ///< voltage applied to the capacitor
         float ratedVoltage; ///< rated voltage of the capacitor
-        Cquality_t quality; ///< quality of the capacitor
-        Cstyle_t style;     ///< capacitor
-
-        float FIT1;             ///< FIT value 1. It is recommended to use the ambient temperature FIT value.
-        float FIT2;             ///< FIT value 2. It is recommended to use the test temperature FIT value. The interpolation between the FIT values is linear.
-        float FIT_temperature1; ///< Temperature in °C of the FIT value 1.
-        float FIT_temperature2; ///< Temperature in °C of the FIT value 2.
-
-        bool FIT_given;         ///< Is set to true, if the FIT is not calculated with the MIL-Hbk
 
     private:
         static std::string identifier;

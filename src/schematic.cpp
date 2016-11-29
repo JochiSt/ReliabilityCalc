@@ -8,29 +8,30 @@
 #include <numeric>
 #include <sstream>
 
+#include "diode.h"
 #include "resistor.h"
 #include "capacitor.h"
-#include "inductor.h"
 #include "IC.h"
-#include "diode.h"
+#include "inductor.h"
 
 schematic::schematic(std::string name) : component(name){
+    verbose_output = false;
     //ctor
 }
 
-float schematic::getFIT(bool output){
-    if(output){
+float schematic::getFIT(){
+    if(verbose_output){
         std::cout << "Calculating FIT for " << name << std::endl;
     }
     float FIT = 0;
     for(unsigned int i = 0; i < parts.size(); i++ ){
         float partFIT = parts.at(i) -> getFIT();
-        if(output) {
+        if(verbose_output) {
                 std::cout << "  " << std::setw(20) << parts.at(i)->getName() << "\t" << std::setprecision(7)  << std::setw(12) << partFIT << " / " << component::FITunit << std::endl;
         }
         FIT += partFIT;
     }
-    if(output){
+    if(verbose_output){
         std::cout << "total FIT: " << FIT << std::endl;
     }
     return FIT;
@@ -49,7 +50,7 @@ float schematic::estimateWeibullExponent(float earlyLifetimeHours, estimation_t 
             validWeibullExponents.push_back(m);
         }
     }
-    
+
     if (type == MINIMUM){
         return *std::min_element(validWeibullExponents.begin(), validWeibullExponents.end());
     } else if (type == MAXIMUM){
@@ -80,77 +81,6 @@ float schematic::getFailureRateError(float deviceHours, double FIT, float weibul
                     std::pow(FIT / 1E6 * deviceHours, weibullExponent) *
                     std::log(FIT / 1E6 * deviceHours) *
                     weibullExponentError);
-}
-
-void schematic::exportToFile(std::string filename){
-    std::cout << std::endl << std::endl;
-    std::cout << "Exporting to: " << filename << std::endl;
-    std::ofstream outF;
-    outF.open(filename.c_str());
-    for(unsigned int i = 0; i< parts.size(); i++){
-            outF << i << "\t" << parts.at(i)->toString() << std::endl;
-    }
-    outF.close();
-}
-
-void schematic::importFromFile(std::string filename){
-    std::cout << "Importing from: " << filename << std::endl;
-    std::ifstream inF;
-    inF.open(filename.c_str());
-    std::string line;
-    int cnt = 0;
-    int linecnt;
-    std::string identifier;
-    while(true){
-        std::getline(inF, line);
-        if(!inF.good()) break;
-
-        std::istringstream iss;
-        iss.str(line);
-        iss >> linecnt >> identifier;
-        if(linecnt != cnt){
-            std::cerr << "Oops, something wrent wrong" << std::endl;
-            std::cerr << "\tlinecounter mismatch" << std::endl;
-            break;
-        }
-
-        if(identifier == resistor::getIdentifier() ){
-            addComponent(new resistor());
-            if( lastAddedComponent() -> fromString( line.substr( line.find(resistor::getIdentifier()), std::string::npos) ) < 0 ){
-                    std::cerr << "unable to add component" << std::endl;
-                    removeLastComponent();
-            }
-        }else if(identifier == capacitor::getIdentifier() ){
-            addComponent(new capacitor());
-            if( lastAddedComponent() -> fromString( line.substr( line.find(capacitor::getIdentifier()), std::string::npos) ) < 0){
-                    std::cerr << "unable to add component" << std::endl;
-                    removeLastComponent();
-            }
-        }else if(identifier == "U"){
-            addComponent(new IC());
-            if( lastAddedComponent() -> fromString( line.substr( line.find(IC::getIdentifier()), std::string::npos) ) < 0){
-                    std::cerr << "unable to add component" << std::endl;
-                    removeLastComponent();
-            }
-        }else if(identifier == "L"){
-            addComponent(new inductor());
-            if( lastAddedComponent() -> fromString( line.substr( line.find(inductor::getIdentifier()), std::string::npos) ) < 0){
-                    std::cerr << "unable to add component" << std::endl;
-                    removeLastComponent();
-            }
-        }else if(identifier == "D"){
-            addComponent(new diode());
-            if( lastAddedComponent() -> fromString( line.substr( line.find(diode::getIdentifier()), std::string::npos) ) < 0){
-                    std::cerr << "unable to add component" << std::endl;
-                    removeLastComponent();
-            }
-        }else{
-            std::cerr << "Oops, something went wrong" << std::endl;
-            std::cerr << "\tidentifier '" << identifier << "' unknown" << std::endl;
-            break;
-        }
-        cnt ++;
-    }
 }
 
 void schematic::printPartCount(){
