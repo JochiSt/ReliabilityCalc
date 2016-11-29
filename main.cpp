@@ -22,7 +22,7 @@ int main(){
 
     schematic* example = new schematic("JUNO Example Board");
 
-    example -> addComponent(new capacitor_WUERTH("WCAP-CSGP", "C1", 1*capacitor::uF, 24, 50));
+    example -> addComponent(new capacitor_WUERTH("C1", "WCAP-CSGP",  1*capacitor::uF, 24, 50));
 
 
     example -> setVerboseOutput(true);  // enable verbose output
