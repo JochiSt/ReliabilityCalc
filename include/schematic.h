@@ -90,6 +90,17 @@ class schematic : public component {
         virtual float getFIT();
 
         /**
+         * enable verbose output
+         */
+         virtual void setVerboseOutput(bool value = true){
+                verbose_output = value;
+         }
+         virtual bool getVerboseOutput(){
+                return verbose_output;
+         }
+
+
+        /**
          * calculate FIT for a given temperature
          * @return FIT value at temperature
          * @param temperature temperature in deg C, at which FIT is evaluated

@@ -2,7 +2,7 @@ BUSSES+=src
 
 CFLAGS=-fPIC -Wall 
 CFLAGS+=-I../include
-#CFLAGS+=-g
+CFLAGS+=-g
 
 LDFLAGS+=
 

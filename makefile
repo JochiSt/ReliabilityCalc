@@ -2,9 +2,9 @@ BUSSES+=src
 
 CFLAGS=-fPIC -Wall 
 CFLAGS+=-Iinclude/
-#CFLAGS+=-g
+CFLAGS+=-g
 
-LDFLAGS+=
+LDFLAGS+=-lsqlite3
 
 GPP=g++
 CC=gcc
@@ -17,7 +17,8 @@ OBJECTS = $(SRCS:.cpp=.o)
 
 .PHONY: all clean doc $(BUSSES)
 
-all:	$(PROGRAM) $(PROGRAM_2)
+#all:	$(PROGRAM) $(PROGRAM_2)
+all:	$(PROGRAM)
 	@echo " ALL DONE. $@"
 
 $(PROGRAM):	$(BUSSES) $(OBJECTS) $(PROGRAM).o
