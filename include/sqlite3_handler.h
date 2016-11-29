@@ -9,6 +9,8 @@ class sqlite3_handler {
 		sqlite3_handler(std::string filename);
 		virtual ~sqlite3_handler();
 
+		void runSQL(std::string sql);
+
 	protected:
 
 	private:

@@ -17,3 +17,27 @@ sqlite3_handler::sqlite3_handler(std::string filename){
 sqlite3_handler::~sqlite3_handler(){
 	   sqlite3_close(db);
 }
+
+void sqlite3_handler::runSQL(std::string sql){
+	    int row = 0;
+        sqlite3_stmt *selectStmt;
+        sqlite3_prepare(db, sql.c_str(), sql.length()+1, &selectStmt, NULL);
+        while (1) {
+            int s;
+            printf("in select while\n");
+            s = sqlite3_step (selectStmt);
+            if (s == SQLITE_ROW) {
+                printf ("%s: %s\n", sqlite3_column_text(selectStmt, 0), sqlite3_column_text(selectStmt, 1));
+                row++;
+            }
+            else if (s == SQLITE_DONE) {
+                break;
+            }
+            else {
+                fprintf (stderr, "Failed.\n");
+                exit (1);
+            }
+        }
+        sqlite3_finalize(selectStmt);
+}
+
