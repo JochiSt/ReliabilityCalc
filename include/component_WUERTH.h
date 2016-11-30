@@ -29,7 +29,7 @@ class component_WUERTH {
 								///< for capacitors, this is 30% stress level
 
 	public:
-		virtual void getFIT(float temperature, float &retTempL, float &FITL, float &retTempU, float &FITU);
+		virtual void getFIT(float temperature, float &retTempL, float &FITL, float &retTempU, float &FITU, char curve = '-');
 
 
 };

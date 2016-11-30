@@ -40,12 +40,16 @@ void component_WUERTH::searchTable(){
 	SIGMA_curve = Scurve[0];
 }
 
-void component_WUERTH::getFIT(float temperature, float &retTempL, float &FITL, float &retTempU, float&FITU){
+void component_WUERTH::getFIT(float temperature, float &retTempL, float &FITL, float &retTempU, float&FITU, char curve){
 	std::string retvalue1 = "-1", retvalue2 = "-1";
 	char buffer[2048];
 
+	char usedCurve = FIT_curve;
+	if(curve != '-')
+		usedCurve = curve;
+
 	sprintf(buffer, "SELECT temperature, FIT FROM reliability_data WHERE temperature <= '%5.2f' AND ('table' - %s)<0.01 AND curve = '%c' ORDER BY temperature DESC LIMIT 1",
-								temperature-component::KELVIN, FIT_table.c_str(), FIT_curve);
+								temperature-component::KELVIN, FIT_table.c_str(), usedCurve);
 
 	db.runSQL(std::string(buffer), retvalue1, retvalue2);
 
@@ -53,7 +57,7 @@ void component_WUERTH::getFIT(float temperature, float &retTempL, float &FITL, f
 	FITL = atof(retvalue2.c_str());
 
 	sprintf(buffer, "SELECT temperature, FIT FROM reliability_data WHERE temperature > '%5.2f' AND ('table' - %s)<0.01 AND curve = '%c' ORDER BY temperature ASC LIMIT 1",
-								temperature-component::KELVIN, FIT_table.c_str(), FIT_curve);
+								temperature-component::KELVIN, FIT_table.c_str(), usedCurve);
 
 	db.runSQL(std::string(buffer), retvalue1, retvalue2);
 
