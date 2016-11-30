@@ -22,8 +22,12 @@ int main(){
 
     schematic* example = new schematic("JUNO Example Board");
 
-    example -> addComponent(new capacitor_WUERTH("C1", "WCAP-CSGP",  1*capacitor::uF, 24, 50));
-
+    example -> addComponent(new capacitor_WUERTH("C1", "WCAP-CSGP",  1*capacitor::uF,  1, 50));
+    example -> addComponent(new capacitor_WUERTH("C2", "WCAP-CSGP",  1*capacitor::uF, 14, 50));
+    example -> addComponent(new capacitor_WUERTH("C3", "WCAP-CSGP",  1*capacitor::uF, 24, 50));
+    example -> addComponent(new capacitor_WUERTH("C4", "WCAP-CSGP",  1*capacitor::uF, 34, 50));
+    example -> addComponent(new capacitor_WUERTH("C5", "WCAP-CSGP",  1*capacitor::uF, 50, 50));
+    example -> addComponent(new capacitor_WUERTH("C6", "WCAP-CSGP",  1*capacitor::uF, 55, 50));
 
     example -> setVerboseOutput(true);  // enable verbose output
 	example -> getFIT();
