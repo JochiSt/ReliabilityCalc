@@ -5,7 +5,6 @@
 #ifndef COMPONENT_WUERTH_H
 #define COMPONENT_WUERTH_H
 
-#include "component.h"
 #include "sqlite3_handler.h"
 
 #include <stdio.h>
@@ -16,6 +15,10 @@ class component_WUERTH {
 		component_WUERTH(std::string code);
 
 	private:
+		static sqlite3_handler db;
+
+	protected:
+		void searchTable();		///< lookup matchcode
 		std::string matchcode;	///< Wuerth MatchCode to select right reliability data (e.g. WE-CBA)
 		std::string FIT_table;	///< FIT value table (e.g. 5.1)
 		char FIT_curve;			///< FIT value curve in table (e.g. C)
@@ -25,11 +28,8 @@ class component_WUERTH {
 		char SIGMA_curve;		///< FIT sigma value curve in table (e.g. n)
 								///< for capacitors, this is 30% stress level
 
-
-		static sqlite3_handler db;
-
-	protected:
-		void searchTable();		///< lookup matchcode
+	public:
+		virtual void getFIT(float temperature, float &retTempL, float &FITL, float &retTempU, float &FITU);
 
 
 };

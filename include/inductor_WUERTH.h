@@ -2,15 +2,23 @@
 #define INDUCTOR_WUERTH_H
 
 #include "inductor.h"
-
-
+#include "component_WUERTH.h"
 /**
- * \brief Inductors based on WÜRTH reliability data
+ * @brief Implementation of reliability for Wuerth inductors
+ * data based on LINK EINFÜGEN
  */
-class inductor_wuerth : public inductor
-{
-    public:
-        inductor(std::string name, float fit_value, Unit_t fit_unit);
+class inductor_WUERTH : public inductor, public component_WUERTH {
+
+	public:
+		/// constructor for Würth capacitors
+		inductor_WUERTH(std::string name, std::string code);
+		virtual ~inductor_WUERTH();
+
+		/// @return FIT of this specific component
+		virtual float getFIT();
+
+	private:
+
 };
 
-#endif // INDUCTOR_H
+#endif
