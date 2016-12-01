@@ -38,7 +38,12 @@ html
 
 main
 main_PowerBoard
+import_wuerth
+sqlite
 output
 websync
 *~
 *.pyc
+
+*.sql
+*.csv
