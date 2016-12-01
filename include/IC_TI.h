@@ -21,11 +21,6 @@ class IC_TI : public IC_ELFR {
         virtual ~IC_TI();
 
     protected:
-        /// stored FIT value
-        float FIT;
-
-        /// temperature the FIT value is valid
-        float FIT_temperature;
 
     private:
         /// handler for the access to the TI webpage

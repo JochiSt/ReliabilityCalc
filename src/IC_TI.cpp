@@ -28,7 +28,7 @@ void IC_TI::lookup_IC(){
     // ask TI webpage about this IC
     // aggregate FIT value from TI webpage
     // http://www.ti.com/quality/docs/estimator.tsp?OPN=DS30EA101SQ/NOPB#resultstable
-    printf("Asking TI about .... %s\n", ICname.c_str());
+    printf("Asking TI about .... %s ", ICname.c_str());
     std::string data;
 
 
@@ -106,8 +106,10 @@ void IC_TI::lookup_IC(){
     ELFR = results[0];
 //    MTBF = results[1];
     FIT = results[2];
-    FIT_temperature = results[7];
+    FIT_temperature = results[7] + component::KELVIN;   // store temperature in KELVIN!
 
-    printf("Determined FIT %f @ %f °C\n", FIT, FIT_temperature);
+//    printf("Determined FIT %f @ %f °C\n", FIT, FIT_temperature);
+
+    printf(" ... result %f @ %f\n", FIT, FIT_temperature);
 }
 

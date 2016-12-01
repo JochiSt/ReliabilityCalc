@@ -4,6 +4,9 @@
 #include <cmath>
 #include <sstream>
 
+#include <stdio.h>
+#include <stdlib.h>
+
 std::string IC::identifier = "U";
 unsigned int IC::partcnt = 0;
 
@@ -22,8 +25,7 @@ IC::~IC(){
 }
 
 float IC::getFIT(){
-    float AF = exp(-1.*(EA/kB)*(1/(ambientTemperature)-1/(FIT_temperature)));    //aging factor
-    //std::cout << "AF: " << AF << std::endl;
+    float AF = exp(-1.*(EA/kB)*(1./(ambientTemperature)-1./(FIT_temperature)));    //aging factor
     return FIT * AF;
 }
 
