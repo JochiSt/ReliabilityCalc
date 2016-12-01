@@ -108,23 +108,29 @@ class schematic : public component {
          */
         virtual float getFIT(float temperature, bool output = true);
 
-        virtual float estimateWeibullExponent(float earlyLifetimeHours=3000.);
-        virtual float estimateWeibullExponent(float earlyLifetimeHours=3000., estimation_t type=MEAN);
+/*
+ *      virtual float estimateWeibullExponent(float earlyLifetimeHours=3000.);
+ *      virtual float estimateWeibullExponent(float earlyLifetimeHours=3000., estimation_t type=MEAN);
+*/
 
         /**
          * Display the part count for this schematic.
          */
         static void printPartCount();
 
+/*
         /**
          * convert a given FIT into a failure rate after a given number of device hours
          * @param deviceHours device hours
          * @param FIT failures in time
          * @return failure rate in 1 (to get it into percent multiply by 100)
          */
+/*
         static float getFailureRate(float deviceHours, double FIT, float weibullExponent=1.);
 
         static float getFailureRateError(float deviceHours, double FIT, float weibullExponent=1., float weibullExponentError=0.);
+
+*/
 
         /**
          * calculate acceleration factor of schematic

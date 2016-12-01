@@ -1,13 +1,13 @@
 #ifndef DIODE_H
 #define DIODE_H
 
-#include "component.h"
+#include "component_MIL_HDBK_217F.h"
 /**
  * @brief Implementation of calculation for low frequency diodes (metallurgically bonded) (MIL-S-19500)
  *
  * FIT calculation based on MIL-HDBK-217F
  */
-class diode : public component
+class diode : public component_MIL_HDBK_217F
 {
     public:
 
@@ -38,15 +38,10 @@ class diode : public component
         };
 
         diode(std::string name, float usedU, float ratedU, application_t app, quality_t qual);
-        diode(){
-            partcnt--;
-        };
-        virtual ~diode(){};
+
+        virtual ~diode();
 
         virtual float getFIT();
-
-        virtual std::string toString();
-        virtual int fromString(std::string value);
 
         static std::string getIdentifier(){
             return identifier;

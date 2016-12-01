@@ -7,7 +7,7 @@
 std::string diode::identifier = "D";
 unsigned int diode::partcnt = 0;
 
-diode::diode(std::string name, float usedU, float ratedU, application_t app, quality_t qual ) : component(name)
+diode::diode(std::string name, float usedU, float ratedU, application_t app, quality_t qual ) : component_MIL_HDBK_217F(name)
 {
     usedVoltage = usedU;
     ratedVoltage = ratedU;
@@ -18,8 +18,12 @@ diode::diode(std::string name, float usedU, float ratedU, application_t app, qua
     partcnt++;
 }
 
+diode::~diode(){
+    partcnt--;
+};
+
 float diode::getFIT(){
-    switch(environment){
+    switch(component_MIL_HDBK_217F::environment){
         case GB:
             environmentFactor = 1.0;
             break;
@@ -101,26 +105,3 @@ float diode::getFIT(){
     return FIT;     //This output was not tested!!!!
 }
 
-std::string diode::toString(){
-    std::ostringstream os;
-    os << identifier << "\t";
-    os << name << "\t";
-    os << usedVoltage << "\t";
-    os << ratedVoltage << "\t";
-    os << applicationFactor << "\t";
-    os << qualityFactor;
-    return os.str();
-}
-
-int diode::fromString(std::string value){
-    std::istringstream is;
-    is.str(value);
-    std::string ident;
-    is >> ident;
-    if(ident == identifier){
-        is >> name >> usedVoltage >> ratedVoltage >> applicationFactor >> qualityFactor;
-        return 0;
-    }else{
-        return -1;
-    }
-}

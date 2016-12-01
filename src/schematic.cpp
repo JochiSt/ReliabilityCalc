@@ -37,6 +37,7 @@ float schematic::getFIT(){
     return FIT;
 }
 
+/*
 float schematic::estimateWeibullExponent(float earlyLifetimeHours){
     return estimateWeibullExponent(earlyLifetimeHours, MEAN);
 }
@@ -70,7 +71,8 @@ float schematic::estimateWeibullExponent(float earlyLifetimeHours, estimation_t 
     }
     return -1.;
 }
-
+*/
+/*
 float schematic::getFailureRate(float deviceHours, double FIT, float weibullExponent){
     return 1. - exp( -1. * std::pow(FIT / 1E6 * deviceHours, weibullExponent) );
 }
@@ -82,7 +84,7 @@ float schematic::getFailureRateError(float deviceHours, double FIT, float weibul
                     std::log(FIT / 1E6 * deviceHours) *
                     weibullExponentError);
 }
-
+*/
 void schematic::printPartCount(){
     std::cout << "parts used to calculate reliability "<< std::endl;
     std::cout << "\t" << diode::getPartCount() << " Diodes" << std::endl;
