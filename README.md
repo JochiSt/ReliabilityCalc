@@ -5,8 +5,8 @@ The parts, which are used are modelled from various sources. One source can be t
 
 ## Requirements
 For full function the libraries of 
-* SQLite3 for given reliability data from private databases
-* CURL for fetching the reliability data from e.g. Texas Instruments
+* **SQLite3** for given reliability data from private databases
+* **CURL** for fetching the reliability data from e.g. Texas Instruments
 
 are needed.
 
