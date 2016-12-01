@@ -24,16 +24,18 @@ int main(){
 
     schematic* example = new schematic("JUNO Example Board");
 
-    example -> addComponent(new capacitor_WUERTH("C1", "WCAP-CSGP",  1*capacitor::uF,  1, 50));
+    example -> addComponent(new capacitor_WUERTH("C1", "WCAP-CSGP",  1*capacitor::uF,  1, 50)); // lowest stress
     example -> addComponent(new capacitor_WUERTH("C2", "WCAP-CSGP",  1*capacitor::uF, 14, 50));
     example -> addComponent(new capacitor_WUERTH("C3", "WCAP-CSGP",  1*capacitor::uF, 24, 50));
     example -> addComponent(new capacitor_WUERTH("C4", "WCAP-CSGP",  1*capacitor::uF, 34, 50));
-    example -> addComponent(new capacitor_WUERTH("C5", "WCAP-CSGP",  1*capacitor::uF, 50, 50));
-    example -> addComponent(new capacitor_WUERTH("C6", "WCAP-CSGP",  1*capacitor::uF, 55, 50));
+    example -> addComponent(new capacitor_WUERTH("C5", "WCAP-CSGP",  1*capacitor::uF, 50, 50)); // maximal stress
+//    example -> addComponent(new capacitor_WUERTH("C6", "WCAP-CSGP",  1*capacitor::uF, 55, 50)); // too high stress
 
     example -> addComponent(new inductor_WUERTH("L1", "WE-PoE+"));
 
-    example -> addComponent(new IC_TI("U101", "DS30EA101SQ/NOPB"));
+    example -> addComponent(new IC_TI("U101", "DS15EA101SQ/NOPB"));                             // Fetch the data from TI
+    example -> addComponent(new IC_TI("U102", "DS15BA101SQ/NOPB"));                             // Fetch the data from TI
+
 
     example -> setVerboseOutput(true);  // enable verbose output
 	example -> getFIT();
