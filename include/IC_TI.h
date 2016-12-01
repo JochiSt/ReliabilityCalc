@@ -1,43 +1,44 @@
 #ifndef IC_TI_H
 #define IC_TI_H
 
-#include "IC.h"
+#include "IC_ELFR.h"
 #include <string.h>
 #include <curl/curl.h>
 
 
 /**
  * @brief calculate the FIT of TI ICs
- * FIT value can be looked up from Webpage
+ * FIT value is looked up from Webpage
  */
-class IC_TI : public IC {
+class IC_TI : public IC_ELFR {
     public:
         /**
          * Constructor of the IC
-         * @param name
-         * @param elfr_value ELFR value itself
-         * @param elfr_unit ELFR unit
-         * @param fit FIT value itself
-         * @param fit_temperature temperature of the given FIT
-         * @param fit_unit  Unit of the given FIT
+         * \param[in] name
+         * \param[in] type correct naming of the IC (e.g. DS30EA101SQ/NOPB)
          */
         IC_TI(std::string name, std::string type);
         virtual ~IC_TI();
 
     protected:
-        /// given FIT value
+        /// stored FIT value
         float FIT;
 
         /// temperature the FIT value is valid
         float FIT_temperature;
 
     private:
+        /// handler for the access to the TI webpage
         CURL *curl;
-
+        /// fetch the data from the TI webpage
         void lookup_IC();
+        /// store the naming of the IC
         std::string ICname;
 
     public:
+        /**
+         * \brief callback function for CURL
+         */
         static int curl_writeCallback(char *inBuffer, size_t size, size_t count, std::string *outBuffer){
                 outBuffer->append(inBuffer);
                 return count*size;

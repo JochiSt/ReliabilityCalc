@@ -9,7 +9,7 @@
 #include <stdlib.h>
 
 
-IC_TI::IC_TI(std::string name, std::string type) : IC(name) {
+IC_TI::IC_TI(std::string name, std::string type) : IC_ELFR(name) {
     ICname = type;
 
     curl_global_init(CURL_GLOBAL_WIN32);
@@ -79,7 +79,7 @@ void IC_TI::lookup_IC(){
         }
     }
 
-    float ELFR_DPPM, MTBF, CL_EF, TT_EF, SS_EF, FD_EF, CL_FIT, E_FIT, TT_FIT, TD_FIT, SS_FIT, FD_FIT;
+//    float ELFR_DPPM, MTBF, CL_EF, TT_EF, SS_EF, FD_EF, CL_FIT, E_FIT, TT_FIT, TD_FIT, SS_FIT, FD_FIT;
 
     // Part number 	ELFR-DPPM 	MTBF 	FIT 	Conf level (%) 	Test temp (°C)
     // Sample size 	Fails 	Usage temp (°C) 	Conf level (%) 	Activation energy (eV)
@@ -103,8 +103,8 @@ void IC_TI::lookup_IC(){
     	ptr = strtok(NULL, delimiter);
     	section ++;
     }
-    ELFR_DPPM = results[0];
-    MTBF = results[1];
+    ELFR = results[0];
+//    MTBF = results[1];
     FIT = results[2];
     FIT_temperature = results[7];
 

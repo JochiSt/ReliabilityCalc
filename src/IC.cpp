@@ -27,12 +27,3 @@ float IC::getFIT(){
     return FIT * AF;
 }
 
-float IC::estimateWeibullExponent(float earlyLifetimeHours){
-    if (ELFR > 0.){
-        // std::cout << "log(-log(1. - " << ELFR << ")) / (log(" << getFIT()/1E6 << " * " << earlyLifetimeHours << ")) = " << log(-log(1. - ELFR)) / (log(getFIT()/1E6 * earlyLifetimeHours)) << std::endl;
-        return log(-log(1. - ELFR)) / (log(getFIT()/1E6 * earlyLifetimeHours));
-    } else {
-        return -1.;
-    }
-}
-
