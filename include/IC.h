@@ -36,10 +36,9 @@ class IC : public component{
          * @param fit_temperature temperature of the given FIT
          * @param fit_unit  Unit of the given FIT
          */
-        IC(std::string name, float elfr_value, Unit_t elfr_unit, float fit, float fit_temperature, Unit_t fit_unit);
-        IC(){
-            partcnt--;
-        };
+        // IC(std::string name, float elfr_value, Unit_t elfr_unit, float fit, float fit_temperature, Unit_t fit_unit);
+        IC(std::string name, float fit=-1, float fit_temperature=-1);
+        virtual ~IC();
 
         /// set the FIT value
         void setFIT(float val) { FIT = val; }
@@ -48,8 +47,6 @@ class IC : public component{
 
         virtual float estimateWeibullExponent(float earlyLifetimeHours=3000.);
 
-        virtual std::string toString();
-        virtual int fromString(std::string value);
 
         static std::string getIdentifier(){
             return identifier;

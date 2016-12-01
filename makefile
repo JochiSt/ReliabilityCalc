@@ -5,6 +5,7 @@ CFLAGS+=-Iinclude/
 CFLAGS+=-g
 
 LDFLAGS+=-lsqlite3
+LDFLAGS+=$(shell curl-config --libs)
 
 GPP=g++
 CC=gcc

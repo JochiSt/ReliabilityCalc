@@ -12,6 +12,7 @@ using namespace std;
 
 #include "capacitor_WUERTH.h"
 #include "inductor_WUERTH.h"
+#include "IC_TI.h"
 
 #include <cmath>
 
@@ -31,6 +32,8 @@ int main(){
     example -> addComponent(new capacitor_WUERTH("C6", "WCAP-CSGP",  1*capacitor::uF, 55, 50));
 
     example -> addComponent(new inductor_WUERTH("L1", "WE-PoE+"));
+
+    example -> addComponent(new IC_TI("U101", "DS30EA101SQ/NOPB"));
 
     example -> setVerboseOutput(true);  // enable verbose output
 	example -> getFIT();
