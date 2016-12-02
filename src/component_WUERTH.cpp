@@ -64,3 +64,28 @@ void component_WUERTH::getFIT(float temperature, float &retTempL, float &FITL, f
 	retTempU = atof(retvalue1.c_str()) + component::KELVIN;
 	FITU = atof(retvalue2.c_str());
 }
+
+void component_WUERTH::getSIGMA(float temperature, float &retTempL, float &SIGMAL, float &retTempU, float&SIGMAU, char curve){
+	std::string retvalue1 = "-1", retvalue2 = "-1";
+	char buffer[2048];
+
+	char usedCurve = SIGMA_curve;
+	if(curve != '-')
+		usedCurve = curve;
+
+	sprintf(buffer, "SELECT temperature, FIT FROM reliability_data WHERE temperature <= '%5.2f' AND ('table' - %s)<0.01 AND curve = '%c' ORDER BY temperature DESC LIMIT 1",
+								temperature-component::KELVIN, FIT_table.c_str(), usedCurve);
+
+	db.runSQL(std::string(buffer), retvalue1, retvalue2);
+
+	retTempL = atof(retvalue1.c_str()) + component::KELVIN;
+	SIGMAL = atof(retvalue2.c_str());
+
+	sprintf(buffer, "SELECT temperature, FIT FROM reliability_data WHERE temperature > '%5.2f' AND ('table' - %s)<0.01 AND curve = '%c' ORDER BY temperature ASC LIMIT 1",
+								temperature-component::KELVIN, FIT_table.c_str(), usedCurve);
+
+	db.runSQL(std::string(buffer), retvalue1, retvalue2);
+
+	retTempU = atof(retvalue1.c_str()) + component::KELVIN;
+	SIGMAU = atof(retvalue2.c_str());
+}

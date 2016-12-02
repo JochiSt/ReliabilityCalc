@@ -30,6 +30,7 @@ class component_WUERTH {
 
 	public:
 		virtual void getFIT(float temperature, float &retTempL, float &FITL, float &retTempU, float &FITU, char curve = '-');
+		virtual void getSIGMA(float temperature, float &retTempL, float &SIGMAL, float &retTempU, float &SIGMAU, char curve = '-');
 
 
 };
