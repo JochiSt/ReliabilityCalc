@@ -13,9 +13,9 @@ IC_TI::IC_TI(std::string name, std::string type) : IC_ELFR(name) {
     ICname = type;
 
     curl_global_init(CURL_GLOBAL_WIN32);
-	curl = curl_easy_init();
-	if(!curl)
-        exit(1);
+    curl = curl_easy_init();
+    if(!curl)
+	exit(1);
 
     lookup_IC();
 }
@@ -28,11 +28,13 @@ void IC_TI::lookup_IC(){
     // ask TI webpage about this IC
     // aggregate FIT value from TI webpage
     // http://www.ti.com/quality/docs/estimator.tsp?OPN=DS30EA101SQ/NOPB#resultstable
-    printf("Asking TI about .... %s ", ICname.c_str());
+    printf("Asking TI about ... %s ", ICname.c_str());
     std::string data;
 
+    char query[4096];
+    sprintf(query, "http://www.ti.com/quality/docs/estimator.tsp?OPN=%s", ICname.c_str());
 
-    curl_easy_setopt(curl, CURLOPT_URL, "http://www.ti.com/quality/docs/estimator.tsp?OPN=DS30EA101SQ/NOPB#resultstable");
+    curl_easy_setopt(curl, CURLOPT_URL, query);
 
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curl_writeCallback);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA    , &data);
