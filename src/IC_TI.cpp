@@ -24,6 +24,10 @@ IC_TI::~IC_TI(){
     curl_easy_cleanup(curl);
 }
 
+/**
+ * lookup FIT value from TI's webpage
+ * \warning since the internet access is needed, this function does not work offline
+ */
 void IC_TI::lookup_IC(){
     // ask TI webpage about this IC
     // aggregate FIT value from TI webpage

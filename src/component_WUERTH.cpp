@@ -24,6 +24,10 @@ component_WUERTH::component_WUERTH(std::string code){
 	searchTable();	// have a look at the database
 }
 
+component_WUERTH::~component_WUERTH(){
+
+}
+
 void component_WUERTH::searchTable(){
 	std::string Ftable;
 	std::string Fcurve;

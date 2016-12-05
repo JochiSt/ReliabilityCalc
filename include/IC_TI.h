@@ -5,7 +5,6 @@
 #include <string.h>
 #include <curl/curl.h>
 
-
 /**
  * @brief calculate the FIT of TI ICs
  * FIT value is looked up from Webpage
