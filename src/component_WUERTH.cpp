@@ -10,10 +10,11 @@ component_WUERTH::component_WUERTH(std::string code){
 	matchcode = code;
 
 // just for testing
+/*
 	std::string NumberDataSets;
 	db.runSQL("SELECT COUNT(*) FROM MatchCodeMapping", NumberDataSets);
 	printf("found %s types in component WUERTH lookup table\n", NumberDataSets.c_str());
-
+*/
 	// init values from table with nothing
 	FIT_table = "-";
 	FIT_curve = '-';

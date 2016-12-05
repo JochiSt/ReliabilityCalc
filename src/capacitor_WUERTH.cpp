@@ -16,6 +16,11 @@ float capacitor_WUERTH::getFIT(){
 	float stress = usedVoltage / ratedVoltage;
 	char curve = FIT_curve;
 
+	if( curve == '-' ){
+		printf("no curve found for %s\n", name);
+		return FLT_MAX;
+	}
+
 	if(stress <= 0.3){ // use the basic curve
 	}else if(stress > 0.3 && stress <= 0.5){
 		curve += 1;
@@ -27,7 +32,7 @@ float capacitor_WUERTH::getFIT(){
 		return FLT_MAX;
 	}
 
-	printf("%s using table %s, curve %c @ %f K - %f\n", matchcode.c_str(), FIT_table.c_str(), curve, ambientTemperature, usedVoltage/ratedVoltage);
+//	printf("%s using table %s, curve %c @ %f K - %f\n", matchcode.c_str(), FIT_table.c_str(), curve, ambientTemperature, usedVoltage/ratedVoltage);
 
 	float FIT1, temp1;	// lower / equal temperature
 	float FIT2, temp2;	// higher temperature
