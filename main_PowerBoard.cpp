@@ -69,7 +69,7 @@ int main(){
     // http://www.ti.com/quality/docs/estimator.tsp?OPN=DS30BA101SQ/NOPB&CPN=&partNumber=DS30BA101#resultstable
     // http://www.ti.com/quality/docs/estimator.tsp?OPN=DS30BA101SQE/NOPB&CPN=&partNumber=DS30BA101#resultstable
     // http://www.ti.com/quality/docs/estimator.tsp?OPN=DS30BA101SQX/NOPB&CPN=&partNumber=DS30BA101#resultstable
-    TriggerDriver -> addComponent(new IC_TI("U100", "DS15BA101SQ/NOPB"));
+    TriggerDriver -> addComponent(new IC_TI("U100", "DS15BA101SD/NOPB"));
 
 // input Cs
     TriggerDriver -> addComponent(new capacitor_WUERTH("C103", "WCAP-CSGP", 1*capacitor::uF, 1.5, 10));

@@ -18,8 +18,8 @@ OBJECTS = $(SRCS:.cpp=.o)
 
 .PHONY: all clean doc $(BUSSES)
 
-#all:	$(PROGRAM) $(PROGRAM_2)
-all:	$(PROGRAM)
+all:	$(PROGRAM) $(PROGRAM_2)
+#all:	$(PROGRAM)
 	@echo " ALL DONE. $@"
 
 $(PROGRAM):	$(BUSSES) $(OBJECTS) $(PROGRAM).o
