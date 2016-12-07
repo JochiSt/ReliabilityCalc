@@ -7,5 +7,6 @@ std::string component::FITunit = "1E9 h";
 unsigned int component::partcnt = 0;
 
 component::component(std::string val){
-    name = val;
+	name = val;
+	deviceTemperature = 0.;
 }

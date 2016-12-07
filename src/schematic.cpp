@@ -27,7 +27,10 @@ float schematic::getFIT(){
     for(unsigned int i = 0; i < parts.size(); i++ ){
         float partFIT = parts.at(i) -> getFIT();
         if(verbose_output) {
-                std::cout << "  " << std::setw(20) << parts.at(i)->getName() << std::setw(5) << " " << std::fixed << std::setprecision(5)  << std::setw(12) << partFIT << " / " << component::FITunit << std::endl;
+                std::cout << "  " << std::setw(20) << parts.at(i)->getName();
+		std::cout << std::setw(5) << " " << std::fixed << std::setprecision(5)  << std::setw(12) << partFIT;
+		std::cout << " / " << component::FITunit;
+		std::cout << std::endl;
         }
         FIT += partFIT;
     }

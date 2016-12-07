@@ -80,12 +80,33 @@ class component
             return partcnt;
         }
 
+	/**
+	 * @return device temperature
+	 */
+	virtual float getDeviceTemperature() {
+		if( deviceTemperature <= ambientTemperature ){
+			return ambientTemperature;
+		}else{
+			return deviceTemperature;
+		}
+	}
+	/** 
+	 * sets individual device temperature
+	 */
+	virtual void setDeviceTemperature( float temp ){
+		if( temp < KELVIN){
+			temp += KELVIN;
+		}
+		deviceTemperature = temp;
+	}
+
     public:
         static float ambientTemperature;	///< define operating temperature for all parts
         static std::string FITunit;		///< string of FIT unit
 
     protected:
         std::string name;			///< name of the component
+	float deviceTemperature;		///< individual device temperature
 
     private:
         static std::string identifier;		///< which type of component is this

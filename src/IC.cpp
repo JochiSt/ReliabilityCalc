@@ -25,7 +25,11 @@ IC::~IC(){
 }
 
 float IC::getFIT(){
-    float AF = exp(-1.*(EA/kB)*(1./(ambientTemperature)-1./(FIT_temperature)));    //aging factor
-    return FIT * AF;
+	float useTemperature = ambientTemperature;
+	if( deviceTemperature > ambientTemperature){
+		useTemperature = deviceTemperature;
+	}
+	float AF = exp(-1.*(EA/kB)*(1./(useTemperature)-1./(FIT_temperature)));    //aging factor
+	return FIT * AF;
 }
 
