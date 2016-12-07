@@ -9,6 +9,7 @@ using namespace std;
 #include "resistor_VISHAY_CRCWe3.h"
 #include "IC.h"
 #include "inductor.h"
+#include "inductor_coilcraft.h"
 #include "diode.h"
 
 #include "capacitor_WUERTH.h"
@@ -39,10 +40,15 @@ int main(){
 //    example -> addComponent(new IC_TI("U102", "DS15BA101SQ/NOPB"));                             // Fetch the data from TI
     schematic* VCCO2V5 = new schematic("VCCO2V5");
     VCCO2V5 -> addComponent (new IC_TI ("RG1", "LMZ21701SILT"));
+    
+    schematic* ETHERNETSWITCH = new schematic("ETHERNETSWITCH");
+    ETHERNETSWITCH -> addComponent(new inductor_coilcraft ("TR1", 60));
+    ETHERNETSWITCH -> addComponent(new inductor_coilcraft ("TR2", 60));
 
     schematic* GCU = new schematic("GCU_total");
     GCU -> addComponent(FPGA2);
     GCU -> addComponent(VCCO2V5);
+    GCU -> addComponent(ETHERNETSWITCH);
     
     GCU -> setVerboseOutput(true);  // enable verbose output
     FPGA2 -> setVerboseOutput(true);
