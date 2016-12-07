@@ -185,6 +185,7 @@ class schematic : public component {
     private:
         /// store components of this schematic
         std::vector<component*> parts;
+	/// store the amount of parts of the same type
         std::vector<unsigned int> part_count;
 
         /// verbose output
