@@ -10,6 +10,12 @@ For full function the libraries of
 
 are needed.
 
+In order to install them, please install:
+* libsqlite3-dev
+* libcurl4-openssl-dev
+
+the dependencies should be installed automaticly
+
 ## Example Usage
 ###### Define the ambient (usage) temperature
 ```
