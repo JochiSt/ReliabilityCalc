@@ -46,10 +46,12 @@ class schematic : public component {
         /**
          * add component to schematic
          * \param part component, which should be added
+	 * \param cnt number of exactly the same components, which should be added
          */
-        void addComponent(component* part){
+        void addComponent(component* part, unsigned int cnt = 1){
             if(part != NULL){
                 parts.push_back(part);
+		part_count.push_back(cnt);
             }
         }
 
@@ -71,6 +73,7 @@ class schematic : public component {
          */
         virtual void clear(){
             parts.clear();
+            part_count.clear();
         };
 
         /**
@@ -79,6 +82,7 @@ class schematic : public component {
         virtual void removeLastComponent(){
             if(!parts.empty()){
                 parts.pop_back();
+                part_count.pop_back();
             }
         };
         ///@}
@@ -181,6 +185,7 @@ class schematic : public component {
     private:
         /// store components of this schematic
         std::vector<component*> parts;
+        std::vector<unsigned int> part_count;
 
         /// verbose output
         bool verbose_output;
