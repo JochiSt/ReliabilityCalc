@@ -17,6 +17,26 @@ sqlite3_handler::~sqlite3_handler(){
 	   sqlite3_close(db);
 }
 
+int sqlite3_handler::callback(void *Notused, int argc, char **argv, char **azColName){
+	int i;
+	for(i=0; i<argc; i++){
+		printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+	}
+	printf("\n");
+	return 0;
+}
+
+void sqlite3_handler::insert(std::string sql){
+	char *zErrMsg;
+	int rc = sqlite3_exec(db, sql.c_str(), sqlite3_handler::callback, 0, &zErrMsg);
+	if( rc != SQLITE_OK ){
+		fprintf(stderr, "SQL error: %s\n", zErrMsg);
+		sqlite3_free(zErrMsg);
+	}else{
+		printf("record created successfully\n");
+	}
+}
+
 void sqlite3_handler::runSQL(std::string sql){
 	int row = 0;
         sqlite3_stmt *selectStmt;
