@@ -42,7 +42,9 @@ int main(){
     example -> lastAddedComponent() -> setDeviceTemperature(55);
 
     example -> setVerboseOutput(true);  // enable verbose output
-	example -> getFIT();
+    example -> getFIT();
+
+    schematic::printPartCount();
 
     return 0;
 }
