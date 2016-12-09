@@ -6,10 +6,14 @@
 
 class sqlite3_handler {
 	public:
-		sqlite3_handler(std::string filename);
+		/**
+		 * constructor of sqlite3 handler
+		 * \param[in] filename path to database file
+		 * \param[in] flags options for opening the database. 
+		 * 			When records in database should be created use SQLITE_OPEN_READWRITE
+		 */
+		sqlite3_handler(std::string filename, int flags = SQLITE_OPEN_READONLY);
 		virtual ~sqlite3_handler();
-
-		void insert(std::string sql);
 
 		void runSQL(std::string sql);
 		void runSQL(std::string sql, std::string &ret1);
@@ -21,7 +25,6 @@ class sqlite3_handler {
 
 	private:
 		sqlite3 *db;
-		static int callback(void *Notused, int argc, char **argv, char **azColName);
 
 };
 
