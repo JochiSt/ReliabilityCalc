@@ -28,6 +28,10 @@
 *.app
 *.exe
 
+# Databases
+*.db
+*.sqlite
+
 doxygen/html/*
 
 html
