@@ -37,6 +37,7 @@ html
 *.log
 
 main
+main_GCU
 main_PowerBoard
 import_wuerth
 sqlite

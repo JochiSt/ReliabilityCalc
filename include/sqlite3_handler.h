@@ -12,13 +12,17 @@
  *
  * Connect to a database via the SQLite3 API
  */
+
 class sqlite3_handler {
 	public:
 		/**
- 		 * constructor
- 		 * \param filename filename (incl. path) of the databasefile
- 		 */
-		sqlite3_handler(std::string filename);
+		 * constructor of sqlite3 handler
+		 * \param[in] filename path to database file
+		 * \param[in] flags options for opening the database. 
+		 * 			When records in database should be created use SQLITE_OPEN_READWRITE
+		 */
+		sqlite3_handler(std::string filename, int flags = SQLITE_OPEN_READONLY);
+
 		virtual ~sqlite3_handler();
 
 		/**

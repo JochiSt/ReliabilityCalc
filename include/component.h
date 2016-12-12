@@ -4,7 +4,12 @@
 #include <string>
 
 /**
- * @brief Basic component class
+ * \class component
+ * \brief Basic component class
+ * \author Jochen Steinmann
+ * \version 1.0
+ * 
+ * Basic class for reliability calculation
  */
 class component
 {
@@ -39,7 +44,11 @@ class component
             return ambientTemperature;
         }
 
-        /// set ambient temperature
+        /**
+	 * set ambient temperature
+	 * \param[in] val temperature (if temperature is smaller than 273.15, 
+	 * the temperature is automatically converted into Kelvin
+	 */
         static void setAmbientTemperature(float val) {
             if(val < KELVIN){
                 val += KELVIN;
@@ -71,12 +80,33 @@ class component
             return partcnt;
         }
 
+	/**
+	 * @return device temperature
+	 */
+	virtual float getDeviceTemperature() {
+		if( deviceTemperature <= ambientTemperature ){
+			return ambientTemperature;
+		}else{
+			return deviceTemperature;
+		}
+	}
+	/** 
+	 * sets individual device temperature
+	 */
+	virtual void setDeviceTemperature( float temp ){
+		if( temp < KELVIN){
+			temp += KELVIN;
+		}
+		deviceTemperature = temp;
+	}
+
     public:
         static float ambientTemperature;	///< define operating temperature for all parts
         static std::string FITunit;		///< string of FIT unit
 
     protected:
         std::string name;			///< name of the component
+	float deviceTemperature;		///< individual device temperature
 
     private:
         static std::string identifier;		///< which type of component is this

@@ -42,10 +42,11 @@ class capacitor : public component {
         /// @return FIT of this specific component
         virtual float getFIT()=0;
 
+	/// get capacitor identifier
         static std::string getIdentifier(){
             return identifier;
         }
-
+	/// get the capacitor part count
         static unsigned int getPartCount(){
             return partcnt;
         }
@@ -56,8 +57,8 @@ class capacitor : public component {
         float ratedVoltage; ///< rated voltage of the capacitor
 
     private:
-        static std::string identifier;
-        static unsigned int partcnt;
+        static std::string identifier;	///< store capacitor identifier
+        static unsigned int partcnt;	///< static variable for counting the parts
 };
 
 #endif // CAPACITOR_H

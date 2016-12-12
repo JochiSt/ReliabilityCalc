@@ -12,13 +12,14 @@ CC=gcc
 
 PROGRAM = main
 PROGRAM_2 = main_PowerBoard
+PROGRAM_3 = main_GCU
 
 SRCS=$(wildcard src/*.cpp)
 OBJECTS = $(SRCS:.cpp=.o)
 
 .PHONY: all clean doc $(BUSSES)
 
-all:	$(PROGRAM) $(PROGRAM_2)
+all:	$(PROGRAM) $(PROGRAM_2) $(PROGRAM_3)
 #all:	$(PROGRAM)
 	@echo " ALL DONE. $@"
 
@@ -29,6 +30,10 @@ $(PROGRAM):	$(BUSSES) $(OBJECTS) $(PROGRAM).o
 $(PROGRAM_2):	$(BUSSES) $(OBJECTS) $(PROGRAM_2).o
 	@echo -n ">>> Linking   "
 	$(GPP)  -o $(PROGRAM_2) $(OBJECTS) $(PROGRAM_2).o $(LDFLAGS)
+
+$(PROGRAM_3):	$(BUSSES) $(OBJECTS) $(PROGRAM_3).o
+	@echo -n ">>> Linking   "
+	$(GPP)  -o $(PROGRAM_3) $(OBJECTS) $(PROGRAM_3).o $(LDFLAGS)
 
 $(BUSSES):
 	@cd $@; $(MAKE);

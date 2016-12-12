@@ -14,6 +14,11 @@
 #include "IC.h"
 #include "inductor.h"
 
+#define FIT_PRECISION	4
+#define FIT_WIDTH	10
+#define SPACE_WIDTH	3
+#define INDENTION	20
+
 schematic::schematic(std::string name) : component(name){
     verbose_output = false;
     //ctor
@@ -25,15 +30,29 @@ float schematic::getFIT(){
     }
     float FIT = 0;
     for(unsigned int i = 0; i < parts.size(); i++ ){
+	unsigned int partCNT = part_count.at(i);
         float partFIT = parts.at(i) -> getFIT();
+	float totalFIT = partFIT * partCNT;
         if(verbose_output) {
-                std::cout << "  " << std::setw(20) << parts.at(i)->getName() << std::setw(5) << " " << std::fixed << std::setprecision(5)  << std::setw(12) << partFIT << " / " << component::FITunit << std::endl;
+            std::cout << "  " << std::setw(INDENTION) << parts.at(i)->getName();
+	    std::cout << std::setw(SPACE_WIDTH) << " ";
+	    std::cout << std::fixed << std::setprecision(FIT_PRECISION)  << std::setw(FIT_WIDTH) << totalFIT;
+	    std::cout << " / " << component::FITunit;
+	    if(partCNT > 1){
+	        std::cout << " " << std::setw(4) << std::fixed << partCNT << " pcs. ";
+	        std::cout << " each ";
+                std::cout << std::fixed << std::setprecision(FIT_PRECISION)  << std::setw(FIT_WIDTH) << partFIT;
+	    }
+            std::cout << std::endl;
         }
-        FIT += partFIT;
+        FIT += totalFIT;
     }
     if(verbose_output){
-	std::cout << "  " << std::setw(25) << " " << "------------" << std::endl;
-	std::cout << "  " << std::setw(20) << "total FIT:" << std::setw(5) << " " << std::fixed << std::setprecision(5)  << std::setw(12) << FIT << " / " << component::FITunit << std::endl;
+	std::cout << "  " << std::setw(INDENTION+SPACE_WIDTH) << " " << "-----------" << std::endl;
+	std::cout << "  " << std::setw(INDENTION) << "total FIT:";
+	std::cout << std::setw(SPACE_WIDTH) << " ";
+	std::cout << std::fixed << std::setprecision(FIT_PRECISION) << std::setw(FIT_WIDTH) << FIT;
+	std::cout << " / " << component::FITunit << std::endl;
     }
     return FIT;
 }
@@ -74,9 +93,6 @@ float schematic::estimateWeibullExponent(float earlyLifetimeHours, estimation_t 
 }
 */
 /*
-float schematic::getFailureRate(float deviceHours, double FIT, float weibullExponent){
-    return 1. - exp( -1. * std::pow(FIT / 1E6 * deviceHours, weibullExponent) );
-}
 
 float schematic::getFailureRateError(float deviceHours, double FIT, float weibullExponent, float weibullExponentError){
     // https://www.wolframalpha.com/input/?i=D%5B1+-+Exp%5B-(f+*+t)%5Em%5D,+m%5D
@@ -88,11 +104,11 @@ float schematic::getFailureRateError(float deviceHours, double FIT, float weibul
 */
 void schematic::printPartCount(){
     std::cout << "parts used to calculate reliability "<< std::endl;
-    std::cout << "\t" << diode::getPartCount() << " Diodes" << std::endl;
-    std::cout << "\t" << resistor::getPartCount() << " Resistors" << std::endl;
-    std::cout << "\t" << capacitor::getPartCount() << " Capacitors" << std::endl;
-    std::cout << "\t" << IC::getPartCount() << " ICs" << std::endl;
-    std::cout << "\t" << inductor::getPartCount() << " inductors" << std::endl;
+    std::cout << "\t" << std::setw(5) << diode::getPartCount() << " Diodes" << std::endl;
+    std::cout << "\t" << std::setw(5) << resistor::getPartCount() << " Resistors" << std::endl;
+    std::cout << "\t" << std::setw(5) << capacitor::getPartCount() << " Capacitors" << std::endl;
+    std::cout << "\t" << std::setw(5) << IC::getPartCount() << " ICs" << std::endl;
+    std::cout << "\t" << std::setw(5) << inductor::getPartCount() << " inductors" << std::endl;
 }
 
 float schematic::getAccelerationFactor(float testT, float refT){

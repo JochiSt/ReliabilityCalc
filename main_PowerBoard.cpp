@@ -9,6 +9,7 @@ using namespace std;
 #include "IC_TI.h"
 #include "inductor_WUERTH.h"
 #include "diode.h"
+#include "PCB.h"
 
 #include <cmath>
 
@@ -95,6 +96,7 @@ int main(){
 //    CLKPowerSplitting -> setVerboseOutput(true);
 //    TriggerDriver -> setVerboseOutput(true);
 
+    PowerBoard -> addComponent(new PCB("PowerBoard v2", 4, 126, PCB::THROUGH_HOLE, 200));
     PowerBoard -> addComponent(CLKreceiver);
     PowerBoard -> addComponent(CLKPowerSplitting);
     PowerBoard -> addComponent(TriggerDriver);

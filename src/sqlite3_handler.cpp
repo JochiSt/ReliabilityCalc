@@ -2,9 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-sqlite3_handler::sqlite3_handler(std::string filename){
+sqlite3_handler::sqlite3_handler(std::string filename, int flags){
 	/* Open database */
-	int ret = sqlite3_open_v2(filename.c_str(), &db, SQLITE_OPEN_READONLY, NULL);
+	int ret = sqlite3_open_v2(filename.c_str(), &db, flags, NULL);
 	if( ret ){
 		fprintf(stderr, "Can't open database: %s\n\t\t%s\n", filename.c_str(), sqlite3_errmsg(db));
 		exit(-1);
@@ -23,7 +23,6 @@ void sqlite3_handler::runSQL(std::string sql){
         sqlite3_prepare(db, sql.c_str(), sql.length()+1, &selectStmt, NULL);
         while (1) {
             int s;
-            printf("in select while\n");
             s = sqlite3_step (selectStmt);
             if (s == SQLITE_ROW) {
                 printf ("%s: %s\n", sqlite3_column_text(selectStmt, 0), sqlite3_column_text(selectStmt, 1));
