@@ -5,6 +5,7 @@
 
 /**
  * @brief calculate the FIT of ICs
+ *
  * FIT values for ICs must be provided by the manufacturer
  * Correction Factor is given by the JEDEC-Standard. ONLY for Silicon based ICs!
  */

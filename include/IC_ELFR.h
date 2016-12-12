@@ -4,9 +4,7 @@
 #include "IC.h"
 
 /**
- * @brief calculate the FIT of ICs
- * FIT values for ICs must be provided by the manufacturer
- * Correction Factor is given by the JEDEC-Standard. ONLY for Silicon based ICs!
+ * @brief calculate the FIT of ICs and estimate a early failure component
  */
 class IC_ELFR : public IC{
     public:

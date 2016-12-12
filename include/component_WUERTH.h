@@ -1,7 +1,3 @@
-/**
- * http://www.we-online.com/web/en/index.php/show/media/07_electronic_components/download_center_1/technische_dokumente/WES_FIT_Nov16.pdf
- */
-
 #ifndef COMPONENT_WUERTH_H
 #define COMPONENT_WUERTH_H
 
@@ -12,13 +8,15 @@
 
 /**
  * \class component_WUERTH
+ * \brief Implementation of the reliability variables for WUERTH components
  * \author Jochen Steinmann
  * \version 1.0
  * \date 2016-12-05
  * \pre get database with reliability data from WÜRTH
  *
  * Tools for getting the reliability data from the database, which is used 
- * to store the digital reliability data from WÜRTH
+ * to store the reliability data from WÜRTH, which is available at 
+ * http://www.we-online.com/web/en/index.php/show/media/07_electronic_components/download_center_1/technische_dokumente/WES_FIT_Nov16.pdf
  *
  */
 class component_WUERTH {
@@ -46,9 +44,9 @@ class component_WUERTH {
 		 * lookup the FIT value at a given temperature
  		 * \param[in] temperature	operating temperature
  		 * \param[out] retTempL		temperature lower / equal the operating 
- 		 * \param[out] FITL		FIT value at \see retTempL
+ 		 * \param[out] FITL		FIT value at see #retTempL
  		 * \param[out] retTempU		temperature higher / equal the operating temperature
- 		 * \param[out] FITU		FIT value at \see retTempU
+ 		 * \param[out] FITU		FIT value at see #retTempU
  		 *
  		 * retTempL and retTempU together with FITL and FITU can be used for linear interpolation
  		 */
