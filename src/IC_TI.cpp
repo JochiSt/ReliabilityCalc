@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/// static sqlite3 handler with Read-Write Function
+sqlite3_handler IC_TI::db = sqlite3_handler("./TI.db",SQLITE_OPEN_READWRITE);
 
 IC_TI::IC_TI(std::string name, std::string type) : IC_ELFR(name) {
     ICname = type;
@@ -17,11 +19,48 @@ IC_TI::IC_TI(std::string name, std::string type) : IC_ELFR(name) {
     if(!curl)
 	exit(1);
 
-    lookup_IC();
+    printf("Asking TI about ... %s ", ICname.c_str());
+    
+    bool found = lookup_IC_DB();
+    if(found){
+	printf("... found in Database ");
+    }else{
+	printf("... not found in Database asking TI.com ");
+	lookup_IC();
+	store_in_DB();
+    }
+    printf(" ... result %4.1f @ %6.2f\n", FIT, FIT_temperature);
 }
 
 IC_TI::~IC_TI(){
     curl_easy_cleanup(curl);
+}
+
+void IC_TI::store_in_DB(){
+    char query[4096];
+    sprintf(query, "INSERT INTO ti_data VALUES ('%s', %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f);",
+				ICname.c_str(),
+				results[0],  results[3],  results[4],  results[5],  results[6],
+				results[2],  results[1],  results[7],  results[8],  results[9], 
+				results[10], results[11], results[12], results[13]);
+    printf("%s\n", query);
+    db.runSQL(std::string(query));
+};
+
+bool IC_TI::lookup_IC_DB(){
+    char buffer[1024];
+    std::string retvalue1 = "-", retvalue2 = "-", retvalue3 = "-";
+    sprintf(buffer, "SELECT FIT_FIT, FIT_UsageTemp, ELFR_DPPM FROM ti_data WHERE partname = '%s'", ICname.c_str());
+    db.runSQL(std::string(buffer), retvalue1, retvalue2);
+    if(retvalue1 == "-"){
+	printf("IC not found in database\n");
+	return false;
+    }else{
+	FIT = atof(retvalue1.c_str());
+	FIT_temperature = atof(retvalue2.c_str()) + component::KELVIN;	
+	ELFR = atof(retvalue3.c_str());
+	return true;
+    }
 }
 
 /**
@@ -32,7 +71,6 @@ void IC_TI::lookup_IC(){
     // ask TI webpage about this IC
     // aggregate FIT value from TI webpage
     // http://www.ti.com/quality/docs/estimator.tsp?OPN=DS30EA101SQ/NOPB#resultstable
-    printf("Asking TI about ... %s ", ICname.c_str());
     std::string data;
 
     char query[4096];
@@ -103,7 +141,7 @@ void IC_TI::lookup_IC(){
     // init and create first section
     ptr = strtok(string, delimiter);
     int section = 0;
-    std::vector<float> results;
+    results.clear(); // clear result vector
     while(ptr != NULL) {
     	results.push_back( atof(ptr) );
     	ptr = strtok(NULL, delimiter);
@@ -114,8 +152,28 @@ void IC_TI::lookup_IC(){
     FIT = results[2];
     FIT_temperature = results[7] + component::KELVIN;   // store temperature in KELVIN!
 
-//    printf("Determined FIT %f @ %f °C\n", FIT, FIT_temperature);
+    // print all received data
+    printf("ELFR_DPPM\t%f\n", results[0]);
+    printf("MTTF\t%f\n", results[1]);
+    printf("FIT\t%f\n", results[2]);
 
-    printf(" ... result %f @ %f\n", FIT, FIT_temperature);
+    printf("\tEarly Failure Testing ...\n");
+    printf("\t\tELFR-DPPM\t%f\n", results[0]);
+    printf("\t\tConfidence Level:\t%.0f\n", results[3]);
+    printf("\t\tTemperature:\t%.0f\n", results[4]);
+    printf("\t\tSample Size\t%.0f\n", results[5]);
+    printf("\t\tFailures\t%.0f\n", results[6]);
+
+    printf("\tFIT ... \n");
+    printf("\t\tFIT\t%f\n", results[2]);
+    printf("\t\tMTTF\t%f\n", results[1]);
+    printf("\t\tUsage Temperature\t%f\n", results[7]);
+    printf("\t\tConfidence Level\t%f\n", results[8]);
+    printf("\t\tActivation Energy\t%f\n", results[9]);
+    printf("\t\tTest Temperature\t%f\n", results[10]);
+    printf("\t\tTest duration\t%f\n", results[11]);
+    printf("\t\tSample size\t%f\n", results[12]);
+    printf("\t\tFails:\t%f\n", results[13]);
+
 }
 

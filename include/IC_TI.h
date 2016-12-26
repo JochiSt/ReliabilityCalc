@@ -3,7 +3,10 @@
 
 #include "IC_ELFR.h"
 #include <string.h>
+#include <vector>
 #include <curl/curl.h>
+
+#include "sqlite3_handler.h"
 
 /**
  * @brief calculate the FIT of TI ICs
@@ -21,6 +24,7 @@ class IC_TI : public IC_ELFR {
 
     protected:
 
+
     private:
         /// handler for the access to the TI webpage
         CURL *curl;
@@ -29,6 +33,15 @@ class IC_TI : public IC_ELFR {
         /// store the naming of the IC
         std::string ICname;
 
+	/// Handler for the SQLite3 database connection
+	static sqlite3_handler db;
+	/// function, which stores all values in database
+	void store_in_DB();
+	/// lookup IC in database
+	bool lookup_IC_DB();
+	
+	/// Vector to store the values from TI webpage
+    	std::vector<float> results;
     public:
         /**
          * \brief callback function for CURL
