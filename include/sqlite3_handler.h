@@ -59,6 +59,11 @@ class sqlite3_handler {
  		 */
 		void runSQL(std::string sql, std::string &ret1, std::string &ret2, std::string &ret3, std::string &ret4);
 
+		/**
+		 * does the table exist?
+		 */
+		bool existsTable(std::string tablename);
+
 	protected:
 
 	private:

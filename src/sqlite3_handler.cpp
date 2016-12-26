@@ -91,3 +91,16 @@ void sqlite3_handler::runSQL(std::string sql, std::string &ret1, std::string &re
 	}
 	sqlite3_finalize(selectStmt);
 }
+
+
+bool sqlite3_handler::existsTable(std::string tablename){
+	std::string returnV = "0";
+	char query[1024];
+	sprintf(query, "SELECT COUNT(type) FROM sqlite_master WHERE type='table' AND name='%s'", tablename.c_str());
+	runSQL(std::string(query), returnV);
+	if( atoi(returnV.c_str()) > 0){
+		return true;
+	}else{
+		return false;
+	}
+}
