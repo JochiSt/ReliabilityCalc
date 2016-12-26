@@ -32,7 +32,7 @@ void sqlite3_handler::runSQL(std::string sql){
                 break;
             }
             else {
-                fprintf (stderr, "Failed.\n");
+		fprintf(stderr, "Failed: %s\n\n%s\n", sqlite3_errmsg(db), sql.c_str());
                 exit (1);
             }
         }
@@ -47,6 +47,12 @@ void sqlite3_handler::runSQL(std::string sql, std::string &ret1){
 	if (s == SQLITE_ROW) {
 		ret1 = std::string((const char*) sqlite3_column_text(selectStmt, 0));
 	}
+	else if (s == SQLITE_DONE) {
+	}
+	else {
+		fprintf(stderr, "Failed: %s\n\n%s\n", sqlite3_errmsg(db), sql.c_str());
+		exit (1);
+	}
 	sqlite3_finalize(selectStmt);
 }
 void sqlite3_handler::runSQL(std::string sql, std::string &ret1, std::string &ret2){
@@ -58,6 +64,12 @@ void sqlite3_handler::runSQL(std::string sql, std::string &ret1, std::string &re
 	if (s == SQLITE_ROW) {
 		ret1 = std::string((const char*) sqlite3_column_text(selectStmt, 0));
 		ret2 = std::string((const char*) sqlite3_column_text(selectStmt, 1));
+	}
+	else if (s == SQLITE_DONE) {
+	}
+	else {
+		fprintf(stderr, "Failed: %s\n\n%s\n", sqlite3_errmsg(db), sql.c_str());
+		exit (1);
 	}
 	sqlite3_finalize(selectStmt);
 }
@@ -72,6 +84,12 @@ void sqlite3_handler::runSQL(std::string sql, std::string &ret1, std::string &re
 		ret1 = std::string((const char*) sqlite3_column_text(selectStmt, 0));
 		ret2 = std::string((const char*) sqlite3_column_text(selectStmt, 1));
 		ret3 = std::string((const char*) sqlite3_column_text(selectStmt, 2));
+	}
+	else if (s == SQLITE_DONE) {
+	}
+	else {
+		fprintf(stderr, "Failed: %s\n\n%s\n", sqlite3_errmsg(db), sql.c_str());
+		exit (1);
 	}
 	sqlite3_finalize(selectStmt);
 }
@@ -88,6 +106,12 @@ void sqlite3_handler::runSQL(std::string sql, std::string &ret1, std::string &re
 		ret2 = std::string((const char*) sqlite3_column_text(selectStmt, 1));
 		ret3 = std::string((const char*) sqlite3_column_text(selectStmt, 2));
 		ret4 = std::string((const char*) sqlite3_column_text(selectStmt, 3));
+	}
+	else if (s == SQLITE_DONE) {
+	}
+	else {
+		fprintf(stderr, "Failed: %s\n\n%s\n", sqlite3_errmsg(db), sql.c_str());
+		exit (1);
 	}
 	sqlite3_finalize(selectStmt);
 }
