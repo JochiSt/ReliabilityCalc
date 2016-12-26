@@ -42,6 +42,10 @@ class IC_TI : public IC_ELFR {
 	
 	/// Vector to store the values from TI webpage
     	std::vector<float> results;
+
+	/// Create new table
+	void createTable();
+
     public:
         /**
          * \brief callback function for CURL

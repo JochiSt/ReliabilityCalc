@@ -9,7 +9,7 @@
 #include <stdlib.h>
 
 /// static sqlite3 handler with Read-Write Function
-sqlite3_handler IC_TI::db = sqlite3_handler("./TI.db",SQLITE_OPEN_READWRITE);
+sqlite3_handler IC_TI::db = sqlite3_handler("./TI.db",SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE);
 
 IC_TI::IC_TI(std::string name, std::string type) : IC_ELFR(name) {
     ICname = type;
@@ -19,8 +19,12 @@ IC_TI::IC_TI(std::string name, std::string type) : IC_ELFR(name) {
     if(!curl)
 	exit(1);
 
-    printf("Asking TI about ... %s ", ICname.c_str());
-    
+    printf("Looking up ... %s ", ICname.c_str());
+
+    if(!db.existsTable("ti_data")){
+	printf("... table not found - creating database ");
+	createTable();
+    }
     bool found = lookup_IC_DB();
     if(found){
 	printf("... found in Database ");
@@ -36,6 +40,12 @@ IC_TI::~IC_TI(){
     curl_easy_cleanup(curl);
 }
 
+void IC_TI::createTable(){
+	std::string query = "CREATE TABLE ti_data ( partname VARCHAR(100), ELFR_DPPM DECIMAL(7,3), ELFR_CL  DECIMAL(7,3), ELFR_TestTemp DECIMAL(7,3), ELFR_SampleSize DECIMAL(7,3), ELFR_Failures DECIMAL(7,3), FIT_FIT DECIMAL(7,3), FIT_MTTF FLOAT, FIT_UsageTemp DECIMAL(7,3), FIT_CL DECIMAL(7,3), FIT_ActivationE DECIMAL(7,3), FIT_TestTemp DECIMAL(7,3), FIT_TestDuration DECIMAL(7,0), FIT_SampleSize INTEGER, FIT_Fails INTEGER );";
+
+	db.runSQL(query);
+};
+
 void IC_TI::store_in_DB(){
     char query[4096];
     sprintf(query, "INSERT INTO ti_data VALUES ('%s', %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f);",
@@ -43,7 +53,7 @@ void IC_TI::store_in_DB(){
 				results[0],  results[3],  results[4],  results[5],  results[6],
 				results[2],  results[1],  results[7],  results[8],  results[9], 
 				results[10], results[11], results[12], results[13]);
-    printf("%s\n", query);
+//    printf("%s\n", query);
     db.runSQL(std::string(query));
 };
 
@@ -53,7 +63,6 @@ bool IC_TI::lookup_IC_DB(){
     sprintf(buffer, "SELECT FIT_FIT, FIT_UsageTemp, ELFR_DPPM FROM ti_data WHERE partname = '%s'", ICname.c_str());
     db.runSQL(std::string(buffer), retvalue1, retvalue2);
     if(retvalue1 == "-"){
-	printf("IC not found in database\n");
 	return false;
     }else{
 	FIT = atof(retvalue1.c_str());
@@ -152,6 +161,7 @@ void IC_TI::lookup_IC(){
     FIT = results[2];
     FIT_temperature = results[7] + component::KELVIN;   // store temperature in KELVIN!
 
+/*
     // print all received data
     printf("ELFR_DPPM\t%f\n", results[0]);
     printf("MTTF\t%f\n", results[1]);
@@ -174,6 +184,6 @@ void IC_TI::lookup_IC(){
     printf("\t\tTest duration\t%f\n", results[11]);
     printf("\t\tSample size\t%f\n", results[12]);
     printf("\t\tFails:\t%f\n", results[13]);
-
+*/
 }
 
