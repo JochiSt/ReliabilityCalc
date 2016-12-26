@@ -9,4 +9,4 @@ before_install:
 - sudo apt-get install -qq libsqlite3-dev libcurl4-openssl-dev
 
 script:
-make main && ./main
+- make main && ./main
