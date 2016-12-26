@@ -3,6 +3,9 @@ C++ realiability calculation framework, which can be used to calculate the lifet
 
 The parts, which are used are modelled from various sources. One source can be the datasheets, but also a "private" database with stored reliability data can be used.
 
+## BuildStatus
+[![Build Status](https://travis-ci.org/JochiSt/ReliabilityCalc.svg?branch=master)](https://travis-ci.org/JochiSt/ReliabilityCalc)
+
 ## Requirements
 For full function the libraries of 
 * **SQLite3** for given reliability data from private databases
