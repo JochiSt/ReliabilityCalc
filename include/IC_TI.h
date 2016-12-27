@@ -28,6 +28,8 @@ class IC_TI : public IC_ELFR {
     private:
         /// handler for the access to the TI webpage
         CURL *curl;
+	/// get the right part name from the TI webpage
+	void lookupPartName();
         /// fetch the data from the TI webpage
         void lookup_IC();
         /// store the naming of the IC

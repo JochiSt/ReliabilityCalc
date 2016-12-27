@@ -30,6 +30,7 @@ IC_TI::IC_TI(std::string name, std::string type) : IC_ELFR(name) {
 	printf("... found in Database ");
     }else{
 	printf("... not found in Database asking TI.com ");
+	lookupPartName();
 	lookup_IC();
 	store_in_DB();
     }
@@ -40,22 +41,41 @@ IC_TI::~IC_TI(){
     curl_easy_cleanup(curl);
 }
 
-void IC_TI::createTable(){
-	std::string query = "CREATE TABLE ti_data ( partname VARCHAR(100), ELFR_DPPM DECIMAL(7,3), ELFR_CL  DECIMAL(7,3), ELFR_TestTemp DECIMAL(7,3), ELFR_SampleSize DECIMAL(7,3), ELFR_Failures DECIMAL(7,3), FIT_FIT DECIMAL(7,3), FIT_MTTF FLOAT, FIT_UsageTemp DECIMAL(7,3), FIT_CL DECIMAL(7,3), FIT_ActivationE DECIMAL(7,3), FIT_TestTemp DECIMAL(7,3), FIT_TestDuration DECIMAL(7,0), FIT_SampleSize INTEGER, FIT_Fails INTEGER );";
+// get right partname from TI's webpage
+void IC_TI::lookupPartName(){
+// first ask
+// http://www.ti.com/quality/docs/estimator.tsp?partType=tiPartNumber&partNumber=DS15BA101
+    std::string data;
 
-	db.runSQL(query);
-};
 
-void IC_TI::store_in_DB(){
     char query[4096];
-    sprintf(query, "INSERT INTO ti_data VALUES ('%s', %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f);",
-				ICname.c_str(),
-				results[0],  results[3],  results[4],  results[5],  results[6],
-				results[2],  results[1],  results[7],  results[8],  results[9], 
-				results[10], results[11], results[12], results[13]);
-//    printf("%s\n", query);
-    db.runSQL(std::string(query));
-};
+    sprintf(query, "http://www.ti.com/quality/docs/estimator.tsp?partType=tiPartNumber&partNumber=%s", ICname.c_str());
+
+    curl_easy_setopt(curl, CURLOPT_URL, query);
+
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curl_writeCallback);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA    , &data);
+    curl_easy_perform(curl);
+
+    if(data.find("possible matches. Please choose a") != std::string::npos){
+	size_t start = data.find("<ul class=\"resultsList\">")+24;
+	size_t end   = data.find("</div>", start);
+	data = data.substr( start, end - start);
+
+	replace_all(data, "\r", "");
+	replace_all(data, "\n", "");
+	replace_all(data, "\t", "");
+
+	start = data.find(">")+1;
+	end   = data.find("<", start);
+
+	data = data.substr(start, end-start);
+
+	printf(" ... partname '%s' ", data.c_str());
+
+	ICname = data;
+    }
+}
 
 bool IC_TI::lookup_IC_DB(){
     char buffer[1024];
@@ -81,6 +101,7 @@ void IC_TI::lookup_IC(){
     // aggregate FIT value from TI webpage
     // http://www.ti.com/quality/docs/estimator.tsp?OPN=DS30EA101SQ/NOPB#resultstable
     std::string data;
+
 
     char query[4096];
     sprintf(query, "http://www.ti.com/quality/docs/estimator.tsp?OPN=%s", ICname.c_str());
@@ -186,4 +207,21 @@ void IC_TI::lookup_IC(){
     printf("\t\tFails:\t%f\n", results[13]);
 */
 }
+
+void IC_TI::createTable(){
+	std::string query = "CREATE TABLE ti_data ( partname VARCHAR(100), ELFR_DPPM DECIMAL(7,3), ELFR_CL  DECIMAL(7,3), ELFR_TestTemp DECIMAL(7,3), ELFR_SampleSize DECIMAL(7,3), ELFR_Failures DECIMAL(7,3), FIT_FIT DECIMAL(7,3), FIT_MTTF FLOAT, FIT_UsageTemp DECIMAL(7,3), FIT_CL DECIMAL(7,3), FIT_ActivationE DECIMAL(7,3), FIT_TestTemp DECIMAL(7,3), FIT_TestDuration DECIMAL(7,0), FIT_SampleSize INTEGER, FIT_Fails INTEGER );";
+
+	db.runSQL(query);
+};
+
+void IC_TI::store_in_DB(){
+    char query[4096];
+    sprintf(query, "INSERT INTO ti_data VALUES ('%s', %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f);",
+				ICname.c_str(),
+				results[0],  results[3],  results[4],  results[5],  results[6],
+				results[2],  results[1],  results[7],  results[8],  results[9], 
+				results[10], results[11], results[12], results[13]);
+//    printf("%s\n", query);
+    db.runSQL(std::string(query));
+};
 
