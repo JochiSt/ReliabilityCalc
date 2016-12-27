@@ -7,7 +7,6 @@ sqlite3_handler::sqlite3_handler(std::string filename, int flags){
 	int ret = sqlite3_open_v2(filename.c_str(), &db, flags, NULL);
 	if( ret ){
 		fprintf(stderr, "Can't open database: %s\n\t\t%s\n", filename.c_str(), sqlite3_errmsg(db));
-		exit(-1);
 	}else{
 		fprintf(stdout, "Opened database %s successfully\n", filename.c_str());
 	}
@@ -32,8 +31,7 @@ void sqlite3_handler::runSQL(std::string sql){
                 break;
             }
             else {
-		fprintf(stderr, "Failed: %s\n\n%s\n", sqlite3_errmsg(db), sql.c_str());
-                exit (1);
+		fprintf(stderr, "Failed: %s\n\t%s\n", sqlite3_errmsg(db), sql.c_str());
             }
         }
         sqlite3_finalize(selectStmt);
@@ -50,8 +48,7 @@ void sqlite3_handler::runSQL(std::string sql, std::string &ret1){
 	else if (s == SQLITE_DONE) {
 	}
 	else {
-		fprintf(stderr, "Failed: %s\n\n%s\n", sqlite3_errmsg(db), sql.c_str());
-		exit (1);
+		fprintf(stderr, "Failed: %s\n\t%s\n", sqlite3_errmsg(db), sql.c_str());
 	}
 	sqlite3_finalize(selectStmt);
 }
@@ -68,8 +65,7 @@ void sqlite3_handler::runSQL(std::string sql, std::string &ret1, std::string &re
 	else if (s == SQLITE_DONE) {
 	}
 	else {
-		fprintf(stderr, "Failed: %s\n\n%s\n", sqlite3_errmsg(db), sql.c_str());
-		exit (1);
+		fprintf(stderr, "Failed: %s\n\t%s\n", sqlite3_errmsg(db), sql.c_str());
 	}
 	sqlite3_finalize(selectStmt);
 }
@@ -88,8 +84,7 @@ void sqlite3_handler::runSQL(std::string sql, std::string &ret1, std::string &re
 	else if (s == SQLITE_DONE) {
 	}
 	else {
-		fprintf(stderr, "Failed: %s\n\n%s\n", sqlite3_errmsg(db), sql.c_str());
-		exit (1);
+		fprintf(stderr, "Failed: %s\n\t%s\n", sqlite3_errmsg(db), sql.c_str());
 	}
 	sqlite3_finalize(selectStmt);
 }
@@ -110,8 +105,7 @@ void sqlite3_handler::runSQL(std::string sql, std::string &ret1, std::string &re
 	else if (s == SQLITE_DONE) {
 	}
 	else {
-		fprintf(stderr, "Failed: %s\n\n%s\n", sqlite3_errmsg(db), sql.c_str());
-		exit (1);
+		fprintf(stderr, "Failed: %s\n\t%s\n", sqlite3_errmsg(db), sql.c_str());
 	}
 	sqlite3_finalize(selectStmt);
 }
