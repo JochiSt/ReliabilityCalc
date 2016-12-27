@@ -60,7 +60,7 @@ void IC_TI::store_in_DB(){
 bool IC_TI::lookup_IC_DB(){
     char buffer[1024];
     std::string retvalue1 = "-", retvalue2 = "-", retvalue3 = "-";
-    sprintf(buffer, "SELECT FIT_FIT, FIT_UsageTemp, ELFR_DPPM FROM ti_data WHERE partname = '%s'", ICname.c_str());
+    sprintf(buffer, "SELECT FIT_FIT, FIT_UsageTemp, ELFR_DPPM FROM ti_data WHERE partname LIKE '%s%c'", ICname.c_str(), '%');
     db.runSQL(std::string(buffer), retvalue1, retvalue2);
     if(retvalue1 == "-"){
 	return false;

@@ -36,9 +36,9 @@ int main(){
 
     example -> addComponent(new inductor_WUERTH("L1", "WE-PoE+"));
 
-//    example -> addComponent(new IC_TI("U101", "DS15EA101SQ/NOPB"));                             // Fetch the data from TI
-//    example -> addComponent(new IC_TI("U102", "DS15BA101SQ/NOPB"));                             // Fetch the data from TI
-    example -> addComponent(new IC_TI("GCU_ISO", "ISO7341CQDWQ1"));                             // Fetch the data from TI
+//    example -> addComponent(new IC_TI("U101", "DS15EA101SQ/NOPB"));
+//    example -> addComponent(new IC_TI("U102", "DS15BA101SQ/NOPB"));
+    example -> addComponent(new IC_TI("GCU_ISO", "ISO7341CQDWQ1"));
     example -> lastAddedComponent() -> setDeviceTemperature(55);
 
     example -> setVerboseOutput(true);  // enable verbose output
