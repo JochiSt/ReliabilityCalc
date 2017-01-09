@@ -110,6 +110,28 @@ int main(){
     IntVoltage -> addComponent(new IC_TI("U600", "LM46000"));
 
 /****************************************************************************************************************/
+// POE+ p. 8
+    schematic* POE = new schematic("POE power");
+    POE -> addComponent(new resistor_VISHAY_CRCWe3("R1100", 75*resistor::Ohm, 0.05, 0.1)); 
+    POE -> addComponent(new resistor_VISHAY_CRCWe3("R1101", 75*resistor::Ohm, 0.05, 0.1)); 
+    POE -> addComponent(new capacitor_WUERTH("C1101", "WCAP-CSGP", 1*capacitor::nF, POEinput/2., 50));
+    POE -> addComponent(new capacitor_WUERTH("C1102", "WCAP-CSGP", 1*capacitor::nF, POEinput/2., 50));
+    POE -> addComponent(new capacitor_WUERTH("C1104", "WCAP-CSGP", 1*capacitor::nF, POEinput/2., 50));
+
+    POE -> addComponent(new inductor_WUERTH("T1100", "WE-PoE+"));
+ 
+    POE -> addComponent(new resistor_VISHAY_CRCWe3("R1102", 75*resistor::Ohm, 0.05, 0.1)); 
+    POE -> addComponent(new resistor_VISHAY_CRCWe3("R1103", 75*resistor::Ohm, 0.05, 0.1)); 
+    POE -> addComponent(new capacitor_WUERTH("C1103", "WCAP-CSGP", 1*capacitor::nF, POEinput/2., 50));
+
+    POE -> addComponent(new capacitor_WUERTH("C1100", "WCAP-CSGP", 100*capacitor::nF, POEinput, 50));
+    POE -> addComponent(new inductor_WUERTH("L1100", "WE-SL5"));
+    POE -> addComponent(new capacitor_WUERTH("C1105", "WCAP-CSGP", 100*capacitor::nF, POEinput, 50));
+
+//TODO FIXME include diode D1100
+
+/****************************************************************************************************************/
+// DC/DC for GCU supply p. 9
     schematic* GCU_U = new schematic("GCU DC/DC");
     GCU_U -> addComponent(new capacitor_WUERTH("C1200", "WCAP-CSGP", 100*capacitor::pF, POEinput/2., 50));
     GCU_U -> addComponent(new capacitor_WUERTH("C1205", "WCAP-CSGP", 100*capacitor::pF, POEinput/2., 50));
@@ -231,6 +253,7 @@ int main(){
     PowerBoard -> addComponent(CLKPowerSplitting);
     PowerBoard -> addComponent(C3V3);
 
+    PowerBoard -> addComponent(POE);
     PowerBoard -> addComponent(GCU_U);
     // GCU_U -> setVerboseOutput(true);
     PowerBoard -> addComponent(I2Ciso);
