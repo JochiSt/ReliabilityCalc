@@ -41,9 +41,9 @@ float capacitor_WUERTH::getFIT(){
 	float FIT1, temp1;	// lower / equal temperature
 	float FIT2, temp2;	// higher temperature
 
-	component_WUERTH::getFIT(ambientTemperature, temp1, FIT1, temp2, FIT2, curve);
+	component_WUERTH::getFIT(getDeviceTemperature(), temp1, FIT1, temp2, FIT2, curve);
 
-	float FIT = FIT1 + (FIT2 - FIT1)/(temp2 - temp1) * (ambientTemperature - temp1);
+	float FIT = FIT1 + (FIT2 - FIT1)/(temp2 - temp1) * (getDeviceTemperature() - temp1);
 
 	return FIT;
 }

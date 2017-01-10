@@ -17,13 +17,12 @@ float inductor_WUERTH::getFIT(){
 		printf("no curve found for %s\n", name.c_str());
 		return FLT_MAX;
 	}
-//	printf("%s using table %s, curve %c @ %f K\n", matchcode.c_str(), FIT_table.c_str(), FIT_curve, ambientTemperature);
 
 	float FIT1, temp1;	// lower / equal temperature
 	float FIT2, temp2;	// higher temperature
-	component_WUERTH::getFIT(ambientTemperature, temp1, FIT1, temp2, FIT2);
+	component_WUERTH::getFIT(getDeviceTemperature(), temp1, FIT1, temp2, FIT2);
 
-	float FIT = FIT1 + (FIT2 - FIT1)/(temp2 - temp1) * (ambientTemperature - temp1);
+	float FIT = FIT1 + (FIT2 - FIT1)/(temp2 - temp1) * (getDeviceTemperature() - temp1);
 
 	return FIT;
 }
