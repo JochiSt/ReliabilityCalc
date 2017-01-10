@@ -106,6 +106,57 @@ int main(){
     C3V3 -> addComponent(new capacitor_WUERTH("C627", "WCAP-CSGP", 1*capacitor::uF, 2.5, 50));
 
 /****************************************************************************************************************/
+// Analog 1V8 supply p. 5
+    schematic* A1V8  = new schematic("analog 1V8");
+/****************************************************************************************************************/
+// Analog 3V3 supply p. 6
+    schematic* A3V3  = new schematic("analog 3V3");
+
+    A3V3 -> addComponent(new capacitor_WUERTH("C512", "WCAP-CSGP", .1*capacitor::nF,  IntU, 25));
+    A3V3 -> addComponent(new capacitor_WUERTH("C513", "WCAP-CSGP", .1*capacitor::nF,  IntU, 25));
+    A3V3 -> addComponent(new capacitor_WUERTH("C514", "WCAP-CSGP", 4.7*capacitor::uF, IntU, 16));
+    A3V3 -> addComponent(new capacitor_WUERTH("C515", "WCAP-CSGP", 4.7*capacitor::uF, IntU, 16));
+    
+    // enable + startup
+    float I_R503_R505 = POCinput / (330e3 + 470e3);
+    A3V3 -> addComponent(new resistor_VISHAY_CRCWe3("R503", 820*resistor::kOhm, pow(I_R503_R505,2)*330E3, 0.1)); 
+    A3V3 -> addComponent(new resistor_VISHAY_CRCWe3("R305", 100*resistor::kOhm, pow(I_R503_R505,2)*470E3, 0.1)); 
+    A3V3 -> addComponent(new capacitor_WUERTH("C518", "WCAP-CSGP", 47*capacitor::nF, 5, 25)); // TODO
+
+    A3V3 -> addComponent(new IC_TI("U500", "LM46000"));
+
+    // feedback
+    float I_R510_R511 = 3.3 / (1E6 + 442E3);
+    A3V3 -> addComponent(new resistor_VISHAY_CRCWe3("R510", 442*resistor::kOhm, pow(I_R510_R511,2)*442E3, 0.1)); 
+    A3V3 -> addComponent(new resistor_VISHAY_CRCWe3("R511", 1*resistor::MOhm, pow(I_R510_R511,2)*1e6, 0.1)); 
+    A3V3 -> addComponent(new capacitor_WUERTH("C521", "WCAP-CSGP", 68*capacitor::pF, 3.3, 50));
+
+    A3V3 -> addComponent(new capacitor_WUERTH("C503", "WCAP-CSGP", 470*capacitor::nF, IntU, 25));
+
+    A3V3 -> addComponent(new inductor_WUERTH("L500", "WE-PD"));
+
+    A3V3 -> addComponent(new capacitor_WUERTH("C519", "WCAP-CSGP", 2.2*capacitor::uF, 5, 25));	// TODO
+    A3V3 -> addComponent(new capacitor_WUERTH("C520", "WCAP-CSGP", 2.2*capacitor::uF, 3.3, 25));
+
+    A3V3 -> addComponent(new capacitor_WUERTH("C504", "WCAP-CSGP", 10*capacitor::uF, 3.3, 10));
+    A3V3 -> addComponent(new capacitor_WUERTH("C505", "WCAP-CSGP", 10*capacitor::uF, 3.3, 10));
+    A3V3 -> addComponent(new capacitor_WUERTH("C506", "WCAP-CSGP", 10*capacitor::uF, 3.3, 10));
+    A3V3 -> addComponent(new capacitor_WUERTH("C507", "WCAP-CSGP", 10*capacitor::uF, 3.3, 10));
+    A3V3 -> addComponent(new capacitor_WUERTH("C510", "WCAP-CSGP", 100*capacitor::pF, 3.3, 25));
+    A3V3 -> addComponent(new capacitor_WUERTH("C511", "WCAP-CSGP", 100*capacitor::pF, 3.3, 25));
+
+    // frequency
+    A3V3 -> addComponent(new resistor_VISHAY_CRCWe3("R504", 56*resistor::kOhm, 0.05, 0.1)); 
+    A3V3 -> addComponent(new resistor_VISHAY_CRCWe3("R506", 10*resistor::kOhm, 0.05, 0.1)); 
+
+    // output filter
+    A3V3 -> addComponent(new capacitor_WUERTH("C522", "WCAP-CSGP", 4.7*capacitor::uF, 3.3, 16));
+    A3V3 -> addComponent(new capacitor_WUERTH("C523", "WCAP-CSGP", 100*capacitor::pF, 3.3, 25));
+    A3V3 -> addComponent(new inductor_WUERTH("L501", "WE-CBF"));
+    A3V3 -> addComponent(new capacitor_WUERTH("C524", "WCAP-CSGP", 100*capacitor::pF, 3.3, 25));
+    A3V3 -> addComponent(new capacitor_WUERTH("C525", "WCAP-CSGP", 4.7*capacitor::uF, 3.3, 16));
+
+/****************************************************************************************************************/
 // Internal Voltage p. 7
     schematic* Int_U = new schematic("Internal Voltage");
 
@@ -293,13 +344,18 @@ int main(){
     PowerBoard -> addComponent(TriggerDriver);
     PowerBoard -> addComponent(CLKreceiver);
     PowerBoard -> addComponent(CLKPowerSplitting);
+
     PowerBoard -> addComponent(C3V3);
 
-    
+    PowerBoard -> addComponent(A1V8);
+    PowerBoard -> addComponent(A3V3);
+
     PowerBoard -> addComponent(Int_U);
+
     PowerBoard -> addComponent(POE);
     PowerBoard -> addComponent(GCU_U);
     // GCU_U -> setVerboseOutput(true);
+
     PowerBoard -> addComponent(I2Ciso);
 
     PowerBoard -> addComponent(GCUmonitoring);
