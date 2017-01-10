@@ -305,9 +305,17 @@ int main(){
     POE -> addComponent(new resistor_VISHAY_CRCWe3("R1103", 75*resistor::Ohm, 0.05, 0.1)); 
     POE -> addComponent(new capacitor_WUERTH("C1103", "WCAP-CSGP", 1*capacitor::nF, POEinput/2., 50));
 
-    POE -> addComponent(new capacitor_WUERTH("C1100", "WCAP-CSGP", 100*capacitor::nF, POEinput, 50));
+    float I_R1105_R1106 = POEinput / (47e3 + 47e3);
+    POE -> addComponent(new capacitor_WUERTH("C1100", "WCAP-CSGP", 100*capacitor::nF, POEinput/2., 50));
+    POE -> addComponent(new capacitor_WUERTH("C1106", "WCAP-CSGP", 100*capacitor::nF, POEinput/2., 50));
     POE -> addComponent(new inductor_WUERTH("L1100", "WE-SL5"));
-    POE -> addComponent(new capacitor_WUERTH("C1105", "WCAP-CSGP", 100*capacitor::nF, POEinput, 50));
+    POE -> addComponent(new capacitor_WUERTH("C1105", "WCAP-CSGP", 100*capacitor::nF, POEinput/2., 50));
+    POE -> addComponent(new capacitor_WUERTH("C1107", "WCAP-CSGP", 100*capacitor::nF, POEinput/2., 50));
+    
+    POE -> addComponent(new resistor_VISHAY_CRCWe3("R1105", 47*resistor::kOhm, pow(I_R1105_R1106,2)*47e3, 0.1));
+    POE -> addComponent(new resistor_VISHAY_CRCWe3("R1106", 47*resistor::kOhm, pow(I_R1105_R1106,2)*47e3, 0.1));
+    POE -> addComponent(new resistor_VISHAY_CRCWe3("R1107", 100*resistor::Ohm, 0.05, 0.1));
+
 
 //TODO FIXME include diode D1100
 
@@ -384,38 +392,74 @@ int main(){
     I2Ciso -> addComponent(new resistor_VISHAY_CRCWe3("R1404", 1.2, 0.05, 0.1)); // TODO Stress??
 
 /****************************************************************************************************************/
-// GCU monitoring p. 12
-    schematic* GCUmonitoring = new schematic("GCU monitoring");
-    GCUmonitoring -> addComponent(new capacitor_WUERTH("C1303", "WCAP-CSGP", 330*capacitor::nF, POEinput/2., 50));
-    GCUmonitoring -> addComponent(new capacitor_WUERTH("C1309", "WCAP-CSGP", 330*capacitor::nF, POEinput/2., 50));
-    //FIXME TODO  use the right inductor here
-//    GCUmonitoring -> addComponent(new inductor_WUERTH("L1300", "WE-CSL"));
-    GCUmonitoring -> addComponent(new capacitor_WUERTH("C1302", "WCAP-CSGP", 330*capacitor::nF, POEinput/2., 50));
-    GCUmonitoring -> addComponent(new capacitor_WUERTH("C1308", "WCAP-CSGP", 330*capacitor::nF, POEinput/2., 50));
+// POC monitoring p. 11
+    schematic* POCmonitoring = new schematic("POC monitoring");
+    
+    POCmonitoring -> addComponent(new capacitor_WUERTH("C904", "WCAP-CSGP", 100*capacitor::nF, POCinput, 50));
+    POCmonitoring -> addComponent(new inductor_WUERTH("L900", "WE-CBF"));
+    POCmonitoring -> addComponent(new capacitor_WUERTH("C903", "WCAP-CSGP", 100*capacitor::nF, POCinput, 50));
+
+    float I_R902_R903 = POCinput / (47E3 + 2.7E3);
+    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R902", 47*resistor::kOhm, pow(I_R902_R903,2) * 47E3, 0.1));
+    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R903", 2.7*resistor::kOhm, pow(I_R902_R903,2)*2.7E3, 0.1));
+
+    POCmonitoring -> addComponent(new IC_TI("U901", "INA168"));
+    //FIXME TODO insert maximal current here
+    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R901", 390*resistor::kOhm, pow(200E-6,2)*390E3, 0.1));
+
+    POCmonitoring -> addComponent(new IC_TI("U900", "TLV2316"));
+    POCmonitoring -> addComponent(new capacitor_WUERTH("C901", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
+
+    float I_R900_R905 = 3.3 / (100 + 47e3);
+    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R900", 100*resistor::Ohm, pow(I_R900_R905,2)*100, 0.1));
+    POCmonitoring -> addComponent(new capacitor_WUERTH("C900", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
+    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R905", 47*resistor::kOhm, pow(I_R900_R905,2)*47e3, 0.1));
+
+    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R904", 100*resistor::Ohm, pow(I_R900_R905,2)*100, 0.1));
+    POCmonitoring -> addComponent(new capacitor_WUERTH("C902", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
+    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R906", 47*resistor::kOhm, pow(I_R900_R905,2)*47e3, 0.1));
+
+    POCmonitoring -> addComponent(new IC_TI("U3", "ADS1015"));
+    POCmonitoring -> addComponent(new capacitor_WUERTH("C9", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
+    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R12", 0*resistor::Ohm, 0, 0.1)); // FIXME
+
+/****************************************************************************************************************/
+// POE monitoring p. 12
+    schematic* POEmonitoring = new schematic("POE monitoring");
+    POEmonitoring -> addComponent(new capacitor_WUERTH("C1303", "WCAP-CSGP", 330*capacitor::nF, POEinput/2., 50));
+    POEmonitoring -> addComponent(new capacitor_WUERTH("C1309", "WCAP-CSGP", 330*capacitor::nF, POEinput/2., 50));
+    POEmonitoring -> addComponent(new inductor_WUERTH("L1300", "WE-CBF"));
+    POEmonitoring -> addComponent(new capacitor_WUERTH("C1302", "WCAP-CSGP", 330*capacitor::nF, POEinput/2., 50));
+    POEmonitoring -> addComponent(new capacitor_WUERTH("C1308", "WCAP-CSGP", 330*capacitor::nF, POEinput/2., 50));
+
+    float I_R1311_R1313 = POEinput / (47E3 + 47E3);
+    POEmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1311", 47*resistor::kOhm, pow(I_R1311_R1313,2)*47E3, 0.1));
+    POEmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1313", 47*resistor::kOhm, pow(I_R1311_R1313,2)*47E3, 0.1));
+    POEmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1312", 100*resistor::Ohm, 0.05, 0.1));
 
     float I_R1302_R1305 = POEinput / (56E3 + 2.2E3);
-    GCUmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1302", 56*resistor::kOhm, pow(I_R1302_R1305,2) * 56E3, 0.1));
-    GCUmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1302", 2.2*resistor::kOhm, pow(I_R1302_R1305,2)*2.2E3, 0.1));
+    POEmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1302", 56*resistor::kOhm, pow(I_R1302_R1305,2) * 56E3, 0.1));
+    POEmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1305", 2.2*resistor::kOhm, pow(I_R1302_R1305,2)*2.2E3, 0.1));
 
-    GCUmonitoring -> addComponent(new IC_TI("U1303", "INA168"));
+    POEmonitoring -> addComponent(new IC_TI("U1303", "INA168"));
     //FIXME TODO insert maximal current here
-    GCUmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1301", 150*resistor::kOhm, pow(200E-6,2)*150E3, 0.1));
+    POEmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1301", 150*resistor::kOhm, pow(200E-6,2)*150E3, 0.1));
 
-    GCUmonitoring -> addComponent(new IC_TI("U1302", "TLV2316"));
-    GCUmonitoring -> addComponent(new capacitor_WUERTH("C1305", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
+    POEmonitoring -> addComponent(new IC_TI("U1302", "TLV2316"));
+    POEmonitoring -> addComponent(new capacitor_WUERTH("C1305", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
 
     float I_R1300_R1309 = 3.3 / (100 + 47e3);
-    GCUmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1300", 100*resistor::Ohm, pow(I_R1300_R1309,2)*100, 0.1));
-    GCUmonitoring -> addComponent(new capacitor_WUERTH("C1304", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
-    GCUmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1309", 47*resistor::kOhm, pow(I_R1300_R1309,2)*47e3, 0.1));
+    POEmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1300", 100*resistor::Ohm, pow(I_R1300_R1309,2)*100, 0.1));
+    POEmonitoring -> addComponent(new capacitor_WUERTH("C1304", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
+    POEmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1309", 47*resistor::kOhm, pow(I_R1300_R1309,2)*47e3, 0.1));
 
-    GCUmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1307", 100*resistor::Ohm, pow(I_R1300_R1309,2)*100, 0.1));
-    GCUmonitoring -> addComponent(new capacitor_WUERTH("C1306", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
-    GCUmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1310", 47*resistor::kOhm, pow(I_R1300_R1309,2)*47e3, 0.1));
+    POEmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1307", 100*resistor::Ohm, pow(I_R1300_R1309,2)*100, 0.1));
+    POEmonitoring -> addComponent(new capacitor_WUERTH("C1306", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
+    POEmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1310", 47*resistor::kOhm, pow(I_R1300_R1309,2)*47e3, 0.1));
 
-    GCUmonitoring -> addComponent(new IC_TI("U1304", "ADS1015"));
-    GCUmonitoring -> addComponent(new capacitor_WUERTH("C1307", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
-    GCUmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1306", 0*resistor::Ohm, 0, 0.1)); // FIXME
+    POEmonitoring -> addComponent(new IC_TI("U1304", "ADS1015"));
+    POEmonitoring -> addComponent(new capacitor_WUERTH("C1307", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
+    POEmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1306", 0*resistor::Ohm, 0, 0.1)); // FIXME
 
 /****************************************************************************************************************/
 // Temperature Monitoring p. 13
@@ -427,6 +471,8 @@ int main(){
 
 /****************************************************************************************************************/
 // put the whole thing together
+
+
     schematic* PowerBoard = new schematic("Power Board (total)");
 
     PowerBoard -> addComponent(new PCB("PowerBoard v2", 4, 126, PCB::THROUGH_HOLE, 200));
@@ -449,13 +495,15 @@ int main(){
 
     PowerBoard -> addComponent(I2Ciso);
 
-    PowerBoard -> addComponent(GCUmonitoring);
+    PowerBoard -> addComponent(POCmonitoring);
+    PowerBoard -> addComponent(POEmonitoring);
     PowerBoard -> addComponent(Tmonitoring);
 
     PowerBoard -> setVerboseOutput(true);
 
 /****************************************************************************************************************/
     cout << endl;
+    cout << "Calculating FIT for " << component::getAmbientTemperature() - component::KELVIN << "°C" << endl;
 
     double FITPowerBoard = PowerBoard -> getFIT();
 
