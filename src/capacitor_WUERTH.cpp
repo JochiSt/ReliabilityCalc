@@ -21,6 +21,10 @@ float capacitor_WUERTH::getFIT(){
 		return FLT_MAX;
 	}
 
+	if(stress > 0.5){
+		printf("Warning stress > 0.5 in %s\n", name.c_str());
+	}
+
 	if(stress <= 0.3){ // use the basic curve
 	}else if(stress > 0.3 && stress <= 0.5){
 		curve += 1;
