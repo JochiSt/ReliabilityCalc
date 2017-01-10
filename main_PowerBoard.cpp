@@ -90,16 +90,51 @@ int main(){
 /****************************************************************************************************************/
 // cable supply 3V3
     schematic* C3V3 = new schematic("C3V3");
+  
     C3V3 -> addComponent(new capacitor_WUERTH("C612", "WCAP-CSGP", .1*capacitor::nF,  IntU, 25));
     C3V3 -> addComponent(new capacitor_WUERTH("C613", "WCAP-CSGP", .1*capacitor::nF,  IntU, 25));
     C3V3 -> addComponent(new capacitor_WUERTH("C614", "WCAP-CSGP", 4.7*capacitor::uF, IntU, 16));
     C3V3 -> addComponent(new capacitor_WUERTH("C615", "WCAP-CSGP", 4.7*capacitor::uF, IntU, 16));
-    C3V3 -> addComponent(new IC_TI("U600", "LM46000"));
-
-    float I_R603_R605 = IntU / (330E3 + 470E3);
+    
+    // enable + startup
+    float I_R603_R605 = IntU / (330e3 + 470e3);
     C3V3 -> addComponent(new resistor_VISHAY_CRCWe3("R603", 330*resistor::kOhm, pow(I_R603_R605,2)*330E3, 0.1)); 
     C3V3 -> addComponent(new resistor_VISHAY_CRCWe3("R605", 470*resistor::kOhm, pow(I_R603_R605,2)*470E3, 0.1)); 
-  
+    C3V3 -> addComponent(new capacitor_WUERTH("C618", "WCAP-CSGP", 47*capacitor::nF, 5, 25)); // TODO
+
+    C3V3 -> addComponent(new IC_TI("U600", "LM46000"));
+
+    // feedback
+    float I_R608_R609 = 3.3 / (1E6 + 442E3);
+    C3V3 -> addComponent(new resistor_VISHAY_CRCWe3("R608", 442*resistor::kOhm, pow(I_R608_R609,2)*442E3, 0.1)); 
+    C3V3 -> addComponent(new resistor_VISHAY_CRCWe3("R609", 1*resistor::MOhm, pow(I_R608_R609,2)*1e6, 0.1)); 
+    C3V3 -> addComponent(new capacitor_WUERTH("C621", "WCAP-CSGP", 68*capacitor::pF, 3.3, 50));
+
+    C3V3 -> addComponent(new capacitor_WUERTH("C603", "WCAP-CSGP", 470*capacitor::nF, IntU, 25));
+
+    C3V3 -> addComponent(new inductor_WUERTH("L600", "WE-PD"));
+
+    C3V3 -> addComponent(new capacitor_WUERTH("C619", "WCAP-CSGP", 2.2*capacitor::uF, 5, 25));	// TODO
+    C3V3 -> addComponent(new capacitor_WUERTH("C620", "WCAP-CSGP", 2.2*capacitor::uF, 3.3, 25));
+
+    C3V3 -> addComponent(new capacitor_WUERTH("C604", "WCAP-CSGP", 10*capacitor::uF, 3.3, 10));
+    C3V3 -> addComponent(new capacitor_WUERTH("C605", "WCAP-CSGP", 10*capacitor::uF, 3.3, 10));
+    C3V3 -> addComponent(new capacitor_WUERTH("C606", "WCAP-CSGP", 10*capacitor::uF, 3.3, 10));
+    C3V3 -> addComponent(new capacitor_WUERTH("C607", "WCAP-CSGP", 10*capacitor::uF, 3.3, 10));
+    C3V3 -> addComponent(new capacitor_WUERTH("C610", "WCAP-CSGP", 100*capacitor::pF, 3.3, 25));
+    C3V3 -> addComponent(new capacitor_WUERTH("C611", "WCAP-CSGP", 100*capacitor::pF, 3.3, 25));
+
+    // frequency
+    C3V3 -> addComponent(new resistor_VISHAY_CRCWe3("R604", 56*resistor::kOhm, 0.05, 0.1)); 
+    C3V3 -> addComponent(new resistor_VISHAY_CRCWe3("R606", 10*resistor::kOhm, 0.05, 0.1)); 
+
+    // output filter
+    C3V3 -> addComponent(new capacitor_WUERTH("C622", "WCAP-CSGP", 4.7*capacitor::uF, 3.3, 16));
+    C3V3 -> addComponent(new capacitor_WUERTH("C623", "WCAP-CSGP", 100*capacitor::pF, 3.3, 25));
+    C3V3 -> addComponent(new inductor_WUERTH("L601", "WE-CBF"));
+    C3V3 -> addComponent(new capacitor_WUERTH("C624", "WCAP-CSGP", 100*capacitor::pF, 3.3, 25));
+    C3V3 -> addComponent(new capacitor_WUERTH("C625", "WCAP-CSGP", 4.7*capacitor::uF, 3.3, 16));
+
 // supply for LVDS isolator 
     C3V3 -> addComponent(new IC_TI("U601", "TLV70225"));
     C3V3 -> addComponent(new capacitor_WUERTH("C626", "WCAP-CSGP", 1*capacitor::uF, 3.3, 50));
@@ -108,6 +143,49 @@ int main(){
 /****************************************************************************************************************/
 // Analog 1V8 supply p. 5
     schematic* A1V8  = new schematic("analog 1V8");
+
+    A1V8 -> addComponent(new capacitor_WUERTH("C412", "WCAP-CSGP", .1*capacitor::nF,  IntU, 25));
+    A1V8 -> addComponent(new capacitor_WUERTH("C413", "WCAP-CSGP", .1*capacitor::nF,  IntU, 25));
+    A1V8 -> addComponent(new capacitor_WUERTH("C414", "WCAP-CSGP", 4.7*capacitor::uF, IntU, 16));
+    A1V8 -> addComponent(new capacitor_WUERTH("C415", "WCAP-CSGP", 4.7*capacitor::uF, IntU, 16));
+    
+    // enable + startup
+    A1V8 -> addComponent(new resistor_VISHAY_CRCWe3("R1", 10*resistor::kOhm, 0.05, 0.1)); 
+    A1V8 -> addComponent(new capacitor_WUERTH("C418", "WCAP-CSGP", 47*capacitor::nF, 5, 25)); // TODO
+
+    A1V8 -> addComponent(new IC_TI("U400", "LM46000"));
+
+    // feedback
+    float I_R408_R409 = 1.8 / (1E6 + 1.27E6);
+    A1V8 -> addComponent(new resistor_VISHAY_CRCWe3("R408", 442*resistor::kOhm, pow(I_R408_R409,2)*442E3, 0.1)); 
+    A1V8 -> addComponent(new resistor_VISHAY_CRCWe3("R409", 1*resistor::MOhm, pow(I_R408_R409,2)*1e6, 0.1)); 
+    A1V8 -> addComponent(new capacitor_WUERTH("C421", "WCAP-CSGP", 68*capacitor::pF, 1.8, 50));
+
+    A1V8 -> addComponent(new capacitor_WUERTH("C403", "WCAP-CSGP", 470*capacitor::nF, IntU, 25));
+
+    A1V8 -> addComponent(new inductor_WUERTH("L400", "WE-PD"));
+
+    A1V8 -> addComponent(new capacitor_WUERTH("C419", "WCAP-CSGP", 2.2*capacitor::uF, 5, 25));	// TODO
+    A1V8 -> addComponent(new capacitor_WUERTH("C420", "WCAP-CSGP", 2.2*capacitor::uF, 3.3, 25));
+
+    A1V8 -> addComponent(new capacitor_WUERTH("C404", "WCAP-CSGP", 10*capacitor::uF, 1.8, 10));
+    A1V8 -> addComponent(new capacitor_WUERTH("C405", "WCAP-CSGP", 10*capacitor::uF, 1.8, 10));
+    A1V8 -> addComponent(new capacitor_WUERTH("C406", "WCAP-CSGP", 10*capacitor::uF, 1.8, 10));
+    A1V8 -> addComponent(new capacitor_WUERTH("C407", "WCAP-CSGP", 10*capacitor::uF, 1.8, 10));
+    A1V8 -> addComponent(new capacitor_WUERTH("C410", "WCAP-CSGP", 100*capacitor::pF, 1.8, 25));
+    A1V8 -> addComponent(new capacitor_WUERTH("C411", "WCAP-CSGP", 100*capacitor::pF, 1.8, 25));
+
+    // frequency
+    A1V8 -> addComponent(new resistor_VISHAY_CRCWe3("R403", 33*resistor::kOhm, 0.05, 0.1)); 
+    A1V8 -> addComponent(new resistor_VISHAY_CRCWe3("R404", 10*resistor::kOhm, 0.05, 0.1)); 
+
+    // output filter
+    A1V8 -> addComponent(new capacitor_WUERTH("C422", "WCAP-CSGP", 4.7*capacitor::uF, 1.8, 16));
+    A1V8 -> addComponent(new capacitor_WUERTH("C423", "WCAP-CSGP", 100*capacitor::pF, 1.8, 25));
+    A1V8 -> addComponent(new inductor_WUERTH("L401", "WE-CBF"));
+    A1V8 -> addComponent(new capacitor_WUERTH("C424", "WCAP-CSGP", 100*capacitor::pF, 1.8, 25));
+    A1V8 -> addComponent(new capacitor_WUERTH("C425", "WCAP-CSGP", 4.7*capacitor::uF, 1.8, 16));
+
 /****************************************************************************************************************/
 // Analog 3V3 supply p. 6
     schematic* A3V3  = new schematic("analog 3V3");
@@ -118,7 +196,7 @@ int main(){
     A3V3 -> addComponent(new capacitor_WUERTH("C515", "WCAP-CSGP", 4.7*capacitor::uF, IntU, 16));
     
     // enable + startup
-    float I_R503_R505 = POCinput / (330e3 + 470e3);
+    float I_R503_R505 = IntU / (330e3 + 470e3);
     A3V3 -> addComponent(new resistor_VISHAY_CRCWe3("R503", 820*resistor::kOhm, pow(I_R503_R505,2)*330E3, 0.1)); 
     A3V3 -> addComponent(new resistor_VISHAY_CRCWe3("R305", 100*resistor::kOhm, pow(I_R503_R505,2)*470E3, 0.1)); 
     A3V3 -> addComponent(new capacitor_WUERTH("C518", "WCAP-CSGP", 47*capacitor::nF, 5, 25)); // TODO
