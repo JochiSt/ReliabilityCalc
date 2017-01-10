@@ -28,7 +28,18 @@ int main(){
     const float IntU = 6.;
 
 /****************************************************************************************************************/
-// JUNO Trigger Driver
+// filtering  p. 1
+    schematic* filter = new schematic("Vcc Filtering");
+    filter -> addComponent(new inductor_WUERTH("L1", "WE-SL5"));
+    filter -> addComponent(new capacitor_WUERTH("C4", "WCAP-CSGP", .1*capacitor::uF, POCinput, 50));
+
+    // if used with Tsinghua C7 L3 C8
+    filter -> addComponent(new capacitor_WUERTH("C5", "WCAP-CSGP", .1*capacitor::uF, IntU, 50));
+    filter -> addComponent(new inductor_WUERTH("L2", "WE-SL5"));
+    filter -> addComponent(new capacitor_WUERTH("C6", "WCAP-CSGP", .1*capacitor::uF, IntU, 50));
+
+/****************************************************************************************************************/
+// JUNO Trigger Driver p. 2
     schematic* TriggerDriver = new schematic("JUNO Trigger Driver");
     TriggerDriver -> addComponent(new IC_TI("U100", "DS15BA101"));
     // input Cs
@@ -51,7 +62,7 @@ int main(){
 
     TriggerDriver -> addComponent(new IC_TI("U101", "TPD2EUSB30DRTR"));
 /****************************************************************************************************************/
-// JUNO Clock Receiver
+// JUNO Clock Receiver p. 3
     schematic* CLKreceiver = new schematic("JUNO Clock Receiver");
 
     CLKreceiver -> addComponent(new IC_TI("U200", "DS15EA101"));
@@ -77,7 +88,7 @@ int main(){
     CLKreceiver -> addComponent(new IC_TI("U201", "TPD2EUSB30DRTR"));
     
 /****************************************************************************************************************/
-// power splitting etc.
+// power splitting etc. p. 3
     schematic* CLKPowerSplitting = new schematic("CLK decoupling");
     // bypass Cs at 24V
     CLKPowerSplitting -> addComponent(new capacitor_WUERTH("C207", "WCAP-CSGP", .1*capacitor::uF, IntU, 50));
@@ -88,7 +99,7 @@ int main(){
     CLKPowerSplitting -> addComponent(new inductor_WUERTH("L202", "WE-SL5"));
 
 /****************************************************************************************************************/
-// cable supply 3V3
+// cable supply 3V3 p. 4
     schematic* C3V3 = new schematic("C3V3");
   
     C3V3 -> addComponent(new capacitor_WUERTH("C612", "WCAP-CSGP", .1*capacitor::nF,  IntU, 25));
@@ -419,12 +430,14 @@ int main(){
     schematic* PowerBoard = new schematic("Power Board (total)");
 
     PowerBoard -> addComponent(new PCB("PowerBoard v2", 4, 126, PCB::THROUGH_HOLE, 200));
+
+    PowerBoard -> addComponent(filter);
+
     PowerBoard -> addComponent(TriggerDriver);
     PowerBoard -> addComponent(CLKreceiver);
     PowerBoard -> addComponent(CLKPowerSplitting);
 
     PowerBoard -> addComponent(C3V3);
-
     PowerBoard -> addComponent(A1V8);
     PowerBoard -> addComponent(A3V3);
 
