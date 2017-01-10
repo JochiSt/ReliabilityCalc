@@ -109,6 +109,12 @@ void schematic::printPartCount(){
     std::cout << "\t" << std::setw(5) << capacitor::getPartCount() << " Capacitors" << std::endl;
     std::cout << "\t" << std::setw(5) << IC::getPartCount() << " ICs" << std::endl;
     std::cout << "\t" << std::setw(5) << inductor::getPartCount() << " inductors" << std::endl;
+    
+    int partsum = diode::getPartCount() + resistor::getPartCount() + capacitor::getPartCount();
+        partsum+= IC::getPartCount() + inductor::getPartCount();
+
+    std::cout << "\t-----" << std::endl;
+    std::cout << "\t" << std::setw(5) << partsum << " parts in total" << std::endl;
 }
 
 float schematic::getAccelerationFactor(float testT, float refT){
