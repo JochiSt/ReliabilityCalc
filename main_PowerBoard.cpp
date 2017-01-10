@@ -106,8 +106,49 @@ int main(){
     C3V3 -> addComponent(new capacitor_WUERTH("C627", "WCAP-CSGP", 1*capacitor::uF, 2.5, 50));
 
 /****************************************************************************************************************/
-    schematic* IntVoltage = new schematic("Internal Voltage");
-    IntVoltage -> addComponent(new IC_TI("U600", "LM46000"));
+// Internal Voltage p. 7
+    schematic* Int_U = new schematic("Internal Voltage");
+
+    Int_U -> addComponent(new capacitor_WUERTH("C307", "WCAP-CSGP", 100*capacitor::pF, POCinput, 50));
+    Int_U -> addComponent(new capacitor_WUERTH("C308", "WCAP-CSGP", 100*capacitor::pF, POCinput, 50));
+    Int_U -> addComponent(new capacitor_WUERTH("C309", "WCAP-CSGP", 4.7*capacitor::uF, POCinput, 50));
+    Int_U -> addComponent(new capacitor_WUERTH("C310", "WCAP-CSGP", 4.7*capacitor::uF, POCinput, 50));
+    Int_U -> addComponent(new capacitor_WUERTH("C311", "WCAP-CSGP", 4.7*capacitor::uF, POCinput, 50));
+    Int_U -> addComponent(new capacitor_WUERTH("C312", "WCAP-CSGP", 4.7*capacitor::uF, POCinput, 50));
+
+    // enable + startup
+    float I_R300_R303 = POCinput / (820e3 + 100e3);
+    Int_U -> addComponent(new resistor_VISHAY_CRCWe3("R300", 820*resistor::kOhm, pow(I_R300_R303,2)*820E3, 0.1)); 
+    Int_U -> addComponent(new resistor_VISHAY_CRCWe3("R303", 100*resistor::kOhm, pow(I_R300_R303,2)*100E3, 0.1)); 
+    Int_U -> addComponent(new capacitor_WUERTH("C315", "WCAP-CSGP", 47*capacitor::nF, 5, 25)); // TODO
+
+    Int_U -> addComponent(new IC_TI("U600", "LM46000"));
+
+    // feedback
+    float I_R305_R306 = IntU / (910E3 + 180E3);
+    Int_U -> addComponent(new resistor_VISHAY_CRCWe3("R305", 180*resistor::kOhm, pow(I_R305_R306,2)*910E3, 0.1)); 
+    Int_U -> addComponent(new resistor_VISHAY_CRCWe3("R306", 910*resistor::kOhm, pow(I_R305_R306,2)*180E3, 0.1)); 
+    Int_U -> addComponent(new capacitor_WUERTH("C318", "WCAP-CSGP", 68*capacitor::pF, 12, 50));
+
+    Int_U -> addComponent(new capacitor_WUERTH("C300", "WCAP-CSGP", 470*capacitor::nF, POCinput, 50));
+
+    Int_U -> addComponent(new inductor_WUERTH("L300", "WE-PD"));
+
+    Int_U -> addComponent(new capacitor_WUERTH("C316", "WCAP-CSGP", 2.2*capacitor::uF, 5., 25));   // TODO voltage
+    Int_U -> addComponent(new capacitor_WUERTH("C317", "WCAP-CSGP", 2.2*capacitor::uF, IntU, 25));
+
+    Int_U -> addComponent(new capacitor_WUERTH("C301", "WCAP-CSGP", 10*capacitor::uF, IntU, 25));
+    Int_U -> addComponent(new capacitor_WUERTH("C302", "WCAP-CSGP", 10*capacitor::uF, IntU, 25));
+    Int_U -> addComponent(new capacitor_WUERTH("C303", "WCAP-CSGP", 10*capacitor::uF, IntU, 25));
+    Int_U -> addComponent(new capacitor_WUERTH("C304", "WCAP-CSGP", 10*capacitor::uF, IntU, 25));
+    Int_U -> addComponent(new capacitor_WUERTH("C305", "WCAP-CSGP", 10*capacitor::uF, IntU, 25));
+    Int_U -> addComponent(new capacitor_WUERTH("C306", "WCAP-CSGP", 10*capacitor::uF, IntU, 25));
+    Int_U -> addComponent(new capacitor_WUERTH("C313", "WCAP-CSGP", 100*capacitor::pF, IntU, 50));
+    Int_U -> addComponent(new capacitor_WUERTH("C314", "WCAP-CSGP", 100*capacitor::pF, IntU, 50));
+
+    // frequency
+    Int_U -> addComponent(new resistor_VISHAY_CRCWe3("R302", 68*resistor::kOhm, 0.05, 0.1)); 
+    Int_U -> addComponent(new resistor_VISHAY_CRCWe3("R304", 4.7*resistor::kOhm, 0.05, 0.1)); 
 
 /****************************************************************************************************************/
 // POE+ p. 8
@@ -181,7 +222,8 @@ int main(){
     GCU_U -> addComponent(new capacitor_WUERTH("C1215", "WCAP-CSGP", 10*capacitor::uF, 12., 25));
     GCU_U -> addComponent(new capacitor_WUERTH("C1224", "WCAP-CSGP", 100*capacitor::pF, 12., 25));
     GCU_U -> addComponent(new capacitor_WUERTH("C1225", "WCAP-CSGP", 100*capacitor::pF, 12., 25));
-
+    
+    // frequency
     GCU_U -> addComponent(new resistor_VISHAY_CRCWe3("R1204", 68*resistor::kOhm, 0.05, 0.1)); 
     GCU_U -> addComponent(new resistor_VISHAY_CRCWe3("R1206", 12*resistor::kOhm, 0.05, 0.1)); 
     
@@ -238,9 +280,9 @@ int main(){
 /****************************************************************************************************************/
 // Temperature Monitoring p. 13
     schematic* Tmonitoring = new schematic("Temp monitoring");
-    Tmonitoring -> addComponent(new IC_TI("U1", "LM75"));
+    Tmonitoring -> addComponent(new IC_TI("U1", "TMP100"));
     Tmonitoring -> addComponent(new capacitor_WUERTH("C1", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
-    Tmonitoring -> addComponent(new IC_TI("U1300", "LM75"));
+    Tmonitoring -> addComponent(new IC_TI("U1300", "TMP100"));
     Tmonitoring -> addComponent(new capacitor_WUERTH("C1300", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
 
 /****************************************************************************************************************/
@@ -253,6 +295,8 @@ int main(){
     PowerBoard -> addComponent(CLKPowerSplitting);
     PowerBoard -> addComponent(C3V3);
 
+    
+    PowerBoard -> addComponent(Int_U);
     PowerBoard -> addComponent(POE);
     PowerBoard -> addComponent(GCU_U);
     // GCU_U -> setVerboseOutput(true);
