@@ -64,10 +64,16 @@ class sqlite3_handler {
 		 */
 		bool existsTable(std::string tablename);
 
+		/**
+		 * return some status statement
+		 */
+		bool getStatus() { return status; };
+
 	protected:
 
 	private:
 		sqlite3 *db;
+		bool status;
 
 };
 

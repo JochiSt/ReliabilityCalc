@@ -7,8 +7,10 @@ sqlite3_handler::sqlite3_handler(std::string filename, int flags){
 	int ret = sqlite3_open_v2(filename.c_str(), &db, flags, NULL);
 	if( ret ){
 		fprintf(stderr, "Can't open database: %s\n\t\t%s\n", filename.c_str(), sqlite3_errmsg(db));
+		status = false;
 	}else{
 		fprintf(stdout, "Opened database %s successfully\n", filename.c_str());
+		status = true;
 	}
 }
 

@@ -2,6 +2,7 @@
 #define COMPONENT_H
 
 #include <string>
+#include "sqlite3_handler.h"
 
 /**
  * \class component
@@ -84,10 +85,19 @@ class component
 	 * @return device temperature
 	 */
 	virtual float getDeviceTemperature() {
-		if( deviceTemperature <= ambientTemperature ){
+		// use the device temperature increase from the database (only if available)
+		float devTemp = ambientTemperature + deviceDeltaT;
+		// this temperature increase might be overwritten by the device temperature,
+		// which can be set via setDeviceTemperature
+		if(devTemp < deviceTemperature){
+			devTemp = deviceTemperature;
+		}
+		// we take the maximal temperature, either ambient or the device temperature
+		// there is no possibility to make a component colder than ambient temperature
+		if( devTemp <= ambientTemperature ){
 			return ambientTemperature;
 		}else{
-			return deviceTemperature;
+			return devTemp;
 		}
 	}
 	/** 
@@ -107,11 +117,16 @@ class component
     protected:
         std::string name;			///< name of the component
 	float deviceTemperature;		///< individual device temperature
+	float deviceDeltaT;			///< individual device temperature increase
+
+	virtual float getDeviceTincrease();	///< look into the database and read temperature increase
 
     private:
         static std::string identifier;		///< which type of component is this
         static unsigned int partcnt;		///< total part count
 
+	/// Handler for the SQLite3 database connection
+	static sqlite3_handler TempDB;
 };
 
 #endif // COMPONENT_H
