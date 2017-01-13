@@ -20,6 +20,9 @@ In order to install them, please install:
 the dependencies should be installed automaticly
 
 ## Example Usage
+
+For a more detailed explanation how this framework works, and how it can be used, please have a look at the [wiki](https://github.com/JochiSt/ReliabilityCalc/wiki)
+
 ###### Define the ambient (usage) temperature
 ```
 component::setAmbientTemperature(45);
