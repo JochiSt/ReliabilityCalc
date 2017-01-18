@@ -419,9 +419,13 @@ int main(){
     POCmonitoring -> addComponent(new capacitor_WUERTH("C902", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
     POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R906", 47*resistor::kOhm, pow(I_R900_R905,2)*47e3, 0.1));
 
+    float I_R907_R908 = 6.0 / (27e3 + 12e3);
+    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R907", 27*resistor::kOhm, pow(I_R907_R908,2)*27e3, 0.1));
+    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R908", 12*resistor::kOhm, pow(I_R907_R908,2)*12e3, 0.1));
+
     POCmonitoring -> addComponent(new IC_TI("U3", "ADS1015"));
-    POCmonitoring -> addComponent(new capacitor_WUERTH("C9", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
-    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R12", 0*resistor::Ohm, 0, 0.1)); // FIXME
+    POCmonitoring -> addComponent(new capacitor_WUERTH("C905", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
+    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R912", 0*resistor::Ohm, 0, 0.1)); // FIXME
 
 /****************************************************************************************************************/
 // POE monitoring p. 12
@@ -456,6 +460,10 @@ int main(){
     POEmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1307", 100*resistor::Ohm, pow(I_R1300_R1309,2)*100, 0.1));
     POEmonitoring -> addComponent(new capacitor_WUERTH("C1306", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
     POEmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1310", 47*resistor::kOhm, pow(I_R1300_R1309,2)*47e3, 0.1));
+
+    float I_R1314_R1315 = 12.0 / (39e3 + 6.8e3);
+    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1314", 27*resistor::kOhm, pow(I_R1314_R1315,2)*39e3, 0.1));
+    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1315", 6.8*resistor::kOhm, pow(I_R1314_R1315,2)*6.8e3, 0.1));
 
     POEmonitoring -> addComponent(new IC_TI("U1304", "ADS1015"));
     POEmonitoring -> addComponent(new capacitor_WUERTH("C1307", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
