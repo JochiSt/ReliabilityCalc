@@ -40,7 +40,7 @@ int main(){
 
 /****************************************************************************************************************/
 // JUNO Trigger Driver p. 2
-    schematic* TriggerDriver = new schematic("JUNO Trigger Driver");
+    schematic* TriggerDriver = new schematic("Sync TX");
     TriggerDriver -> addComponent(new IC_TI("U100", "DS15BA101"));
     // input Cs
     TriggerDriver -> addComponent(new capacitor_WUERTH("C103", "WCAP-CSGP", 1*capacitor::uF, 1.5, 10));
@@ -63,7 +63,7 @@ int main(){
     TriggerDriver -> addComponent(new IC_TI("U101", "TPD2EUSB30DRTR"));
 /****************************************************************************************************************/
 // JUNO Clock Receiver p. 3
-    schematic* CLKreceiver = new schematic("JUNO Clock Receiver");
+    schematic* CLKreceiver = new schematic("Sync RX");
 
     CLKreceiver -> addComponent(new IC_TI("U200", "DS15EA101"));
     // input C
@@ -389,7 +389,7 @@ int main(){
     I2Ciso -> addComponent(new IC_TI("U1401", "LM9076"));
     I2Ciso -> addComponent(new capacitor_WUERTH("C1402", "WCAP-CSGP", 10*capacitor::uF, 3.3, 10));
     I2Ciso -> addComponent(new capacitor_WUERTH("C1405", "WCAP-CSGP", 1*capacitor::nF, 3.3, 25)); // TODO voltage?
-    I2Ciso -> addComponent(new resistor_VISHAY_CRCWe3("R1404", 1.2, 0.05, 0.1)); // TODO Stress??
+    I2Ciso -> addComponent(new resistor_VISHAY_CRCWe3("R1404", 1.2*resistor::Ohm, 0.05, 0.1)); // TODO Stress??
 
 /****************************************************************************************************************/
 // POC monitoring p. 11
@@ -425,7 +425,6 @@ int main(){
 
     POCmonitoring -> addComponent(new IC_TI("U3", "ADS1015"));
     POCmonitoring -> addComponent(new capacitor_WUERTH("C905", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
-    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R912", 0*resistor::Ohm, 0, 0.1)); // FIXME
 
 /****************************************************************************************************************/
 // POE monitoring p. 12
@@ -467,7 +466,6 @@ int main(){
 
     POEmonitoring -> addComponent(new IC_TI("U1304", "ADS1015"));
     POEmonitoring -> addComponent(new capacitor_WUERTH("C1307", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
-    POEmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1306", 0*resistor::Ohm, 0, 0.1)); // FIXME
 
 /****************************************************************************************************************/
 // Temperature Monitoring p. 13
