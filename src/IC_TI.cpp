@@ -46,10 +46,9 @@ void IC_TI::lookupPartName(){
 // first ask
 // http://www.ti.com/quality/docs/estimator.tsp?partType=tiPartNumber&partNumber=DS15BA101
     std::string data;
-
-
     char query[4096];
     sprintf(query, "http://www.ti.com/quality/docs/estimator.tsp?partType=tiPartNumber&partNumber=%s", ICname.c_str());
+
 
     curl_easy_setopt(curl, CURLOPT_URL, query);
 
@@ -57,6 +56,13 @@ void IC_TI::lookupPartName(){
     curl_easy_setopt(curl, CURLOPT_WRITEDATA    , &data);
     curl_easy_perform(curl);
 
+    if(data.find("No results found. Please enter another search criteria") != std::string::npos){
+	fprintf(stderr, "IC (%s) not found on TI website.\n", ICname.c_str());
+	fprintf(stderr, "using query ... \n");
+    	fprintf(stderr, "%s\n", query);
+	fprintf(stderr, "exiting ...\n");
+	exit(-1);
+    }
     if(data.find("possible matches. Please choose a") != std::string::npos){
 	size_t start = data.find("<ul class=\"resultsList\">")+24;
 	size_t end   = data.find("</div>", start);
