@@ -16,6 +16,7 @@ using namespace std;
 
 #include "capacitor_WIMA.h"
 #include "capacitor_WIMA_SMD_PPS.h"
+#include "capacitor_VISHAY.h"
 
 #include "utils.h"
 
@@ -35,6 +36,9 @@ int main(){
     example -> addComponent(new capacitor_WUERTH("C3", "WCAP-CSGP",  1*capacitor::uF, 24, 50));
     example -> addComponent(new capacitor_WUERTH("C4", "WCAP-CSGP",  1*capacitor::uF, 34, 50));
     example -> addComponent(new capacitor_WUERTH("C5", "WCAP-CSGP",  1*capacitor::uF, 50, 50)); // maximal stress
+
+    example -> addComponent(new capacitor_VISHAY("C90", capacitor_VISHAY::CLASS_1, 1*capacitor::pF, 24, 50));
+    example -> addComponent(new capacitor_VISHAY("C91", capacitor_VISHAY::CLASS_2, 1*capacitor::pF, 24, 50));
 
     example -> addComponent(new capacitor_WIMA("C10", 1*capacitor::uF, 24, 50));
     example -> addComponent(new capacitor_WIMA_SMD_PPS("C10", 1*capacitor::uF, 24, 50));
