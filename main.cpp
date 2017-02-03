@@ -13,6 +13,7 @@ using namespace std;
 #include "capacitor_WUERTH.h"
 #include "inductor_WUERTH.h"
 #include "IC_TI.h"
+#include "PCB.h"
 
 #include "capacitor_WIMA.h"
 #include "capacitor_WIMA_SMD_PPS.h"
@@ -48,6 +49,8 @@ int main(){
 
     example -> addComponent(new IC_TI("GCU_ISO", "ISO7341CQDWQ1"));
     example -> lastAddedComponent() -> setDeviceTemperature(55);
+
+    example -> addComponent(new PCB("PCB", 4 ,1000, PCB::MICRO_VIA , 500)); 
 
     example -> setVerboseOutput(true);  // enable verbose output
     example -> getFIT();
