@@ -30,7 +30,8 @@ int main(){
 
     component::setAmbientTemperature(40);
 
-
+    // maximal voltage 3kV
+    // total resistance ~ 9.92 MOhm
     float BaseCurrent = 3000. / 9.02E6; 
     float BaseCurrent2 = BaseCurrent * BaseCurrent;
 
@@ -83,7 +84,6 @@ int main(){
     voltage_divider -> addComponent(new resistor_VISHAY_CRCWe3("R19", 10*resistor::kOhm, 10e3*BaseCurrent2, 0.75));
     voltage_divider -> addComponent(new capacitor_VISHAY("C5", capacitor_VISHAY::CLASS_2, 4.7*capacitor::nF, 3000, 6000));
 
-
     schematic* adc_input_protection = new schematic("ADC protection");
     adc_input_protection -> addComponent(new capacitor_VISHAY("C6", capacitor_VISHAY::CLASS_2, 47*capacitor::nF, 3000, 6000));
     adc_input_protection -> addComponent(new resistor_VISHAY_CRCWe3("R17", 10*resistor::kOhm, 0.09, 0.1));	// FIXME add right stress
@@ -92,6 +92,8 @@ int main(){
     adc_input_protection -> addComponent(new resistor_VISHAY_CRCWe3("R15", 51*resistor::Ohm, 0.09, 0.1));	// FIXME add right stress
     adc_input_protection -> addComponent(new resistor_VISHAY_CRCWe3("R14", 51*resistor::Ohm, 0.09, 0.1));	// FIXME add right stress
     adc_input_protection -> addComponent(new resistor_VISHAY_CRCWe3("R13", 100*resistor::Ohm, 0.09, 0.1));	// FIXME add right stress
+
+    // TODO add Gas Discharge Tubes and TVS Diode(s)
     
     adc_input_protection -> addComponent(new resistor_VISHAY_CRCWe3("R6",  100*resistor::kOhm, 0.09, 0.1));	// FIXME add right stress
     adc_input_protection -> addComponent(new resistor_VISHAY_CRCWe3("R18", 100*resistor::kOhm, 0.09, 0.1));	// FIXME add right stress
