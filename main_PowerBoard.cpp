@@ -481,7 +481,7 @@ int main(){
 
     schematic* PowerBoard = new schematic("Power Board (total)");
 
-    PowerBoard -> addComponent(new PCB("PowerBoard v2", 4, 126, PCB::THROUGH_HOLE, 200));
+    PowerBoard -> addComponent(new PCB("PowerBoard PCB", 4, 500, PCB::THROUGH_HOLE, 125));
 
     PowerBoard -> addComponent(filter);
 
