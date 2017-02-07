@@ -43,6 +43,7 @@ html
 main
 main_GCU
 main_PowerBoard
+main_BASE_Hamamatsu
 import_wuerth
 sqlite
 output
