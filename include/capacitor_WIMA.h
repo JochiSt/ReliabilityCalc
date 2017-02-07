@@ -5,6 +5,10 @@
 
 /**
  * @brief Implementation of reliability for WIMA capacitors
+ * @author Jochen Steinmann
+ * @date 2017-02-03
+ *
+ * details can be found at http://www.wima.com/EN/reliability.htm
  */
 class capacitor_WIMA : public capacitor {
 
