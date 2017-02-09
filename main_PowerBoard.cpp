@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -35,6 +36,13 @@ int main(int argc, char* argv[]){
     }
 
     const float IntU = 6.;
+
+    float Temperature = 40.;
+    // seems that we got a second parameter
+    if(argc > 2){
+	Temperature = atof(argv[2]);
+	printf("Using Temperature with: %5.1f V\n", Temperature);
+    }
 
 /****************************************************************************************************************/
 // filtering  p. 1
@@ -487,7 +495,6 @@ int main(int argc, char* argv[]){
 /****************************************************************************************************************/
 // put the whole thing together
 
-
     schematic* PowerBoard = new schematic("Power Board (total)");
 
     PowerBoard -> addComponent(new PCB("PowerBoard PCB", 4, 500, PCB::THROUGH_HOLE, 125));
@@ -518,6 +525,8 @@ int main(int argc, char* argv[]){
 
 /****************************************************************************************************************/
     cout << endl;
+
+    component::setAmbientTemperature(Temperature);
     cout << "Calculating FIT for " << component::getAmbientTemperature() - component::KELVIN << "°C" << endl;
 
     double FITPowerBoard = PowerBoard -> getFIT();
@@ -529,6 +538,11 @@ int main(int argc, char* argv[]){
     cout << endl;
     cout << "###############################################################################" << endl;
     cout << endl;
+
+    std::ofstream ofs;
+    ofs.open ("reliability_PowerBoard.txt", std::ofstream::out | std::ofstream::app);
+    ofs << time(NULL) << "\t" << Temperature << "\t" << POCinput << "\t" << POEinput << "\t" << FITPowerBoard << endl;
+    ofs.close();
 
 //    cout << "Failures of the Power Board within 6 years: \t" << schematic::getFailureRate( 6 * component::YEAR, FITPowerBoard ) * 100. << " %" << endl;
 
