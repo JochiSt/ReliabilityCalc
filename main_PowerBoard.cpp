@@ -1,4 +1,6 @@
 #include <iostream>
+#include <stdlib.h>
+#include <stdio.h>
 
 using namespace std;
 
@@ -14,7 +16,7 @@ using namespace std;
 #include <cmath>
 
 
-int main(){
+int main(int argc, char* argv[]){
     cout << "Reliability Calculator" << endl;
     cout << "\tcompiled @ " << __DATE__ << " " << __TIME__ << " using GCC " << __VERSION__ << endl;
 
@@ -24,7 +26,14 @@ int main(){
 
     // define the input voltages
     const float POCinput = 24.;
-    const float POEinput = 48.;
+    float POEinput = 48.;
+
+    // seems that we got a second parameter
+    if(argc > 1){
+	POEinput = atof(argv[1]);
+	printf("Using POE with: %5.1f V\n", POEinput);
+    }
+
     const float IntU = 6.;
 
 /****************************************************************************************************************/
