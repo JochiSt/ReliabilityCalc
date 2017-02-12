@@ -9,6 +9,7 @@ using namespace std;
 #include "IC.h"
 #include "inductor.h"
 #include "diode.h"
+#include "crystal.h"
 
 #include "capacitor_WUERTH.h"
 #include "inductor_WUERTH.h"
@@ -18,6 +19,8 @@ using namespace std;
 #include "capacitor_WIMA.h"
 #include "capacitor_WIMA_SMD_PPS.h"
 #include "capacitor_VISHAY.h"
+
+#include "crystal_EPSON.h"
 
 #include "utils.h"
 
@@ -44,8 +47,10 @@ int main(){
     example -> addComponent(new capacitor_WIMA("C10", 1*capacitor::uF, 24, 50));
     example -> addComponent(new capacitor_WIMA_SMD_PPS("C10", 1*capacitor::uF, 24, 50));
 
-
     example -> addComponent(new inductor_WUERTH("L1", "WE-PoE+"));
+
+    example -> addComponent(new crystal("Q1", 36, 25));
+    example -> addComponent(new crystal_EPSON("Q1", 36, 25));
 
     example -> addComponent(new IC_TI("GCU_ISO", "ISO7341CQDWQ1"));
     example -> lastAddedComponent() -> setDeviceTemperature(55);
