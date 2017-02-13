@@ -29,7 +29,7 @@ crystal::~crystal(){
 };
 
 float crystal::getFIT(){
-    printf("using EA = %f\n", EA);
+//    printf("using EA = %f\n", EA);
     float useTemperature = getDeviceTemperature();
     float AF = exp(-1.*(EA/kB)*(1./(useTemperature)-1./(FITtemp)));    //aging factor
     return BaseFit * AF;
