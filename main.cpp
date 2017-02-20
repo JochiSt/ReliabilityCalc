@@ -14,6 +14,7 @@ using namespace std;
 #include "capacitor_WUERTH.h"
 #include "inductor_WUERTH.h"
 #include "IC_TI.h"
+#include "IC_MAXIM.h"
 #include "PCB.h"
 
 #include "capacitor_WIMA.h"
@@ -53,7 +54,11 @@ int main(){
     example -> addComponent(new crystal_EPSON("Q1", 36, 25));
 
     example -> addComponent(new IC_TI("GCU_ISO", "ISO7341CQDWQ1"));
+    example -> addComponent(new IC_TI("GCU_ISO", "DS30EA101"));
     example -> lastAddedComponent() -> setDeviceTemperature(55);
+
+    example -> addComponent(new IC_MAXIM("IC2", "MAX232"));
+    example -> addComponent(new IC_MAXIM("IC2", "MAX485"));
 
     example -> addComponent(new PCB("PCB", 4 ,1000, PCB::MICRO_VIA , 500)); 
 
