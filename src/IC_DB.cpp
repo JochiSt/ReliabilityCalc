@@ -14,10 +14,14 @@ sqlite3_handler IC_DB::db = sqlite3_handler("./ICoffline.db",SQLITE_OPEN_READWRI
 IC_DB::IC_DB(std::string name, std::string type) : IC_ELFR(name) {
     ICname = type;
 
-    curl_global_init(CURL_GLOBAL_WIN32);
+//    curl_global_init(CURL_GLOBAL_WIN32);
+    curl_global_init(CURL_GLOBAL_DEFAULT);
     curl = curl_easy_init();
     if(!curl)
 	exit(1);
+
+    // initialise vector with 0
+    results = std::vector<float>(13,0); 
 
     printf("Looking up ... %s ", ICname.c_str());
 
