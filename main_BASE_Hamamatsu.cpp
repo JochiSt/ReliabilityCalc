@@ -101,7 +101,8 @@ int main(){
     adc_input_protection -> addComponent(new capacitor_WUERTH("C7", "WCAP-CSGP",  1*capacitor::uF, 12, 25));
     adc_input_protection -> addComponent(new capacitor_WUERTH("C8", "WCAP-CSGP",  1*capacitor::uF, 12, 25));
 
-//    adc_input_protection -> setVerboseOutput(true);
+    voltage_divider -> setVerboseOutput(true);
+    adc_input_protection -> setVerboseOutput(true);
 
     schematic* base_hamamatsu = new schematic("Base Hamamatsu");
     base_hamamatsu -> addComponent(voltage_divider);
