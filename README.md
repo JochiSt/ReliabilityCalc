@@ -16,6 +16,7 @@ are needed.
 In order to install them, please install:
 * libsqlite3-dev
 * libcurl4-openssl-dev
+* libgsl-dev (maybe libgsl0-dev when using Ubuntu)
 
 the dependencies should be installed automaticly
 
