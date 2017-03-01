@@ -15,6 +15,7 @@ using namespace std;
 #include "inductor_WUERTH.h"
 #include "IC_TI.h"
 #include "IC_MAXIM.h"
+#include "IC_AD.h"
 #include "PCB.h"
 
 #include "capacitor_WIMA.h"
@@ -59,6 +60,8 @@ int main(){
 
     example -> addComponent(new IC_MAXIM("IC2", "MAX232"));
     example -> addComponent(new IC_MAXIM("IC2", "MAX485"));
+
+    example -> addComponent(new IC_AD("IC5", "ADP1765"));
 
     example -> addComponent(new PCB("PCB", 4 ,1000, PCB::MICRO_VIA , 500)); 
 
