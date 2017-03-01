@@ -13,7 +13,7 @@ float utils::FailureRate2FIT(float failureRate, float deviceHours){
 float utils::calcFIT(float conflevel, int failures, int devhours){
     double FIT = 10000;
     #ifdef __GSL_CDF_H__
-    FIT = gsl_cdf_chisq_Pinv(conflevel, 2*failures+2) / 2. / devhours * 1E9;
+    FIT = 1E9 * gsl_cdf_chisq_Pinv(conflevel, 2*failures+2) / 2. / devhours;
     #endif
     return FIT;	    
 }
