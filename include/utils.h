@@ -32,6 +32,8 @@ class utils {
 		 * \param[in] deviceHours runtime of the device in hours
 		 */
 		static float FailureRate2FIT(float failureRate, float deviceHours);
+
+		static float calcFIT(float conflevel, int failures, int devhours);
 };
 
 #endif

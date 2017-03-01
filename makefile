@@ -4,7 +4,7 @@ CFLAGS=-fPIC -Wall
 CFLAGS+=-Iinclude/
 CFLAGS+=-g
 
-LDFLAGS+=-lsqlite3
+LDFLAGS+=-lsqlite3 -lgsl -lgslcblas -lm
 LDFLAGS+=$(shell curl-config --libs)
 
 GPP=g++
