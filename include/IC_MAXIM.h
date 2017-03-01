@@ -22,11 +22,14 @@ class IC_MAXIM : public IC_DB {
         IC_MAXIM(std::string name, std::string type);
         virtual ~IC_MAXIM();
 
+	/**
+	 * struct to put all data from website into map
+	 */
 	struct ic_data_t {
-	   int sample_size;
-	   int rejects;
-	   float FIT_25;
-	   float FIT_55;
+	   int sample_size;	///< global number of samples
+	   int rejects;		///< number of rejected ICs
+	   float FIT_25;	///< FIT value at 25°C
+	   float FIT_55;	///< FIT value at 55°C
     	};
 
     protected:
@@ -35,10 +38,9 @@ class IC_MAXIM : public IC_DB {
         /// fetch the data from the TI webpage
         virtual void lookup_IC();
 	
+	/// local variable for storage of data
 	ic_data_t maxim_data;
 	
-    public:
-
 };
 
 #endif // IC_H
