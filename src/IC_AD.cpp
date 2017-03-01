@@ -21,9 +21,9 @@ IC_AD::IC_AD(std::string name, std::string type) : IC_DB(name, type) {
 	fflush(stdout);
 	lookupPartName();
 	lookup_IC();
-//	store_in_DB();
+	store_in_DB();
     }
-    printf(" ... result %4.1f @ %6.2f\n", FIT, FIT_temperature);
+    printf(" ... result %4.2f @ %6.2f\n", FIT, FIT_temperature);
 }
 
 IC_AD::~IC_AD(){
@@ -103,20 +103,16 @@ void IC_AD::lookup_IC(){
 
 	if( line.find("OverallSampleSize") != std::string::npos ){
 	    iss2 >> text >> value1;
-	    printf("sample size %lf\n", value1);
 	    results[12] = value1;	    
 	}else if( line.find("QtyFail") != std::string::npos ){
 	    iss2 >> text >> value1;
-	    printf("failed %lf\n", value1);
 	    results[13] = value1;
 	}else if( line.find("EquivalentDeviceHrs") != std::string::npos ){
 	    iss2 >> text >> value1 >> value2;
-	    printf("dev hours %lf @ %lf °C\n", value2, value1);
 	    results[11] = value2;
 	    results[7] = value1;
 	}else if( line.find("ActivationEnergy") != std::string::npos ){
 	    iss2 >> text >> value1 >> text;
-	    printf("activation energy %lf\n", value1);
 	    results[9] = value1;
 	}	
     }

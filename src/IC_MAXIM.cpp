@@ -21,7 +21,7 @@ IC_MAXIM::IC_MAXIM(std::string name, std::string type) : IC_DB(name, type) {
 	lookup_IC();
 	store_in_DB();
     }
-    printf(" ... result %4.1f @ %6.2f\n", FIT, FIT_temperature);
+    printf(" ... result %4.2f @ %6.2f\n", FIT, FIT_temperature);
 }
 
 IC_MAXIM::~IC_MAXIM(){
