@@ -33,7 +33,7 @@ class utils {
 		 */
 		static float FailureRate2FIT(float failureRate, float deviceHours);
 
-		static float calcFIT(float conflevel, int failures, int devhours);
+		static float calcFIT(float conflevel, int failures, double devhours);
 };
 
 #endif
