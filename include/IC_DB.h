@@ -30,6 +30,7 @@ class IC_DB : public IC_ELFR {
 	virtual void lookupPartName() = 0;
         /// fetch the data from the webpage
         virtual void lookup_IC() = 0;
+
         /// store the naming of the IC
         std::string ICname;
 
@@ -69,6 +70,16 @@ class IC_DB : public IC_ELFR {
                 }
         }
 
+	static void replace_tag(std::string& text, const std::string& fnd, const std::string& rep){
+		std::string find = std::string("<") + fnd;
+                size_t pos = text.find(find);
+		size_t end = text.find(">", pos);
+                while(pos!=std::string::npos && end!=std::string::npos){
+                        text.replace(pos,end-pos+1,rep);
+                        pos = text.find(find,pos+rep.length());
+			end = text.find(">", pos);
+                }
+	}
 };
 
 #endif // IC_H
