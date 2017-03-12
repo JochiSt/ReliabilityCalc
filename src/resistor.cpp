@@ -12,6 +12,19 @@ resistor::resistor(std::string name, float value, float usedP, float ratedP) : c
     resistance = value;
     usedPower = usedP;
     ratedPower = ratedP;
+
+    stress = usedPower / ratedPower;
+
+    partcnt++;
+}
+
+resistor::resistor(std::string name, float value, float stre) : component(name){
+    resistance = value;
+    usedPower = 0;
+    ratedPower = 0;
+
+    stress = stre;
+
     partcnt++;
 }
 

@@ -11,6 +11,7 @@
 class resistor_VISHAY_CRCWe3 : public resistor {
 	public:
         	resistor_VISHAY_CRCWe3(std::string name, float value, float usedPower, float ratedPower);
+        	resistor_VISHAY_CRCWe3(std::string name, float value, float stress);
 		virtual float getFIT();
 };
 

@@ -28,6 +28,7 @@ class resistor : public component {
          * \param ratedP    rated power in Watt
          */
         resistor(std::string name, float value, float usedP, float ratedP);
+        resistor(std::string name, float value, float stress);
         resistor(){
             partcnt--;
         };
@@ -63,6 +64,8 @@ class resistor : public component {
         float resistance;   ///< resistance
         float usedPower;    ///< used Power in W
         float ratedPower;   ///< rated Power in W
+    
+	float stress;	    ///< used stress
 
     private:
         static std::string identifier;
