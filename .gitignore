@@ -44,12 +44,14 @@ main
 main_GCU
 main_PowerBoard
 main_BASE_Hamamatsu
+main_TsinghuaFMC
 import_wuerth
 sqlite
 output
 websync
 *~
 *.pyc
+*.swp
 
 *.sql
 *.csv
