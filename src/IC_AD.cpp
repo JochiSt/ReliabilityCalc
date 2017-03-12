@@ -21,6 +21,12 @@ IC_AD::IC_AD(std::string name, std::string type) : IC_DB(name, type) {
 	fflush(stdout);
 	lookupPartName();
 	lookup_IC();
+	
+	if( FIT > 1000 ){
+	    fprintf(stderr, "seems, that IC was not found\n");
+	    exit(-1);
+	}
+
 	store_in_DB();
     }
     printf(" ... result %4.2f @ %6.2f\n", FIT, FIT_temperature);
