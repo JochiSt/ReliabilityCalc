@@ -30,7 +30,12 @@ class capacitor : public component {
          */
         capacitor(std::string name, float value, float usedU, float ratedU);
 
+        capacitor(std::string name, float value, float stress);
+
         virtual ~capacitor();
+
+	/// @return stress
+	float getStress() { return stress; }
 
         /// @return capacity in pF
         float getCapacity() { return capacity; }
@@ -55,6 +60,8 @@ class capacitor : public component {
         float capacity;     ///< capacity in pF
         float usedVoltage;  ///< voltage applied to the capacitor
         float ratedVoltage; ///< rated voltage of the capacitor
+
+	float stress;	    ///< stress level of this capacitor ( usedVoltage / ratedVoltage )
 
     private:
         static std::string identifier;	///< store capacitor identifier

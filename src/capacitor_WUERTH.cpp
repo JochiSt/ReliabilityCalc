@@ -7,6 +7,9 @@ capacitor_WUERTH::capacitor_WUERTH(std::string name, std::string code, float val
     if(ratedVoltage > 50)   // do check, whether rated voltage is ok
         ratedVoltage = 50;
 }
+capacitor_WUERTH::capacitor_WUERTH(std::string name, std::string code, float value, float stress) : capacitor(name, value, stress), component_WUERTH(code){
+
+}
 
 capacitor_WUERTH::~capacitor_WUERTH(){
 

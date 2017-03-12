@@ -9,15 +9,20 @@
  */
 class capacitor_WUERTH : public capacitor, public component_WUERTH {
 
-	public:
-		/// constructor for Würth capacitors
+    public:
+	/// constructor for Würth capacitors
         capacitor_WUERTH(std::string name, std::string code, float value, float usedU, float ratedU);
+
+        capacitor_WUERTH(std::string name, std::string code, float value, float stress);
+	
         virtual ~capacitor_WUERTH();
 
-		/// @return FIT of this specific component
-		virtual float getFIT();
+	/// @return FIT of this specific component
+	virtual float getFIT();
 
-	private:
+    protected:
+	/// stress of this capacitor
+	float stress;
 
 };
 
