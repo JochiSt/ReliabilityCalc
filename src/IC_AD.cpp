@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <stdexcept>
+
 #include "utils.h"
 
 IC_AD::IC_AD(std::string name, std::string type) : IC_DB(name, type) {
@@ -23,8 +25,7 @@ IC_AD::IC_AD(std::string name, std::string type) : IC_DB(name, type) {
 	lookup_IC();
 	
 	if( FIT > 1000 ){
-	    fprintf(stderr, "seems, that IC was not found\n");
-	    exit(-1);
+	    throw std::runtime_error("IC not found");
 	}
 
 	store_in_DB();
