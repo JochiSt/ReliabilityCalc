@@ -33,6 +33,14 @@ class utils {
 		 */
 		static float FailureRate2FIT(float failureRate, float deviceHours);
 
+
+		/**
+		 * \brief calculate FIT from failures and runtime
+		 * \return FIT value
+		 * \param[in] conflevel confidence level typ. 0.6
+		 * \param[in] failures number of observed failures
+		 * \param[in] devhours device hours = runtime * devices * acceleration factor
+		 */
 		static float calcFIT(float conflevel, int failures, double devhours);
 };
 
