@@ -4,6 +4,7 @@
 #include <cmath>
 #include <vector>
 #include <sstream>
+#include <stdexcept>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -17,8 +18,9 @@ IC_DB::IC_DB(std::string name, std::string type) : IC_ELFR(name) {
 //    curl_global_init(CURL_GLOBAL_WIN32);
     curl_global_init(CURL_GLOBAL_DEFAULT);
     curl = curl_easy_init();
-    if(!curl)
-	exit(1);
+    if(!curl){
+	throw std::runtime_error("CURL init failure");
+    }
 
     // initialise vector with 0
     results = std::vector<float>(13,0); 
