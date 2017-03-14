@@ -5,40 +5,65 @@ CFLAGS+=-Iinclude/
 CFLAGS+=-g
 
 LDFLAGS+=-lsqlite3 -lgsl -lgslcblas -lm
+LDFLAGS+=-L. -lReliability
 LDFLAGS+=$(shell curl-config --libs)
 
+###############################################################################
+# library....
+# use $$HOME directory as default location
+# (do not check in something like LIB_INSTALL_PATH=/home/t2k_user as it
+# will break the build for everybody at the next update)
+LIB_INSTALL_PATH=$(HOME)/lib
+INC_INSTALL_PATH=$(HOME)/include/liblab
+
+LIBNAME=libReliability.a
+
+##############################################################################
+# compiler selection
 GPP=g++
 CC=gcc
+AR=ar
+
+##############################################################################
 
 PROGRAM = main
 PROGRAM_2 = main_PowerBoard
 PROGRAM_3 = main_GCU
 PROGRAM_4 = main_BASE_Hamamatsu
+PROGRAM_5 = main_TsinghuaFMC
+PROGRAM_6 = main_ESS
 
 SRCS=$(wildcard src/*.cpp)
 OBJECTS = $(SRCS:.cpp=.o)
 
-.PHONY: all clean doc $(BUSSES)
+.PHONY: all clean doc lib install $(BUSSES)
 
-all:	$(PROGRAM) $(PROGRAM_2) $(PROGRAM_3) $(PROGRAM_4)
-#all:	$(PROGRAM)
+all:	lib $(PROGRAM) $(PROGRAM_2) $(PROGRAM_3) $(PROGRAM_4) $(PROGRAM_5) $(PROGRAM_6)
 	@echo " ALL DONE. $@"
 
-$(PROGRAM):	$(BUSSES) $(OBJECTS) $(PROGRAM).o
+$(PROGRAM):	$(BUSSES) $(PROGRAM).o
 	@echo -n ">>> Linking   "
-	$(GPP)  -o $(PROGRAM) $(OBJECTS) $(PROGRAM).o $(LDFLAGS)
+	$(GPP)  -o $(PROGRAM) $(PROGRAM).o $(LDFLAGS)
 
-$(PROGRAM_2):	$(BUSSES) $(OBJECTS) $(PROGRAM_2).o
+$(PROGRAM_2):	$(BUSSES) $(PROGRAM_2).o
 	@echo -n ">>> Linking   "
-	$(GPP)  -o $(PROGRAM_2) $(OBJECTS) $(PROGRAM_2).o $(LDFLAGS)
+	$(GPP)  -o $(PROGRAM_2) $(PROGRAM_2).o $(LDFLAGS)
 
-$(PROGRAM_3):	$(BUSSES) $(OBJECTS) $(PROGRAM_3).o
+$(PROGRAM_3):	$(BUSSES) $(PROGRAM_3).o
 	@echo -n ">>> Linking   "
-	$(GPP)  -o $(PROGRAM_3) $(OBJECTS) $(PROGRAM_3).o $(LDFLAGS)
+	$(GPP)  -o $(PROGRAM_3) $(PROGRAM_3).o $(LDFLAGS)
 
-$(PROGRAM_4):	$(BUSSES) $(OBJECTS) $(PROGRAM_4).o
+$(PROGRAM_4):	$(BUSSES) $(PROGRAM_4).o
 	@echo -n ">>> Linking   "
-	$(GPP)  -o $(PROGRAM_4) $(OBJECTS) $(PROGRAM_4).o $(LDFLAGS)
+	$(GPP)  -o $(PROGRAM_4) $(PROGRAM_4).o $(LDFLAGS)
+
+$(PROGRAM_5):	$(BUSSES) $(PROGRAM_5).o
+	@echo -n ">>> Linking   "
+	$(GPP)  -o $(PROGRAM_5) $(PROGRAM_5).o $(LDFLAGS)
+
+$(PROGRAM_6):	$(BUSSES) $(PROGRAM_6).o
+	@echo -n ">>> Linking   "
+	$(GPP)  -o $(PROGRAM_6) $(PROGRAM_6).o $(LDFLAGS)
 
 $(BUSSES):
 	@cd $@; $(MAKE);
@@ -59,12 +84,23 @@ $(BUSSES):
 	@echo -e -n " CC $<:\t";
 	$(GPP) -c $< $(CFLAGS)
 
+lib:	all
+	rm -f $(LIBNAME)
+	@echo -en " LIB:\t"
+	$(AR) rsc $(LIBNAME) `for dir in $(BUSSES); do ( find $$dir -name '*.o'; ); done` 
+	@echo -en "\n*** The library now contains following files ***\n"
+	@$(AR) tv $(LIBNAME)
+
 doc:
 	@echo " creating documentation"
 	doxygen doxygen/doxyfile
 
 clean:
-	@echo " CLEAN"
+	@echo " CLEAN ALL"
+	@for dir in $(BUSSES); do ( cd $$dir; $(MAKE) clean; ); done
+	@rm -f $(LIBNAME)
+	@rm -f libReliability.so
+	@rm -f libReliability.a
 	@rm -f *.o
 	@rm -f src/*.o
 	@echo " CLEAN."
