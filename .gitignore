@@ -41,6 +41,7 @@ html
 *.log
 
 main
+main_ESS
 main_GCU
 main_PowerBoard
 main_BASE_Hamamatsu
