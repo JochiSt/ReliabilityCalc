@@ -7,7 +7,7 @@
 int main(){
 
 
-    printf("ESS %f\n", ESS::ScreenStrength(80, 10, 2));
+    printf("ESS %f\n", ESS::ScreenStrengthTC(80, 10, 2));
 
    
     return 0; 

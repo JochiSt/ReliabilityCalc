@@ -4,7 +4,15 @@
 class ESS {
 
     public:
-	static float ScreenStrength(float Trange, float dT, int cycles);
+	/**
+	 * @brief calculate screening strength for temperature cycles
+	 * 
+	 * @param[in] Trange temperature range in deg Celsius
+	 * @param[in] dT rate of temperature change
+	 * @param[out] cycles number of cycles, which are performed
+	 * @return calculated Screening Strength
+	 */
+	static float ScreenStrengthTC(float Trange, float dT, int cycles);
 
 
 };
