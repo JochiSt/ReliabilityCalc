@@ -30,7 +30,7 @@ PROGRAM = main
 PROGRAM_2 = main_PowerBoard
 PROGRAM_3 = main_GCU
 PROGRAM_4 = main_BASE_Hamamatsu
-PROGRAM_5 = main_TsinghuaFMC
+#PROGRAM_5 = main_TsinghuaFMC
 PROGRAM_6 = main_ESS
 
 SRCS=$(wildcard src/*.cpp)
@@ -38,7 +38,7 @@ OBJECTS = $(SRCS:.cpp=.o)
 
 .PHONY: all clean doc lib install $(BUSSES)
 
-all:	lib $(PROGRAM) $(PROGRAM_2) $(PROGRAM_3) $(PROGRAM_4) $(PROGRAM_5) $(PROGRAM_6)
+all:	$(BUSSES) lib $(PROGRAM) $(PROGRAM_2) $(PROGRAM_3) $(PROGRAM_4) $(PROGRAM_5) $(PROGRAM_6)
 	@echo " ALL DONE. $@"
 
 $(PROGRAM):	$(BUSSES) $(PROGRAM).o
