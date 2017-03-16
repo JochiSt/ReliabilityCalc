@@ -38,30 +38,30 @@ OBJECTS = $(SRCS:.cpp=.o)
 
 .PHONY: all clean doc lib install $(BUSSES)
 
-all:	$(BUSSES) lib $(PROGRAM) $(PROGRAM_2) $(PROGRAM_3) $(PROGRAM_4) $(PROGRAM_5) $(PROGRAM_6)
+all:	lib $(PROGRAM) $(PROGRAM_2) $(PROGRAM_3) $(PROGRAM_4) $(PROGRAM_5) $(PROGRAM_6)
 	@echo " ALL DONE. $@"
 
-$(PROGRAM):	$(BUSSES) $(PROGRAM).o
+$(PROGRAM):	lib $(PROGRAM).o
 	@echo -n ">>> Linking   "
 	$(GPP)  -o $(PROGRAM) $(PROGRAM).o $(LDFLAGS)
 
-$(PROGRAM_2):	$(BUSSES) $(PROGRAM_2).o
+$(PROGRAM_2):	lib $(PROGRAM_2).o
 	@echo -n ">>> Linking   "
 	$(GPP)  -o $(PROGRAM_2) $(PROGRAM_2).o $(LDFLAGS)
 
-$(PROGRAM_3):	$(BUSSES) $(PROGRAM_3).o
+$(PROGRAM_3):	lib $(PROGRAM_3).o
 	@echo -n ">>> Linking   "
 	$(GPP)  -o $(PROGRAM_3) $(PROGRAM_3).o $(LDFLAGS)
 
-$(PROGRAM_4):	$(BUSSES) $(PROGRAM_4).o
+$(PROGRAM_4):	lib $(PROGRAM_4).o
 	@echo -n ">>> Linking   "
 	$(GPP)  -o $(PROGRAM_4) $(PROGRAM_4).o $(LDFLAGS)
 
-$(PROGRAM_5):	$(BUSSES) $(PROGRAM_5).o
+$(PROGRAM_5):	lib $(PROGRAM_5).o
 	@echo -n ">>> Linking   "
 	$(GPP)  -o $(PROGRAM_5) $(PROGRAM_5).o $(LDFLAGS)
 
-$(PROGRAM_6):	$(BUSSES) $(PROGRAM_6).o
+$(PROGRAM_6):	lib $(PROGRAM_6).o
 	@echo -n ">>> Linking   "
 	$(GPP)  -o $(PROGRAM_6) $(PROGRAM_6).o $(LDFLAGS)
 
@@ -84,7 +84,7 @@ $(BUSSES):
 	@echo -e -n " CC $<:\t";
 	$(GPP) -c $< $(CFLAGS)
 
-lib:	all
+lib:	$(BUSSES)
 	rm -f $(LIBNAME)
 	@echo -en " LIB:\t"
 	$(AR) rsc $(LIBNAME) `for dir in $(BUSSES); do ( find $$dir -name '*.o'; ); done` 
