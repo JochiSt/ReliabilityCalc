@@ -3,13 +3,16 @@ BUSSES+=
 CFLAGS=-fPIC -Wall 
 CFLAGS+=-I../../include/
 CFLAGS+=-g
+#CFLAGS+=$(shell root-config --cflags)
 
 LDFLAGS+=-lsqlite3 -lgsl -lgslcblas -lm
 LDFLAGS+=-L../../ -lReliability
 LDFLAGS+=$(shell curl-config --libs)
+#LDFLAGS+=$(shell root-config --libs)
 
 ##############################################################################
 # compiler selection
+#GPP=g++ -std=c++0x
 GPP=g++
 CC=gcc
 AR=ar

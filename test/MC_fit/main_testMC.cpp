@@ -4,6 +4,7 @@ using namespace std;
 
 #include "schematic.h"
 #include "component.h"
+#include "component_FIT.h"
 #include "capacitor.h"
 #include "resistor.h"
 #include "IC.h"
@@ -26,49 +27,87 @@ using namespace std;
 
 #include "utils.h"
 
+#include <cstdlib>
+#include <time.h>
+#include <fstream>
+
 int main(){
     cout << "Reliability Calculator" << endl;
     cout << "\tcompiled @ " << __DATE__ << " " << __TIME__ << " using GCC " << __VERSION__ << endl << endl;
 
     cout << "FIT for 0.5% in 6 years " << utils::FailureRate2FIT(0.5/100., 6*365*24.) << endl;
 
+    cout << "0.4095:\t" << utils::FailureRate2FIT(0.4095, 6*365*24.) << endl;
+    cout << "0.6536:\t" << utils::FailureRate2FIT(0.6536, 6*365*24.) << endl;
+
     component::setAmbientTemperature(40);
 
     schematic* example = new schematic("Example Board");
+    example -> addComponent( new component_FIT("T1", 100) );
+    example -> setVerboseOutput(true);
+    float FIT = example -> getFIT();
 
-    example -> addComponent(new capacitor_WUERTH("C1", "WCAP-CSGP",  1*capacitor::uF,  1, 50)); // lowest stress
-    example -> addComponent(new capacitor_WUERTH("C2", "WCAP-CSGP",  1*capacitor::uF, 14, 50));
-    example -> addComponent(new capacitor_WUERTH("C2a", "WCAP-CSGP",  1*capacitor::uF, 14, 50), 10);
-    example -> addComponent(new capacitor_WUERTH("C3", "WCAP-CSGP",  1*capacitor::uF, 24, 50));
-    example -> addComponent(new capacitor_WUERTH("C4", "WCAP-CSGP",  1*capacitor::uF, 34, 50));
-    example -> addComponent(new capacitor_WUERTH("C5", "WCAP-CSGP",  1*capacitor::uF, 50, 50)); // maximal stress
 
-    example -> addComponent(new capacitor_VISHAY("C90", capacitor_VISHAY::CLASS_1, 1*capacitor::pF, 24, 50));
-    example -> addComponent(new capacitor_VISHAY("C91", capacitor_VISHAY::CLASS_2, 1*capacitor::pF, 24, 50));
+    srand (time(NULL));
+    const float fit = 100;
+    
+    std::ofstream outp;
+    outp.open("test_distri.dat");    
 
-    example -> addComponent(new capacitor_WIMA("C10", 1*capacitor::uF, 24, 50));
-    example -> addComponent(new capacitor_WIMA_SMD_PPS("C10", 1*capacitor::uF, 24, 50));
+    double cntAll = 0, cntFMD = 0, cnt = 0;
 
-    example -> addComponent(new inductor_WUERTH("L1", "WE-PoE+"));
+    float runtime = 6;
+    float singleFIT = 10000;
+    for(unsigned int tries = 0; tries < 1E6; tries ++){
+//    for(float runtime=0; runtime<6; runtime+=0.0125 ){
+        int failureCounter = 0;
+        bool failed = false;
+	bool strongfail = false;
 
-    example -> addComponent(new crystal("Q1", 36, 25));
-    example -> addComponent(new crystal_EPSON("Q1", 36, 25));
+        float failureProb = utils::FIT2FailureRate(singleFIT, runtime*365*24.);    
+        float realFailure = 0.5;	// 50% are real failures    
 
-    example -> addComponent(new IC_TI("GCU_ISO", "ISO7341CQDWQ1"));
-    example -> addComponent(new IC_TI("GCU_ISO", "DS30EA101"));
-    example -> lastAddedComponent() -> setDeviceTemperature(55);
+//	cout << i << "\t" << failureProb << endl;
 
-    example -> addComponent(new IC_MAXIM("IC2", "MAX232"));
-    example -> addComponent(new IC_MAXIM("IC2", "MAX485"));
+        for(int components=0; components<2; components++){
+            // Failure Probability after xx h
+            // assume 10%
+    
+	    double componentFailure = rand();
+		   componentFailure /= RAND_MAX;
+//	    cout << componentFailure << endl;
+            if( componentFailure < failureProb ){	// if component is failing
+		    strongfail = true;
+		    double failureMode = rand();
+			   failureMode /= RAND_MAX;
+//		    cout << failureMode << endl;
+		    if( realFailure < failureMode){		// component seriously failed
+			failed = true;
+		    }else{
+			failureCounter ++;
+		    }
+	    }
+        }
+	int mode = 0;
+	cntAll ++;
+	if(strongfail){
+		cnt++;
+		if( failureCounter > 1 || failed) {	// more than one small issue
+		    cntFMD ++;
+		}
+	}
+    }
+    
+    cout << cntAll << "\t" << cnt << "\t" << cntFMD << endl;
 
-    example -> addComponent(new IC_AD("IC5", "ADP1765"));
+    cntFMD /= cntAll;
+    cnt    /= cntAll;
 
-    example -> addComponent(new PCB("PCB", 4 ,1000, PCB::MICRO_VIA , 500)); 
+    cout << cntAll << "\t" << cnt << "\t" << cntFMD << endl;
 
-    example -> setVerboseOutput(true);  // enable verbose output
-    example -> getFIT();
-
-    schematic::printPartCount();
+    cout << "FIT of single device: " << singleFIT << endl;
+    cout << "ALL: " << utils::FailureRate2FIT(cnt, runtime * 365*24.) << endl;
+    cout << "FMD: " << utils::FailureRate2FIT(cntFMD, runtime * 365*24.) << endl;
 
     return 0;
 }
