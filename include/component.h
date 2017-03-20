@@ -2,6 +2,7 @@
 #define COMPONENT_H
 
 #include <string>
+#include <stdio.h>
 #include "sqlite3_handler.h"
 
 /**
@@ -99,7 +100,8 @@ class component
 		}else{
 			return devTemp;
 		}
-	}
+	};
+
 	/** 
 	 * sets individual device temperature
 	 */
@@ -108,7 +110,23 @@ class component
 			temp += KELVIN;
 		}
 		deviceTemperature = temp;
-	}
+	};
+
+        /**
+         * @addtogroup FMDhandling Failure Mode Distribution handling
+         * @{
+         */
+	virtual void setProbSeriousError(float prob){
+	    if( prob <= 1.){
+	    	probSeriousError = prob;
+	    }else{
+		fprintf(stderr, "Probability should be between 0 and 1\n");
+	    }
+	};
+	virtual float getProbSeriousError(){
+	    return probSeriousError;
+	};
+	///@}
 
     public:
         static float ambientTemperature;	///< define operating temperature for all parts
@@ -118,6 +136,13 @@ class component
         std::string name;			///< name of the component
 	float deviceTemperature;		///< individual device temperature
 	float deviceDeltaT;			///< individual device temperature increase
+
+        /**
+         * @addtogroup FMDhandling
+         * @{
+         */
+	float probSeriousError;			///< serious error, which cause mission to fail (range 0 - 1)
+	///@} 
 
 	virtual float getDeviceTincrease();	///< look into the database and read temperature increase
 
