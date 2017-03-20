@@ -8,6 +8,8 @@
 #include <numeric>
 #include <sstream>
 
+#include "utils.h"
+
 #include "diode.h"
 #include "resistor.h"
 #include "capacitor.h"
@@ -172,5 +174,57 @@ void schematic::exportDataToFile(std::string filename, std::vector<float> vec1, 
         output << vec1[i] << "\t" << vec2[i] << std::endl;
     }
     output.close();
+}
+
+/*****************************************************************************/
+
+void schematic::MCcalculateFIT(double runtime, unsigned long int tries){
+    double cntALL = 0;	// sum of all errors
+    double cntFMD = 0;	// sum of errors, which cause mission to fail
+ 
+    // do multiple simulations
+    for(unsigned int run = 0; run < tries; run ++){
+	unsigned int softFailureCNT = 0;    // sum of all small errors
+	bool missionFail = false;	    // mission critical error happened
+	bool partFail = false;		    // part failure according to FIT
+
+	// loop over all components of this schematic
+	for(unsigned int cmp = 0; cmp < parts.size(); cmp ++){
+	    double partFailureProb = utils::FIT2FailureRate(parts[cmp] -> getFIT(), runtime);
+	    
+	    double partFailure = rand(); partFailure /= RAND_MAX;
+	    // is this part failing ?
+	    if( partFailure < partFailureProb ){    // if true part has been failed
+		partFail = true;	
+		
+		// if failing -> have a look at the failure mode
+	    	double failureMode = rand(); failureMode /= RAND_MAX;
+	   
+		// TODO FIXME insert right failure mode prob here 
+		if( 0.5 > failureMode){     // component seriously failed
+		    missionFail = true;
+                }else{
+		    softFailureCNT ++;		    // SoftFailure, which might still cause mission to succeed
+		}
+    	    }
+	} 
+	// ANALYSIS of the failures
+	if( partFail ){
+	    cntALL ++;	
+	    if( missionFail || softFailureCNT > MCsoftErrorTol ){
+		// either mission critical failure or too many soft failures
+		cntFMD ++;
+	    } 
+	}
+    }   
+
+    cntALL /= tries;
+    cntFMD /= tries;
+
+    double FITall = utils::FailureRate2FIT(cntALL, runtime); 
+    double FITfmd = utils::FailureRate2FIT(cntFMD, runtime); 
+    
+    printf("ALL %lf FIT \t\t FMD %lf FIT\n", FITall, FITfmd);
+
 }
 

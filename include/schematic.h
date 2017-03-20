@@ -189,8 +189,7 @@ class schematic : public component {
 	/**
 	 * calculate FIT based on MC (using the given probabilities)
 	 */
-	virtual void MCcalculateFIT(long tries = 1E6){
-	}
+	virtual void MCcalculateFIT(double runtime = 6*365*24., unsigned long int tries = 1E6);
 
 	virtual void MCsetNumberSoftError(unsigned int errors){
 	    MCsoftErrorTol = errors;
