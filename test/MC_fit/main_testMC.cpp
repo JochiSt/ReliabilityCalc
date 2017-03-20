@@ -37,16 +37,12 @@ int main(){
 
     cout << "FIT for 0.5% in 6 years " << utils::FailureRate2FIT(0.5/100., 6*365*24.) << endl;
 
-    cout << "0.4095:\t" << utils::FailureRate2FIT(0.4095, 6*365*24.) << endl;
-    cout << "0.6536:\t" << utils::FailureRate2FIT(0.6536, 6*365*24.) << endl;
-
     component::setAmbientTemperature(40);
 
     schematic* example = new schematic("Example Board");
     example -> addComponent( new component_FIT("T1", 100) );
     example -> setVerboseOutput(true);
     float FIT = example -> getFIT();
-
 
     srand (time(NULL));
     const float fit = 100;
@@ -59,28 +55,25 @@ int main(){
     float runtime = 6;
     float singleFIT = 0.03;
     for(unsigned int tries = 0; tries < 1E8; tries ++){
-//    for(float runtime=0; runtime<6; runtime+=0.0125 ){
-        int failureCounter = 0;
-        bool failed = false;
-	bool strongfail = false;
+
+        int failureCounter = 0;	    // count all failures
+        bool failed = false;	    // has this device failed
+	bool strongfail = false;    // is this a failure, which causes the misssion to fail
 
         float failureProb = utils::FIT2FailureRate(singleFIT, runtime*365*24.);    
-        float realFailure = 0.5;	// 50% are real failures    
+        float realFailure = 0.5;	// 50% are real failures
+					// rest are failures, which do not harm that much
 
-//	cout << i << "\t" << failureProb << endl;
-
-        for(int components=0; components<2; components++){
-            // Failure Probability after xx h
-            // assume 10%
-    
+        for(int components=0; components<5; components++){
+	    // generate the failure probability between 0 and 1
 	    double componentFailure = rand();
 		   componentFailure /= RAND_MAX;
-//	    cout << componentFailure << endl;
+
             if( componentFailure < failureProb ){	// if component is failing
 		    strongfail = true;
+		    // generate the failure mode probability between 0 and 1
 		    double failureMode = rand();
 			   failureMode /= RAND_MAX;
-//		    cout << failureMode << endl;
 		    if( realFailure < failureMode){		// component seriously failed
 			failed = true;
 		    }else{
@@ -88,7 +81,6 @@ int main(){
 		    }
 	    }
         }
-	int mode = 0;
 	cntAll ++;
 	if(strongfail){
 		cnt++;
