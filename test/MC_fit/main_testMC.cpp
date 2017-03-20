@@ -57,8 +57,8 @@ int main(){
     double cntAll = 0, cntFMD = 0, cnt = 0;
 
     float runtime = 6;
-    float singleFIT = 10000;
-    for(unsigned int tries = 0; tries < 1E6; tries ++){
+    float singleFIT = 0.03;
+    for(unsigned int tries = 0; tries < 1E8; tries ++){
 //    for(float runtime=0; runtime<6; runtime+=0.0125 ){
         int failureCounter = 0;
         bool failed = false;
