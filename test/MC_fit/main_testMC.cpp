@@ -61,7 +61,7 @@ int main(){
 	bool strongfail = false;    // is this a failure, which causes the misssion to fail
 
         float failureProb = utils::FIT2FailureRate(singleFIT, runtime*365*24.);    
-        float realFailure = 0.5;	// 50% are real failures
+        float realFailure = 0.1;	// 50% are real failures
 					// rest are failures, which do not harm that much
 
         for(int components=0; components<5; components++){
@@ -74,7 +74,7 @@ int main(){
 		    // generate the failure mode probability between 0 and 1
 		    double failureMode = rand();
 			   failureMode /= RAND_MAX;
-		    if( realFailure < failureMode){		// component seriously failed
+		    if( realFailure > failureMode){		// component seriously failed
 			failed = true;
 		    }else{
 			failureCounter ++;
