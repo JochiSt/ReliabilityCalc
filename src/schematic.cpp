@@ -189,6 +189,13 @@ void schematic::exportDataToFile(std::string filename, std::vector<float> vec1, 
 void schematic::MCcalculateFIT(double runtime, unsigned long int tries){
     double cntALL = 0;	// sum of all errors
     double cntFMD = 0;	// sum of errors, which cause mission to fail
+
+    std::vector<float> cmp_FIT;
+
+    // create a map of all component's FIT data (will speed up MC calculation
+    for(unsigned int cmp = 0; cmp < parts.size(); cmp ++){
+	cmp_FIT.push_back( parts[cmp] -> getFIT() );
+    }
  
     // do multiple simulations
     for(unsigned long int run = 0; run < tries; run ++){
@@ -202,7 +209,7 @@ void schematic::MCcalculateFIT(double runtime, unsigned long int tries){
 	// loop over all components of this schematic
 	for(unsigned int cmp = 0; cmp < parts.size(); cmp ++){
 
-	    double partFailureProb = utils::FIT2FailureRate(parts[cmp] -> getFIT(), runtime);
+	    double partFailureProb = utils::FIT2FailureRate( cmp_FIT[cmp] , runtime);
 	    double partFailure = rand(); partFailure /= RAND_MAX;
 
 	    // is this part failing ?
