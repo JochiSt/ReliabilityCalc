@@ -181,8 +181,11 @@ void schematic::exportDataToFile(std::string filename, std::vector<float> vec1, 
     output.close();
 }
 
-/*****************************************************************************/
-
+/******************************************************************************
+ * Monte Carlo FIT calculation
+ *	    using failure probabilities and can still cause mission to suceed
+ *	    with some errors
+ */
 void schematic::MCcalculateFIT(double runtime, unsigned long int tries){
     double cntALL = 0;	// sum of all errors
     double cntFMD = 0;	// sum of errors, which cause mission to fail
@@ -195,21 +198,22 @@ void schematic::MCcalculateFIT(double runtime, unsigned long int tries){
 
 	// loop over all components of this schematic
 	for(unsigned int cmp = 0; cmp < parts.size(); cmp ++){
+
 	    double partFailureProb = utils::FIT2FailureRate(parts[cmp] -> getFIT(), runtime);
-	    
 	    double partFailure = rand(); partFailure /= RAND_MAX;
+
 	    // is this part failing ?
 	    if( partFailure < partFailureProb ){    // if true part has been failed
-		partFail = true;	
+		partFail = true;		    // there has been some failure observed
 		
 		// if failing -> have a look at the failure mode
 	    	double failureMode = rand(); failureMode /= RAND_MAX;
 	   
 		// TODO FIXME insert right failure mode prob here 
-		if( 0.5 > failureMode){     // component seriously failed
-		    missionFail = true;
+		if( 0.5 > failureMode || part_critical[cmp] ){	// component seriously failed
+		    missionFail = true;				// or component really important for mission
                 }else{
-		    softFailureCNT ++;		    // SoftFailure, which might still cause mission to succeed
+		    softFailureCNT ++;				// SoftFailure, which might still cause mission to succeed
 		}
     	    }
 	} 
