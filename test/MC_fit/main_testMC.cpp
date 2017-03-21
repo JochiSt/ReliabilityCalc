@@ -40,7 +40,11 @@ int main(){
     component::setAmbientTemperature(40);
 
     schematic* example = new schematic("Example Board");
-    example -> addComponent( new component_FIT("T1", 100) );
+    example -> addComponent( new component_FIT("T1", 100), 1, false );
+    example -> addComponent( new component_FIT("T2", 100), 1, false );
+
+    example -> MCcalculateFIT();
+
     example -> setVerboseOutput(true);
     float FIT = example -> getFIT();
 
