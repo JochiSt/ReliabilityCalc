@@ -27,14 +27,14 @@ class schematic : public component {
          * sets the ambient temperature
          * @param val ambient / operating temperature in degrees Celsius
          */
-        void setAmbientTemperature(float val){
+        virtual void setAmbientTemperature(float val){
             component::setAmbientTemperature(val);
         }
 
         /**
          * \return ambient / operating temperature in degrees Celsius
          */
-        float getAmbientTemperature(){
+        virtual float getAmbientTemperature(){
             return component::getAmbientTemperature();
         }
 
@@ -48,7 +48,7 @@ class schematic : public component {
 	 * \param cnt number of exactly the same components, which should be added
 	 * \param critical defines, whether this part is critical for the mission or not
          */
-        void addComponent(component* part, unsigned int cnt, bool critical){
+        virtual void addComponent(component* part, unsigned int cnt, bool critical){
             if(part != NULL){
                 parts.push_back(part);
 		part_count.push_back(cnt);
@@ -56,7 +56,7 @@ class schematic : public component {
             }
         }
 
-        void addComponent(component* part, unsigned int critical = 1){
+        virtual void addComponent(component* part, unsigned int critical = 1){
 	    if( critical == 0 || critical == 1){
 		addComponent(part, 1, critical);
 	    }else{
@@ -65,12 +65,24 @@ class schematic : public component {
 	    }
 	}
 
+	virtual unsigned int getComponentNumber(){
+	    return parts.size();
+	}
+
+	virtual component* getComponent(unsigned int index){
+	    if( index < parts.size() ){
+		return parts.at(index);
+	    }else{
+		return NULL;
+	    }
+	}
+
         /**
          * get pointer to latest add component
          * @return pointer to last added component
          * @return NULL if there is no last element
          */
-        component* getLastComponent(){
+        virtual component* getLastComponent(){
             if(parts.size() > 0){
                 return parts.at( parts.size() - 1 );
             }else{
