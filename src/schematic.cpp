@@ -186,7 +186,7 @@ void schematic::exportDataToFile(std::string filename, std::vector<float> vec1, 
  *	    using failure probabilities and can still cause mission to suceed
  *	    with some errors
  */
-void schematic::MCcalculateFIT(double runtime, unsigned long int tries){
+void schematic::MCcalculateFIT(double &FITall, double &FITfmd, double runtime, unsigned long int tries){
     double cntALL = 0;	// sum of all errors
     double cntFMD = 0;	// sum of errors, which cause mission to fail
 
@@ -222,7 +222,7 @@ void schematic::MCcalculateFIT(double runtime, unsigned long int tries){
 	    	double failureMode = rand(); failureMode /= RAND_MAX;
 	   
 		// TODO FIXME insert right failure mode prob here 
-		if( 0.5 > failureMode || part_critical[cmp] ){	// component seriously failed
+		if( parts[cmp] -> getProbSeriousError() > failureMode || part_critical[cmp] ){	// component seriously failed
 		    missionFail = true;				// or component really important for mission
                 }else{
 		    softFailureCNT ++;				// SoftFailure, which might still cause mission to succeed
@@ -242,8 +242,8 @@ void schematic::MCcalculateFIT(double runtime, unsigned long int tries){
     cntALL /= tries;
     cntFMD /= tries;
 
-    double FITall = utils::FailureRate2FIT(cntALL, runtime); 
-    double FITfmd = utils::FailureRate2FIT(cntFMD, runtime); 
+    FITall = utils::FailureRate2FIT(cntALL, runtime); 
+    FITfmd = utils::FailureRate2FIT(cntFMD, runtime); 
     
     printf("All errors are mission critical          \t%lf FIT ALL\n", FITall);
     printf("Some errors do not cause mission to fail \t%lf FIT FMD\n", FITfmd);
