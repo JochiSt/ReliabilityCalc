@@ -199,8 +199,10 @@ void schematic::MCcalculateFIT(double runtime, unsigned long int tries){
  
     // do multiple simulations
     for(unsigned long int run = 0; run < tries; run ++){
-	printf("%ld of %ld done %lf \%\r", run, tries, (double) run/tries * 100.);
-	fflush(stdout);
+	if(run % 1000 == 0){
+	    printf("%ld of %ld done %lf %% \r", run, tries, (double) run/tries * 100.);
+	    fflush(stdout);
+	}
 
 	unsigned int softFailureCNT = 0;    // sum of all small errors
 	bool missionFail = false;	    // mission critical error happened
