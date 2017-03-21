@@ -30,7 +30,7 @@ int main(){
 
 
     FPGA2 -> addComponent(new IC ("IC12", 11, 55));
-    FPGA2 -> lastAddedComponent () -> setDeviceTemperature (60);
+    FPGA2 -> getLastComponent () -> setDeviceTemperature (60);
     
     FPGA2 -> addComponent(new capacitor_WUERTH ("C241", "WCAP-CSGP", 1*capacitor ::uF, 2.5, 16));
     

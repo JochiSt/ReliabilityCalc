@@ -56,7 +56,7 @@ int main(){
 
     example -> addComponent(new IC_TI("GCU_ISO", "ISO7341CQDWQ1"));
     example -> addComponent(new IC_TI("GCU_ISO", "DS30EA101"));
-    example -> lastAddedComponent() -> setDeviceTemperature(55);
+    example -> getLastComponent() -> setDeviceTemperature(55);
 
     example -> addComponent(new IC_MAXIM("IC2", "MAX232"));
     example -> addComponent(new IC_MAXIM("IC2", "MAX485"));
