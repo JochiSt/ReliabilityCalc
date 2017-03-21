@@ -128,6 +128,8 @@ class component
 	};
 
 	virtual void MCcalculateFIT(double &FITall, double &FITfmd, double runtime = 6*365*24., unsigned long int tries = 1E6){
+	    FITall = getFIT();
+	    FITfmd = FITall;
 	}
 	///@}
 

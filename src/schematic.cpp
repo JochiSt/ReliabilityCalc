@@ -28,7 +28,7 @@ schematic::schematic(std::string name) : component(name){
     srand(time(NULL));
     verbose_output = false;
 
-    MCsoftErrorTol = 2;
+    MCsoftErrorTol = 0;	// no tolerance for "soft" errors
 }
 
 float schematic::getFIT(){
@@ -199,10 +199,10 @@ void schematic::MCcalculateFIT(double &FITall, double &FITfmd, double runtime, u
  
     // do multiple simulations
     for(unsigned long int run = 0; run < tries; run ++){
-	if(run % 1000 == 0){
-	    printf("%ld of %ld done %lf %% \r", run, tries, (double) run/tries * 100.);
-	    fflush(stdout);
-	}
+//	if(run % 1000 == 0){
+//	    printf("%ld of %ld done %lf %% \r", run, tries, (double) run/tries * 100.);
+//	    fflush(stdout);
+//	}
 
 	unsigned int softFailureCNT = 0;    // sum of all small errors
 	bool missionFail = false;	    // mission critical error happened
@@ -239,14 +239,16 @@ void schematic::MCcalculateFIT(double &FITall, double &FITfmd, double runtime, u
 	}
     }   
 
+//    printf("\n");
+
     cntALL /= tries;
     cntFMD /= tries;
 
     FITall = utils::FailureRate2FIT(cntALL, runtime); 
     FITfmd = utils::FailureRate2FIT(cntFMD, runtime); 
     
-    printf("All errors are mission critical          \t%lf FIT ALL\n", FITall);
-    printf("Some errors do not cause mission to fail \t%lf FIT FMD\n", FITfmd);
+//    printf("All errors are mission critical          \t%lf FIT ALL\n", FITall);
+//    printf("Some errors do not cause mission to fail \t%lf FIT FMD\n", FITfmd);
 
 }
 
