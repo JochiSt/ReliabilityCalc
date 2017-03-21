@@ -45,15 +45,28 @@ int main(int argc, char* argv[]){
     }
 
 /****************************************************************************************************************/
+    const float FMD91_CapCeram_SHORT	    = 0.49;
+    const float FMD91_CapCeram_OPEN	    = 0.22;
+    const float FMD91_CapCeram_VALCH	    = 0.29;
+
+    const float FMD91_ResFixedFilm_SHORT    = 0.05;
+    const float FMD91_ResFixedFilm_OPEN	    = 0.59;
+    const float FMD91_ResFixedFilm_VALCH    = 0.36;
+/****************************************************************************************************************/
+
+/****************************************************************************************************************/
 // filtering  p. 1
     schematic* filter = new schematic("Vcc Filtering");
     filter -> addComponent(new inductor_WUERTH("L1", "WE-SL5"));
     filter -> addComponent(new capacitor_WUERTH("C4", "WCAP-CSGP", .1*capacitor::uF, POCinput, 50));
+    filter -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
 
     // if used with Tsinghua C7 L3 C8
     filter -> addComponent(new capacitor_WUERTH("C5", "WCAP-CSGP", .1*capacitor::uF, IntU, 50));
+    filter -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
     filter -> addComponent(new inductor_WUERTH("L2", "WE-SL5"));
     filter -> addComponent(new capacitor_WUERTH("C6", "WCAP-CSGP", .1*capacitor::uF, IntU, 50));
+    filter -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
 
 /****************************************************************************************************************/
 // JUNO Trigger Driver p. 2
@@ -66,11 +79,16 @@ int main(int argc, char* argv[]){
     TriggerDriver -> addComponent(new capacitor_WUERTH("C104", "WCAP-CSGP", 1*capacitor::uF, 2, 50));
     TriggerDriver -> addComponent(new capacitor_WUERTH("C106", "WCAP-CSGP", 1*capacitor::uF, 2, 50));
     // 100n bypass Cs
-    TriggerDriver -> addComponent(new capacitor_WUERTH("C100", "WCAP-CSGP", .1*capacitor::uF, 3.3, 16));
-    TriggerDriver -> addComponent(new capacitor_WUERTH("C101", "WCAP-CSGP", .1*capacitor::uF, 3.3, 16));
-    TriggerDriver -> addComponent(new capacitor_WUERTH("C102", "WCAP-CSGP", .1*capacitor::uF, 3.3, 16));
-    TriggerDriver -> addComponent(new capacitor_WUERTH("C107", "WCAP-CSGP", .1*capacitor::uF, 3.3, 16));
-    TriggerDriver -> addComponent(new capacitor_WUERTH("C108", "WCAP-CSGP", .1*capacitor::nF, 3.3, 25));
+    TriggerDriver -> addComponent(new capacitor_WUERTH("C100", "WCAP-CSGP", .1*capacitor::uF, 3.3, 16), false);
+    TriggerDriver -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    TriggerDriver -> addComponent(new capacitor_WUERTH("C101", "WCAP-CSGP", .1*capacitor::uF, 3.3, 16), false);
+    TriggerDriver -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    TriggerDriver -> addComponent(new capacitor_WUERTH("C102", "WCAP-CSGP", .1*capacitor::uF, 3.3, 16), false);
+    TriggerDriver -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    TriggerDriver -> addComponent(new capacitor_WUERTH("C107", "WCAP-CSGP", .1*capacitor::uF, 3.3, 16), false);
+    TriggerDriver -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    TriggerDriver -> addComponent(new capacitor_WUERTH("C108", "WCAP-CSGP", .1*capacitor::nF, 3.3, 25), false);
+    TriggerDriver -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
 
     TriggerDriver -> addComponent(new resistor_VISHAY_CRCWe3("R104", 100*resistor::Ohm, 0.02, 0.1));
     TriggerDriver -> addComponent(new resistor_VISHAY_CRCWe3("R100", 953*resistor::Ohm, 0.05, 0.1));	// calculate stress
@@ -95,10 +113,14 @@ int main(int argc, char* argv[]){
     // internal capacitor (CAP+ CAP-)
     CLKreceiver -> addComponent(new capacitor_WUERTH("C206", "WCAP-CSGP", 1*capacitor::uF, 1, 10));	// check voltage
     // bypass Cs (all at 3V3) 100n / 100p
-    CLKreceiver -> addComponent(new capacitor_WUERTH("C209", "WCAP-CSGP", .1*capacitor::uF, 3.3, 16));
-    CLKreceiver -> addComponent(new capacitor_WUERTH("C210", "WCAP-CSGP", .1*capacitor::uF, 3.3, 16));
-    CLKreceiver -> addComponent(new capacitor_WUERTH("C211", "WCAP-CSGP", .1*capacitor::nF, 3.3, 10));
-    CLKreceiver -> addComponent(new capacitor_WUERTH("C212", "WCAP-CSGP", .1*capacitor::nF, 3.3, 10));
+    CLKreceiver -> addComponent(new capacitor_WUERTH("C209", "WCAP-CSGP", .1*capacitor::uF, 3.3, 16), false);
+    CLKreceiver -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    CLKreceiver -> addComponent(new capacitor_WUERTH("C210", "WCAP-CSGP", .1*capacitor::uF, 3.3, 16), false);
+    CLKreceiver -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    CLKreceiver -> addComponent(new capacitor_WUERTH("C211", "WCAP-CSGP", .1*capacitor::nF, 3.3, 10), false);
+    CLKreceiver -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    CLKreceiver -> addComponent(new capacitor_WUERTH("C212", "WCAP-CSGP", .1*capacitor::nF, 3.3, 10), false);
+    CLKreceiver -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
 
     CLKreceiver -> addComponent(new resistor_VISHAY_CRCWe3("R201", 10*resistor::kOhm, 0.06, 0.1));	// calculate stress
     CLKreceiver -> addComponent(new resistor_VISHAY_CRCWe3("R203", 10*resistor::kOhm, 0.06, 0.1));
@@ -108,8 +130,10 @@ int main(int argc, char* argv[]){
 // power splitting etc. p. 3
     schematic* CLKPowerSplitting = new schematic("CLK decoupling");
     // bypass Cs at 24V
-    CLKPowerSplitting -> addComponent(new capacitor_WUERTH("C207", "WCAP-CSGP", .1*capacitor::uF, IntU, 50));
-    CLKPowerSplitting -> addComponent(new capacitor_WUERTH("C208", "WCAP-CSGP", .1*capacitor::uF, IntU, 50));
+    CLKPowerSplitting -> addComponent(new capacitor_WUERTH("C207", "WCAP-CSGP", .1*capacitor::uF, IntU, 50), false);
+    CLKPowerSplitting -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    CLKPowerSplitting -> addComponent(new capacitor_WUERTH("C208", "WCAP-CSGP", .1*capacitor::uF, IntU, 50), false);
+    CLKPowerSplitting -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
 
     CLKPowerSplitting -> addComponent(new inductor_WUERTH("L200", "WE-CBF"));
     CLKPowerSplitting -> addComponent(new inductor_WUERTH("L201", "WE-CBF"));
@@ -119,15 +143,20 @@ int main(int argc, char* argv[]){
 // cable supply 3V3 p. 4
     schematic* C3V3 = new schematic("C3V3");
   
-    C3V3 -> addComponent(new capacitor_WUERTH("C612", "WCAP-CSGP", .1*capacitor::nF,  IntU, 25));
-    C3V3 -> addComponent(new capacitor_WUERTH("C613", "WCAP-CSGP", .1*capacitor::nF,  IntU, 25));
-    C3V3 -> addComponent(new capacitor_WUERTH("C614", "WCAP-CSGP", 4.7*capacitor::uF, IntU, 16));
-    C3V3 -> addComponent(new capacitor_WUERTH("C615", "WCAP-CSGP", 4.7*capacitor::uF, IntU, 16));
+    C3V3 -> addComponent(new capacitor_WUERTH("C612", "WCAP-CSGP", .1*capacitor::nF,  IntU, 25), false);
+    C3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    C3V3 -> addComponent(new capacitor_WUERTH("C613", "WCAP-CSGP", .1*capacitor::nF,  IntU, 25), false);
+    C3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    C3V3 -> addComponent(new capacitor_WUERTH("C614", "WCAP-CSGP", 4.7*capacitor::uF, IntU, 16), false);
+    C3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    C3V3 -> addComponent(new capacitor_WUERTH("C615", "WCAP-CSGP", 4.7*capacitor::uF, IntU, 16), false);
+    C3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
     
     // enable + startup
     float I_R603_R605 = IntU / (330e3 + 470e3);
     C3V3 -> addComponent(new resistor_VISHAY_CRCWe3("R603", 330*resistor::kOhm, pow(I_R603_R605,2)*330E3, 0.1)); 
-    C3V3 -> addComponent(new resistor_VISHAY_CRCWe3("R605", 470*resistor::kOhm, pow(I_R603_R605,2)*470E3, 0.1)); 
+    C3V3 -> addComponent(new resistor_VISHAY_CRCWe3("R605", 470*resistor::kOhm, pow(I_R603_R605,2)*470E3, 0.1), false); 
+    C3V3 -> getLastComponent() -> setProbSeriousError( FMD91_ResFixedFilm_SHORT );
     C3V3 -> addComponent(new capacitor_WUERTH("C618", "WCAP-CSGP", 47*capacitor::nF, 5, 25)); // TODO
 
     C3V3 -> addComponent(new IC_TI("U600", "LM46000"));
@@ -145,40 +174,59 @@ int main(int argc, char* argv[]){
     C3V3 -> addComponent(new capacitor_WUERTH("C619", "WCAP-CSGP", 2.2*capacitor::uF, 5, 25));	// TODO
     C3V3 -> addComponent(new capacitor_WUERTH("C620", "WCAP-CSGP", 2.2*capacitor::uF, 3.3, 25));
 
-    C3V3 -> addComponent(new capacitor_WUERTH("C604", "WCAP-CSGP", 10*capacitor::uF, 3.3, 10));
-    C3V3 -> addComponent(new capacitor_WUERTH("C605", "WCAP-CSGP", 10*capacitor::uF, 3.3, 10));
-    C3V3 -> addComponent(new capacitor_WUERTH("C606", "WCAP-CSGP", 10*capacitor::uF, 3.3, 10));
-    C3V3 -> addComponent(new capacitor_WUERTH("C607", "WCAP-CSGP", 10*capacitor::uF, 3.3, 10));
-    C3V3 -> addComponent(new capacitor_WUERTH("C610", "WCAP-CSGP", 100*capacitor::pF, 3.3, 25));
-    C3V3 -> addComponent(new capacitor_WUERTH("C611", "WCAP-CSGP", 100*capacitor::pF, 3.3, 25));
+    C3V3 -> addComponent(new capacitor_WUERTH("C604", "WCAP-CSGP", 10*capacitor::uF, 3.3, 10), false);
+    C3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    C3V3 -> addComponent(new capacitor_WUERTH("C605", "WCAP-CSGP", 10*capacitor::uF, 3.3, 10), false);
+    C3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    C3V3 -> addComponent(new capacitor_WUERTH("C606", "WCAP-CSGP", 10*capacitor::uF, 3.3, 10), false);
+    C3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    C3V3 -> addComponent(new capacitor_WUERTH("C607", "WCAP-CSGP", 10*capacitor::uF, 3.3, 10), false);
+    C3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    C3V3 -> addComponent(new capacitor_WUERTH("C610", "WCAP-CSGP", 100*capacitor::pF, 3.3, 25), false);
+    C3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    C3V3 -> addComponent(new capacitor_WUERTH("C611", "WCAP-CSGP", 100*capacitor::pF, 3.3, 25), false);
+    C3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
 
     // frequency
     C3V3 -> addComponent(new resistor_VISHAY_CRCWe3("R604", 56*resistor::kOhm, 0.05, 0.1)); 
     C3V3 -> addComponent(new resistor_VISHAY_CRCWe3("R606", 10*resistor::kOhm, 0.05, 0.1)); 
 
     // output filter
-    C3V3 -> addComponent(new capacitor_WUERTH("C622", "WCAP-CSGP", 4.7*capacitor::uF, 3.3, 16));
-    C3V3 -> addComponent(new capacitor_WUERTH("C623", "WCAP-CSGP", 100*capacitor::pF, 3.3, 25));
+    C3V3 -> addComponent(new capacitor_WUERTH("C622", "WCAP-CSGP", 4.7*capacitor::uF, 3.3, 16), false);
+    C3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    C3V3 -> addComponent(new capacitor_WUERTH("C623", "WCAP-CSGP", 100*capacitor::pF, 3.3, 25), false);
+    C3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
     C3V3 -> addComponent(new inductor_WUERTH("L601", "WE-CBF"));
-    C3V3 -> addComponent(new capacitor_WUERTH("C624", "WCAP-CSGP", 100*capacitor::pF, 3.3, 25));
-    C3V3 -> addComponent(new capacitor_WUERTH("C625", "WCAP-CSGP", 4.7*capacitor::uF, 3.3, 16));
+    C3V3 -> addComponent(new capacitor_WUERTH("C624", "WCAP-CSGP", 100*capacitor::pF, 3.3, 25), false);
+    C3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    C3V3 -> addComponent(new capacitor_WUERTH("C625", "WCAP-CSGP", 4.7*capacitor::uF, 3.3, 16), false);
+    C3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
 
 // supply for LVDS isolator 
     C3V3 -> addComponent(new IC_TI("U601", "TLV70225"));
-    C3V3 -> addComponent(new capacitor_WUERTH("C626", "WCAP-CSGP", 1*capacitor::uF, 3.3, 50));
-    C3V3 -> addComponent(new capacitor_WUERTH("C627", "WCAP-CSGP", 1*capacitor::uF, 2.5, 50));
+    C3V3 -> addComponent(new capacitor_WUERTH("C626", "WCAP-CSGP", 1*capacitor::uF, 3.3, 50), false);
+    C3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    C3V3 -> addComponent(new capacitor_WUERTH("C627", "WCAP-CSGP", 1*capacitor::uF, 2.5, 50), false);
+    C3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
 
 /****************************************************************************************************************/
 // Analog 1V8 supply p. 5
     schematic* A1V8  = new schematic("analog 1V8");
 
-    A1V8 -> addComponent(new capacitor_WUERTH("C412", "WCAP-CSGP", .1*capacitor::nF,  IntU, 25));
-    A1V8 -> addComponent(new capacitor_WUERTH("C413", "WCAP-CSGP", .1*capacitor::nF,  IntU, 25));
-    A1V8 -> addComponent(new capacitor_WUERTH("C414", "WCAP-CSGP", 4.7*capacitor::uF, IntU, 16));
-    A1V8 -> addComponent(new capacitor_WUERTH("C415", "WCAP-CSGP", 4.7*capacitor::uF, IntU, 16));
+    A1V8 -> addComponent(new capacitor_WUERTH("C412", "WCAP-CSGP", .1*capacitor::nF,  IntU, 25), false);
+    A1V8 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    A1V8 -> addComponent(new capacitor_WUERTH("C413", "WCAP-CSGP", .1*capacitor::nF,  IntU, 25), false);
+    A1V8 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    A1V8 -> addComponent(new capacitor_WUERTH("C414", "WCAP-CSGP", 4.7*capacitor::uF, IntU, 16), false);
+    A1V8 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    A1V8 -> addComponent(new capacitor_WUERTH("C415", "WCAP-CSGP", 4.7*capacitor::uF, IntU, 16), false);
+    A1V8 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
     
     // enable + startup
-    A1V8 -> addComponent(new resistor_VISHAY_CRCWe3("R1", 10*resistor::kOhm, 0.05, 0.1)); 
+   
+    A1V8 -> addComponent(new resistor_VISHAY_CRCWe3("R1", 10*resistor::kOhm, 0.05, 0.1), false); 
+    A1V8 -> getLastComponent() -> setProbSeriousError( FMD91_ResFixedFilm_OPEN );
+
     A1V8 -> addComponent(new capacitor_WUERTH("C418", "WCAP-CSGP", 47*capacitor::nF, 5, 25)); // TODO
 
     A1V8 -> addComponent(new IC_TI("U400", "LM46000"));
@@ -196,37 +244,52 @@ int main(int argc, char* argv[]){
     A1V8 -> addComponent(new capacitor_WUERTH("C419", "WCAP-CSGP", 2.2*capacitor::uF, 5, 25));	// TODO
     A1V8 -> addComponent(new capacitor_WUERTH("C420", "WCAP-CSGP", 2.2*capacitor::uF, 3.3, 25));
 
-    A1V8 -> addComponent(new capacitor_WUERTH("C404", "WCAP-CSGP", 10*capacitor::uF, 1.8, 10));
-    A1V8 -> addComponent(new capacitor_WUERTH("C405", "WCAP-CSGP", 10*capacitor::uF, 1.8, 10));
-    A1V8 -> addComponent(new capacitor_WUERTH("C406", "WCAP-CSGP", 10*capacitor::uF, 1.8, 10));
-    A1V8 -> addComponent(new capacitor_WUERTH("C407", "WCAP-CSGP", 10*capacitor::uF, 1.8, 10));
-    A1V8 -> addComponent(new capacitor_WUERTH("C410", "WCAP-CSGP", 100*capacitor::pF, 1.8, 25));
-    A1V8 -> addComponent(new capacitor_WUERTH("C411", "WCAP-CSGP", 100*capacitor::pF, 1.8, 25));
+    A1V8 -> addComponent(new capacitor_WUERTH("C404", "WCAP-CSGP", 10*capacitor::uF, 1.8, 10), false);
+    A1V8 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    A1V8 -> addComponent(new capacitor_WUERTH("C405", "WCAP-CSGP", 10*capacitor::uF, 1.8, 10), false);
+    A1V8 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    A1V8 -> addComponent(new capacitor_WUERTH("C406", "WCAP-CSGP", 10*capacitor::uF, 1.8, 10), false);
+    A1V8 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    A1V8 -> addComponent(new capacitor_WUERTH("C407", "WCAP-CSGP", 10*capacitor::uF, 1.8, 10), false);
+    A1V8 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    A1V8 -> addComponent(new capacitor_WUERTH("C410", "WCAP-CSGP", 100*capacitor::pF, 1.8, 25), false);
+    A1V8 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    A1V8 -> addComponent(new capacitor_WUERTH("C411", "WCAP-CSGP", 100*capacitor::pF, 1.8, 25), false);
+    A1V8 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
 
     // frequency
     A1V8 -> addComponent(new resistor_VISHAY_CRCWe3("R403", 33*resistor::kOhm, 0.05, 0.1)); 
     A1V8 -> addComponent(new resistor_VISHAY_CRCWe3("R404", 10*resistor::kOhm, 0.05, 0.1)); 
 
     // output filter
-    A1V8 -> addComponent(new capacitor_WUERTH("C422", "WCAP-CSGP", 4.7*capacitor::uF, 1.8, 16));
-    A1V8 -> addComponent(new capacitor_WUERTH("C423", "WCAP-CSGP", 100*capacitor::pF, 1.8, 25));
+    A1V8 -> addComponent(new capacitor_WUERTH("C422", "WCAP-CSGP", 4.7*capacitor::uF, 1.8, 16), false);
+    A1V8 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    A1V8 -> addComponent(new capacitor_WUERTH("C423", "WCAP-CSGP", 100*capacitor::pF, 1.8, 25), false);
+    A1V8 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
     A1V8 -> addComponent(new inductor_WUERTH("L401", "WE-CBF"));
-    A1V8 -> addComponent(new capacitor_WUERTH("C424", "WCAP-CSGP", 100*capacitor::pF, 1.8, 25));
-    A1V8 -> addComponent(new capacitor_WUERTH("C425", "WCAP-CSGP", 4.7*capacitor::uF, 1.8, 16));
+    A1V8 -> addComponent(new capacitor_WUERTH("C424", "WCAP-CSGP", 100*capacitor::pF, 1.8, 25), false);
+    A1V8 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    A1V8 -> addComponent(new capacitor_WUERTH("C425", "WCAP-CSGP", 4.7*capacitor::uF, 1.8, 16), false);
+    A1V8 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
 
 /****************************************************************************************************************/
 // Analog 3V3 supply p. 6
     schematic* A3V3  = new schematic("analog 3V3");
 
-    A3V3 -> addComponent(new capacitor_WUERTH("C512", "WCAP-CSGP", .1*capacitor::nF,  IntU, 25));
-    A3V3 -> addComponent(new capacitor_WUERTH("C513", "WCAP-CSGP", .1*capacitor::nF,  IntU, 25));
-    A3V3 -> addComponent(new capacitor_WUERTH("C514", "WCAP-CSGP", 4.7*capacitor::uF, IntU, 16));
-    A3V3 -> addComponent(new capacitor_WUERTH("C515", "WCAP-CSGP", 4.7*capacitor::uF, IntU, 16));
+    A3V3 -> addComponent(new capacitor_WUERTH("C512", "WCAP-CSGP", .1*capacitor::nF,  IntU, 25), false);
+    A3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    A3V3 -> addComponent(new capacitor_WUERTH("C513", "WCAP-CSGP", .1*capacitor::nF,  IntU, 25), false);
+    A3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    A3V3 -> addComponent(new capacitor_WUERTH("C514", "WCAP-CSGP", 4.7*capacitor::uF, IntU, 16), false);
+    A3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    A3V3 -> addComponent(new capacitor_WUERTH("C515", "WCAP-CSGP", 4.7*capacitor::uF, IntU, 16), false);
+    A3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
     
     // enable + startup
     float I_R503_R505 = IntU / (330e3 + 470e3);
     A3V3 -> addComponent(new resistor_VISHAY_CRCWe3("R503", 820*resistor::kOhm, pow(I_R503_R505,2)*330E3, 0.1)); 
-    A3V3 -> addComponent(new resistor_VISHAY_CRCWe3("R305", 100*resistor::kOhm, pow(I_R503_R505,2)*470E3, 0.1)); 
+    A3V3 -> addComponent(new resistor_VISHAY_CRCWe3("R505", 100*resistor::kOhm, pow(I_R503_R505,2)*470E3, 0.1), false); 
+    A3V3 -> getLastComponent() -> setProbSeriousError( FMD91_ResFixedFilm_SHORT );
     A3V3 -> addComponent(new capacitor_WUERTH("C518", "WCAP-CSGP", 47*capacitor::nF, 5, 25)); // TODO
 
     A3V3 -> addComponent(new IC_TI("U500", "LM46000"));
@@ -244,39 +307,56 @@ int main(int argc, char* argv[]){
     A3V3 -> addComponent(new capacitor_WUERTH("C519", "WCAP-CSGP", 2.2*capacitor::uF, 5, 25));	// TODO
     A3V3 -> addComponent(new capacitor_WUERTH("C520", "WCAP-CSGP", 2.2*capacitor::uF, 3.3, 25));
 
-    A3V3 -> addComponent(new capacitor_WUERTH("C504", "WCAP-CSGP", 10*capacitor::uF, 3.3, 10));
-    A3V3 -> addComponent(new capacitor_WUERTH("C505", "WCAP-CSGP", 10*capacitor::uF, 3.3, 10));
-    A3V3 -> addComponent(new capacitor_WUERTH("C506", "WCAP-CSGP", 10*capacitor::uF, 3.3, 10));
-    A3V3 -> addComponent(new capacitor_WUERTH("C507", "WCAP-CSGP", 10*capacitor::uF, 3.3, 10));
-    A3V3 -> addComponent(new capacitor_WUERTH("C510", "WCAP-CSGP", 100*capacitor::pF, 3.3, 25));
-    A3V3 -> addComponent(new capacitor_WUERTH("C511", "WCAP-CSGP", 100*capacitor::pF, 3.3, 25));
+    A3V3 -> addComponent(new capacitor_WUERTH("C504", "WCAP-CSGP", 10*capacitor::uF, 3.3, 10), false);
+    A3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    A3V3 -> addComponent(new capacitor_WUERTH("C505", "WCAP-CSGP", 10*capacitor::uF, 3.3, 10), false);
+    A3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    A3V3 -> addComponent(new capacitor_WUERTH("C506", "WCAP-CSGP", 10*capacitor::uF, 3.3, 10), false);
+    A3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    A3V3 -> addComponent(new capacitor_WUERTH("C507", "WCAP-CSGP", 10*capacitor::uF, 3.3, 10), false);
+    A3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    A3V3 -> addComponent(new capacitor_WUERTH("C510", "WCAP-CSGP", 100*capacitor::pF, 3.3, 25), false);
+    A3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    A3V3 -> addComponent(new capacitor_WUERTH("C511", "WCAP-CSGP", 100*capacitor::pF, 3.3, 25), false);
+    A3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
 
     // frequency
     A3V3 -> addComponent(new resistor_VISHAY_CRCWe3("R504", 56*resistor::kOhm, 0.05, 0.1)); 
     A3V3 -> addComponent(new resistor_VISHAY_CRCWe3("R506", 10*resistor::kOhm, 0.05, 0.1)); 
 
     // output filter
-    A3V3 -> addComponent(new capacitor_WUERTH("C522", "WCAP-CSGP", 4.7*capacitor::uF, 3.3, 16));
-    A3V3 -> addComponent(new capacitor_WUERTH("C523", "WCAP-CSGP", 100*capacitor::pF, 3.3, 25));
+    A3V3 -> addComponent(new capacitor_WUERTH("C522", "WCAP-CSGP", 4.7*capacitor::uF, 3.3, 16), false);
+    A3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    A3V3 -> addComponent(new capacitor_WUERTH("C523", "WCAP-CSGP", 100*capacitor::pF, 3.3, 25), false);
+    A3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
     A3V3 -> addComponent(new inductor_WUERTH("L501", "WE-CBF"));
-    A3V3 -> addComponent(new capacitor_WUERTH("C524", "WCAP-CSGP", 100*capacitor::pF, 3.3, 25));
-    A3V3 -> addComponent(new capacitor_WUERTH("C525", "WCAP-CSGP", 4.7*capacitor::uF, 3.3, 16));
+    A3V3 -> addComponent(new capacitor_WUERTH("C524", "WCAP-CSGP", 100*capacitor::pF, 3.3, 25), false);
+    A3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    A3V3 -> addComponent(new capacitor_WUERTH("C525", "WCAP-CSGP", 4.7*capacitor::uF, 3.3, 16), false);
+    A3V3 -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
 
 /****************************************************************************************************************/
 // Internal Voltage p. 7
     schematic* Int_U = new schematic("Internal Voltage");
 
-    Int_U -> addComponent(new capacitor_WUERTH("C307", "WCAP-CSGP", 100*capacitor::pF, POCinput, 50));
-    Int_U -> addComponent(new capacitor_WUERTH("C308", "WCAP-CSGP", 100*capacitor::pF, POCinput, 50));
-    Int_U -> addComponent(new capacitor_WUERTH("C309", "WCAP-CSGP", 4.7*capacitor::uF, POCinput, 50));
-    Int_U -> addComponent(new capacitor_WUERTH("C310", "WCAP-CSGP", 4.7*capacitor::uF, POCinput, 50));
-    Int_U -> addComponent(new capacitor_WUERTH("C311", "WCAP-CSGP", 4.7*capacitor::uF, POCinput, 50));
-    Int_U -> addComponent(new capacitor_WUERTH("C312", "WCAP-CSGP", 4.7*capacitor::uF, POCinput, 50));
+    Int_U -> addComponent(new capacitor_WUERTH("C307", "WCAP-CSGP", 100*capacitor::pF, POCinput, 50), false);
+    Int_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    Int_U -> addComponent(new capacitor_WUERTH("C308", "WCAP-CSGP", 100*capacitor::pF, POCinput, 50), false);
+    Int_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    Int_U -> addComponent(new capacitor_WUERTH("C309", "WCAP-CSGP", 4.7*capacitor::uF, POCinput, 50), false);
+    Int_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    Int_U -> addComponent(new capacitor_WUERTH("C310", "WCAP-CSGP", 4.7*capacitor::uF, POCinput, 50), false);
+    Int_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    Int_U -> addComponent(new capacitor_WUERTH("C311", "WCAP-CSGP", 4.7*capacitor::uF, POCinput, 50), false);
+    Int_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    Int_U -> addComponent(new capacitor_WUERTH("C312", "WCAP-CSGP", 4.7*capacitor::uF, POCinput, 50), false);
+    Int_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
 
     // enable + startup
     float I_R300_R303 = POCinput / (820e3 + 100e3);
     Int_U -> addComponent(new resistor_VISHAY_CRCWe3("R300", 820*resistor::kOhm, pow(I_R300_R303,2)*820E3, 0.1)); 
-    Int_U -> addComponent(new resistor_VISHAY_CRCWe3("R303", 100*resistor::kOhm, pow(I_R300_R303,2)*100E3, 0.1)); 
+    Int_U -> addComponent(new resistor_VISHAY_CRCWe3("R303", 100*resistor::kOhm, pow(I_R300_R303,2)*100E3, 0.1), false); 
+    Int_U -> getLastComponent() -> setProbSeriousError( FMD91_ResFixedFilm_SHORT );
     Int_U -> addComponent(new capacitor_WUERTH("C315", "WCAP-CSGP", 47*capacitor::nF, 5, 25)); // TODO
 
     Int_U -> addComponent(new IC_TI("U600", "LM46000"));
@@ -294,14 +374,22 @@ int main(int argc, char* argv[]){
     Int_U -> addComponent(new capacitor_WUERTH("C316", "WCAP-CSGP", 2.2*capacitor::uF, 5., 25));   // TODO voltage
     Int_U -> addComponent(new capacitor_WUERTH("C317", "WCAP-CSGP", 2.2*capacitor::uF, IntU, 25));
 
-    Int_U -> addComponent(new capacitor_WUERTH("C301", "WCAP-CSGP", 10*capacitor::uF, IntU, 25));
-    Int_U -> addComponent(new capacitor_WUERTH("C302", "WCAP-CSGP", 10*capacitor::uF, IntU, 25));
-    Int_U -> addComponent(new capacitor_WUERTH("C303", "WCAP-CSGP", 10*capacitor::uF, IntU, 25));
-    Int_U -> addComponent(new capacitor_WUERTH("C304", "WCAP-CSGP", 10*capacitor::uF, IntU, 25));
-    Int_U -> addComponent(new capacitor_WUERTH("C305", "WCAP-CSGP", 10*capacitor::uF, IntU, 25));
-    Int_U -> addComponent(new capacitor_WUERTH("C306", "WCAP-CSGP", 10*capacitor::uF, IntU, 25));
-    Int_U -> addComponent(new capacitor_WUERTH("C313", "WCAP-CSGP", 100*capacitor::pF, IntU, 50));
-    Int_U -> addComponent(new capacitor_WUERTH("C314", "WCAP-CSGP", 100*capacitor::pF, IntU, 50));
+    Int_U -> addComponent(new capacitor_WUERTH("C301", "WCAP-CSGP", 10*capacitor::uF, IntU, 25), false);
+    Int_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    Int_U -> addComponent(new capacitor_WUERTH("C302", "WCAP-CSGP", 10*capacitor::uF, IntU, 25), false);
+    Int_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    Int_U -> addComponent(new capacitor_WUERTH("C303", "WCAP-CSGP", 10*capacitor::uF, IntU, 25), false);
+    Int_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    Int_U -> addComponent(new capacitor_WUERTH("C304", "WCAP-CSGP", 10*capacitor::uF, IntU, 25), false);
+    Int_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    Int_U -> addComponent(new capacitor_WUERTH("C305", "WCAP-CSGP", 10*capacitor::uF, IntU, 25), false);
+    Int_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    Int_U -> addComponent(new capacitor_WUERTH("C306", "WCAP-CSGP", 10*capacitor::uF, IntU, 25), false);
+    Int_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    Int_U -> addComponent(new capacitor_WUERTH("C313", "WCAP-CSGP", 100*capacitor::pF, IntU, 50), false);
+    Int_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    Int_U -> addComponent(new capacitor_WUERTH("C314", "WCAP-CSGP", 100*capacitor::pF, IntU, 50), false);
+    Int_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
 
     // frequency
     Int_U -> addComponent(new resistor_VISHAY_CRCWe3("R302", 68*resistor::kOhm, 0.05, 0.1)); 
@@ -323,15 +411,20 @@ int main(int argc, char* argv[]){
     POE -> addComponent(new capacitor_WUERTH("C1103", "WCAP-CSGP", 1*capacitor::nF, POEinput/2., 50));
 
     float I_R1105_R1106 = POEinput / (47e3 + 47e3);
-    POE -> addComponent(new capacitor_WUERTH("C1100", "WCAP-CSGP", 100*capacitor::nF, POEinput/2., 50));
-    POE -> addComponent(new capacitor_WUERTH("C1106", "WCAP-CSGP", 100*capacitor::nF, POEinput/2., 50));
+    POE -> addComponent(new capacitor_WUERTH("C1100", "WCAP-CSGP", 100*capacitor::nF, POEinput/2., 50), false);
+    POE -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    POE -> addComponent(new capacitor_WUERTH("C1106", "WCAP-CSGP", 100*capacitor::nF, POEinput/2., 50), false);
+    POE -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
     POE -> addComponent(new inductor_WUERTH("L1100", "WE-SL5"));
-    POE -> addComponent(new capacitor_WUERTH("C1105", "WCAP-CSGP", 100*capacitor::nF, POEinput/2., 50));
-    POE -> addComponent(new capacitor_WUERTH("C1107", "WCAP-CSGP", 100*capacitor::nF, POEinput/2., 50));
+    POE -> addComponent(new capacitor_WUERTH("C1105", "WCAP-CSGP", 100*capacitor::nF, POEinput/2., 50), false);
+    POE -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    POE -> addComponent(new capacitor_WUERTH("C1107", "WCAP-CSGP", 100*capacitor::nF, POEinput/2., 50), false);
+    POE -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
     
     POE -> addComponent(new resistor_VISHAY_CRCWe3("R1105", 47*resistor::kOhm, pow(I_R1105_R1106,2)*47e3, 0.1));
     POE -> addComponent(new resistor_VISHAY_CRCWe3("R1106", 47*resistor::kOhm, pow(I_R1105_R1106,2)*47e3, 0.1));
-    POE -> addComponent(new resistor_VISHAY_CRCWe3("R1107", 100*resistor::Ohm, 0.05, 0.1));
+    POE -> addComponent(new resistor_VISHAY_CRCWe3("R1107", 100*resistor::Ohm, 0.05, 0.1), false);
+    POE -> getLastComponent() -> setProbSeriousError( FMD91_ResFixedFilm_OPEN );
 
 
 //TODO FIXME include diode D1100
@@ -339,23 +432,37 @@ int main(int argc, char* argv[]){
 /****************************************************************************************************************/
 // DC/DC for GCU supply p. 9
     schematic* GCU_U = new schematic("GCU DC/DC");
-    GCU_U -> addComponent(new capacitor_WUERTH("C1200", "WCAP-CSGP", 100*capacitor::pF, POEinput/2., 50));
-    GCU_U -> addComponent(new capacitor_WUERTH("C1205", "WCAP-CSGP", 100*capacitor::pF, POEinput/2., 50));
-    GCU_U -> addComponent(new capacitor_WUERTH("C1203", "WCAP-CSGP", 4.7*capacitor::uF, POEinput/2., 50));
-    GCU_U -> addComponent(new capacitor_WUERTH("C1208", "WCAP-CSGP", 4.7*capacitor::uF, POEinput/2., 50));
-    GCU_U -> addComponent(new capacitor_WUERTH("C1204", "WCAP-CSGP", 4.7*capacitor::uF, POEinput/2., 50));
-    GCU_U -> addComponent(new capacitor_WUERTH("C1209", "WCAP-CSGP", 4.7*capacitor::uF, POEinput/2., 50));
+    GCU_U -> addComponent(new capacitor_WUERTH("C1200", "WCAP-CSGP", 100*capacitor::pF, POEinput/2., 50), false);
+    GCU_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    GCU_U -> addComponent(new capacitor_WUERTH("C1205", "WCAP-CSGP", 100*capacitor::pF, POEinput/2., 50), false);
+    GCU_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    GCU_U -> addComponent(new capacitor_WUERTH("C1203", "WCAP-CSGP", 4.7*capacitor::uF, POEinput/2., 50), false);
+    GCU_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    GCU_U -> addComponent(new capacitor_WUERTH("C1208", "WCAP-CSGP", 4.7*capacitor::uF, POEinput/2., 50), false);
+    GCU_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    GCU_U -> addComponent(new capacitor_WUERTH("C1204", "WCAP-CSGP", 4.7*capacitor::uF, POEinput/2., 50), false);
+    GCU_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    GCU_U -> addComponent(new capacitor_WUERTH("C1209", "WCAP-CSGP", 4.7*capacitor::uF, POEinput/2., 50), false);
+    GCU_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
     GCU_U -> addComponent(new resistor_VISHAY_CRCWe3("R1200", 47*resistor::kOhm, pow(POEinput/2.,2)/47E3, 0.1)); 
     GCU_U -> addComponent(new resistor_VISHAY_CRCWe3("R1201", 47*resistor::kOhm, pow(POEinput/2.,2)/47E3, 0.1)); 
 
-    GCU_U -> addComponent(new capacitor_WUERTH("C1218", "WCAP-CSGP", 100*capacitor::pF, POEinput/2., 50));
-    GCU_U -> addComponent(new capacitor_WUERTH("C1229", "WCAP-CSGP", 100*capacitor::pF, POEinput/2., 50));
-    GCU_U -> addComponent(new capacitor_WUERTH("C1219", "WCAP-CSGP", 100*capacitor::pF, POEinput/2., 50));
-    GCU_U -> addComponent(new capacitor_WUERTH("C1230", "WCAP-CSGP", 100*capacitor::pF, POEinput/2., 50));
-    GCU_U -> addComponent(new capacitor_WUERTH("C1220", "WCAP-CSGP", 4.7*capacitor::uF, POEinput/2., 50));
-    GCU_U -> addComponent(new capacitor_WUERTH("C1231", "WCAP-CSGP", 4.7*capacitor::uF, POEinput/2., 50));
-    GCU_U -> addComponent(new capacitor_WUERTH("C1221", "WCAP-CSGP", 4.7*capacitor::uF, POEinput/2., 50));
-    GCU_U -> addComponent(new capacitor_WUERTH("C1232", "WCAP-CSGP", 4.7*capacitor::uF, POEinput/2., 50));
+    GCU_U -> addComponent(new capacitor_WUERTH("C1218", "WCAP-CSGP", 100*capacitor::pF, POEinput/2., 50), false);
+    GCU_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    GCU_U -> addComponent(new capacitor_WUERTH("C1229", "WCAP-CSGP", 100*capacitor::pF, POEinput/2., 50), false);
+    GCU_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    GCU_U -> addComponent(new capacitor_WUERTH("C1219", "WCAP-CSGP", 100*capacitor::pF, POEinput/2., 50), false);
+    GCU_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    GCU_U -> addComponent(new capacitor_WUERTH("C1230", "WCAP-CSGP", 100*capacitor::pF, POEinput/2., 50), false);
+    GCU_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    GCU_U -> addComponent(new capacitor_WUERTH("C1220", "WCAP-CSGP", 4.7*capacitor::uF, POEinput/2., 50), false);
+    GCU_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    GCU_U -> addComponent(new capacitor_WUERTH("C1231", "WCAP-CSGP", 4.7*capacitor::uF, POEinput/2., 50), false);
+    GCU_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    GCU_U -> addComponent(new capacitor_WUERTH("C1221", "WCAP-CSGP", 4.7*capacitor::uF, POEinput/2., 50), false);
+    GCU_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    GCU_U -> addComponent(new capacitor_WUERTH("C1232", "WCAP-CSGP", 4.7*capacitor::uF, POEinput/2., 50), false);
+    GCU_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
     GCU_U -> addComponent(new resistor_VISHAY_CRCWe3("R1203", 47*resistor::kOhm, pow(POEinput/2.,2)/47E3, 0.1)); 
     GCU_U -> addComponent(new resistor_VISHAY_CRCWe3("R1207", 47*resistor::kOhm, pow(POEinput/2.,2)/47E3, 0.1)); 
 
@@ -364,7 +471,8 @@ int main(int argc, char* argv[]){
     // enable + startup
     float I_R1202_R1205 = POEinput / (820e3 + 100e3);
     GCU_U -> addComponent(new resistor_VISHAY_CRCWe3("R1202", 820*resistor::kOhm, pow(I_R1202_R1205,2)*820E3, 0.1)); 
-    GCU_U -> addComponent(new resistor_VISHAY_CRCWe3("R1205", 100*resistor::kOhm, pow(I_R1202_R1205,2)*100E3, 0.1)); 
+    GCU_U -> addComponent(new resistor_VISHAY_CRCWe3("R1205", 100*resistor::kOhm, pow(I_R1202_R1205,2)*100E3, 0.1),false); 
+    GCU_U -> getLastComponent() -> setProbSeriousError( FMD91_ResFixedFilm_SHORT );
     GCU_U -> addComponent(new capacitor_WUERTH("C1226", "WCAP-CSGP", 47*capacitor::nF, 5, 25)); // TODO
 
     // feedback
@@ -381,20 +489,23 @@ int main(int argc, char* argv[]){
     GCU_U -> addComponent(new capacitor_WUERTH("C1227", "WCAP-CSGP", 2.2*capacitor::uF, 5., 25));   // TODO voltage
     GCU_U -> addComponent(new capacitor_WUERTH("C1228", "WCAP-CSGP", 2.2*capacitor::uF, 12., 25));
 
-    GCU_U -> addComponent(new capacitor_WUERTH("C1212", "WCAP-CSGP", 10*capacitor::uF, 12., 25));
-    GCU_U -> addComponent(new capacitor_WUERTH("C1213", "WCAP-CSGP", 10*capacitor::uF, 12., 25));
-    GCU_U -> addComponent(new capacitor_WUERTH("C1214", "WCAP-CSGP", 10*capacitor::uF, 12., 25));
-    GCU_U -> addComponent(new capacitor_WUERTH("C1215", "WCAP-CSGP", 10*capacitor::uF, 12., 25));
-    GCU_U -> addComponent(new capacitor_WUERTH("C1224", "WCAP-CSGP", 100*capacitor::pF, 12., 25));
-    GCU_U -> addComponent(new capacitor_WUERTH("C1225", "WCAP-CSGP", 100*capacitor::pF, 12., 25));
+    GCU_U -> addComponent(new capacitor_WUERTH("C1212", "WCAP-CSGP", 10*capacitor::uF, 12., 25), false);
+    GCU_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    GCU_U -> addComponent(new capacitor_WUERTH("C1213", "WCAP-CSGP", 10*capacitor::uF, 12., 25), false);
+    GCU_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    GCU_U -> addComponent(new capacitor_WUERTH("C1214", "WCAP-CSGP", 10*capacitor::uF, 12., 25), false);
+    GCU_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    GCU_U -> addComponent(new capacitor_WUERTH("C1215", "WCAP-CSGP", 10*capacitor::uF, 12., 25), false);
+    GCU_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    GCU_U -> addComponent(new capacitor_WUERTH("C1224", "WCAP-CSGP", 100*capacitor::pF, 12., 25), false);
+    GCU_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    GCU_U -> addComponent(new capacitor_WUERTH("C1225", "WCAP-CSGP", 100*capacitor::pF, 12., 25), false);
+    GCU_U -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
     
     // frequency
     GCU_U -> addComponent(new resistor_VISHAY_CRCWe3("R1204", 68*resistor::kOhm, 0.05, 0.1)); 
     GCU_U -> addComponent(new resistor_VISHAY_CRCWe3("R1206", 12*resistor::kOhm, 0.05, 0.1)); 
 
-    // calculate FIT via MC for this part
-    GCU_U -> MCcalculateFIT();
-    cout << "FIT: " << GCU_U -> getFIT() << endl;
     
 /****************************************************************************************************************/
 // I2C isolation p. 10
@@ -402,27 +513,36 @@ int main(int argc, char* argv[]){
     I2Ciso -> addComponent(new IC_TI("U1400", "ISO1541"));
     I2Ciso -> addComponent(new resistor_VISHAY_CRCWe3("R1402", 1*resistor::kOhm, pow(3.3,2)/1E3, 0.1)); 
     I2Ciso -> addComponent(new resistor_VISHAY_CRCWe3("R1403", 1*resistor::kOhm, pow(3.3,2)/1E3, 0.1)); 
-    I2Ciso -> addComponent(new capacitor_WUERTH("C1400", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
-    I2Ciso -> addComponent(new capacitor_WUERTH("C1401", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
+    I2Ciso -> addComponent(new capacitor_WUERTH("C1400", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16), false);
+    I2Ciso -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    I2Ciso -> addComponent(new capacitor_WUERTH("C1401", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16), false);
+    I2Ciso -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
 
-    I2Ciso -> addComponent(new capacitor_WUERTH("C1404", "WCAP-CSGP", 100*capacitor::nF, 12., 50));
-    I2Ciso -> addComponent(new capacitor_WUERTH("C1403", "WCAP-CSGP", 10*capacitor::uF, 12., 25));
+    I2Ciso -> addComponent(new capacitor_WUERTH("C1404", "WCAP-CSGP", 100*capacitor::nF, 12., 50), false);
+    I2Ciso -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    I2Ciso -> addComponent(new capacitor_WUERTH("C1403", "WCAP-CSGP", 10*capacitor::uF, 12., 25), false);
+    I2Ciso -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
     I2Ciso -> addComponent(new IC_TI("U1401", "LM9076"));
-    I2Ciso -> addComponent(new capacitor_WUERTH("C1402", "WCAP-CSGP", 10*capacitor::uF, 3.3, 10));
     I2Ciso -> addComponent(new capacitor_WUERTH("C1405", "WCAP-CSGP", 1*capacitor::nF, 3.3, 25)); // TODO voltage?
+    I2Ciso -> addComponent(new capacitor_WUERTH("C1402", "WCAP-CSGP", 10*capacitor::uF, 3.3, 10), false);
+    I2Ciso -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT + FMD91_CapCeram_OPEN );
     I2Ciso -> addComponent(new resistor_VISHAY_CRCWe3("R1404", 1.2*resistor::Ohm, 0.05, 0.1)); // TODO Stress??
 
 /****************************************************************************************************************/
 // POC monitoring p. 11
     schematic* POCmonitoring = new schematic("POC monitoring");
     
-    POCmonitoring -> addComponent(new capacitor_WUERTH("C904", "WCAP-CSGP", 100*capacitor::nF, POCinput, 50));
+    POCmonitoring -> addComponent(new capacitor_WUERTH("C904", "WCAP-CSGP", 100*capacitor::nF, POCinput, 50), false);
+    POCmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
     POCmonitoring -> addComponent(new inductor_WUERTH("L900", "WE-CBF"));
-    POCmonitoring -> addComponent(new capacitor_WUERTH("C903", "WCAP-CSGP", 100*capacitor::nF, POCinput, 50));
+    POCmonitoring -> addComponent(new capacitor_WUERTH("C903", "WCAP-CSGP", 100*capacitor::nF, POCinput, 50), false);
+    POCmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
 
     float I_R902_R903 = POCinput / (47E3 + 2.7E3);
-    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R902", 47*resistor::kOhm, pow(I_R902_R903,2) * 47E3, 0.1));
-    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R903", 2.7*resistor::kOhm, pow(I_R902_R903,2)*2.7E3, 0.1));
+    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R902", 47*resistor::kOhm, pow(I_R902_R903,2) * 47E3, 0.1), false);
+    POCmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_ResFixedFilm_SHORT + FMD91_ResFixedFilm_VALCH );
+    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R903", 2.7*resistor::kOhm, pow(I_R902_R903,2)*2.7E3, 0.1), false);
+    POCmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_ResFixedFilm_OPEN + FMD91_ResFixedFilm_VALCH );
 
     POCmonitoring -> addComponent(new IC_TI("U901", "INA168"));
     //FIXME TODO insert maximal current here
@@ -432,29 +552,41 @@ int main(int argc, char* argv[]){
     POCmonitoring -> addComponent(new capacitor_WUERTH("C901", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
 
     float I_R900_R905 = 3.3 / (100 + 47e3);
-    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R900", 100*resistor::Ohm, pow(I_R900_R905,2)*100, 0.1));
-    POCmonitoring -> addComponent(new capacitor_WUERTH("C900", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
-    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R905", 47*resistor::kOhm, pow(I_R900_R905,2)*47e3, 0.1));
+    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R900", 100*resistor::Ohm, pow(I_R900_R905,2)*100, 0.1), false);
+    POCmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_ResFixedFilm_OPEN );
+    POCmonitoring -> addComponent(new capacitor_WUERTH("C900", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16), false);
+    POCmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R905", 47*resistor::kOhm, pow(I_R900_R905,2)*47e3, 0.1), false);
+    POCmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_ResFixedFilm_SHORT );
 
-    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R904", 100*resistor::Ohm, pow(I_R900_R905,2)*100, 0.1));
-    POCmonitoring -> addComponent(new capacitor_WUERTH("C902", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
-    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R906", 47*resistor::kOhm, pow(I_R900_R905,2)*47e3, 0.1));
+    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R904", 100*resistor::Ohm, pow(I_R900_R905,2)*100, 0.1), false);
+    POCmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_ResFixedFilm_OPEN );
+    POCmonitoring -> addComponent(new capacitor_WUERTH("C902", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16), false);
+    POCmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R906", 47*resistor::kOhm, pow(I_R900_R905,2)*47e3, 0.1),false);
+    POCmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_ResFixedFilm_SHORT );
 
     float I_R907_R908 = 6.0 / (27e3 + 12e3);
-    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R907", 27*resistor::kOhm, pow(I_R907_R908,2)*27e3, 0.1));
-    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R908", 12*resistor::kOhm, pow(I_R907_R908,2)*12e3, 0.1));
+    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R907", 27*resistor::kOhm, pow(I_R907_R908,2)*27e3, 0.1), false);
+    POCmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_ResFixedFilm_SHORT + FMD91_ResFixedFilm_VALCH );
+    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R908", 12*resistor::kOhm, pow(I_R907_R908,2)*12e3, 0.1), false);
+    POCmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_ResFixedFilm_OPEN + FMD91_ResFixedFilm_VALCH );
 
     POCmonitoring -> addComponent(new IC_TI("U3", "ADS1015"));
-    POCmonitoring -> addComponent(new capacitor_WUERTH("C905", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
+    POCmonitoring -> addComponent(new capacitor_WUERTH("C905", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16), false);
+    POCmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
 
 /****************************************************************************************************************/
 // POE monitoring p. 12
     schematic* POEmonitoring = new schematic("POE monitoring");
-    POEmonitoring -> addComponent(new capacitor_WUERTH("C1303", "WCAP-CSGP", 330*capacitor::nF, POEinput/2., 50));
-    POEmonitoring -> addComponent(new capacitor_WUERTH("C1309", "WCAP-CSGP", 330*capacitor::nF, POEinput/2., 50));
+    POEmonitoring -> addComponent(new capacitor_WUERTH("C1303", "WCAP-CSGP", 330*capacitor::nF, POEinput/2., 50), false);
+    POEmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    POEmonitoring -> addComponent(new capacitor_WUERTH("C1309", "WCAP-CSGP", 330*capacitor::nF, POEinput/2., 50), false);
     POEmonitoring -> addComponent(new inductor_WUERTH("L1300", "WE-CBF"));
-    POEmonitoring -> addComponent(new capacitor_WUERTH("C1302", "WCAP-CSGP", 330*capacitor::nF, POEinput/2., 50));
-    POEmonitoring -> addComponent(new capacitor_WUERTH("C1308", "WCAP-CSGP", 330*capacitor::nF, POEinput/2., 50));
+    POEmonitoring -> addComponent(new capacitor_WUERTH("C1302", "WCAP-CSGP", 330*capacitor::nF, POEinput/2., 50), false);
+    POEmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    POEmonitoring -> addComponent(new capacitor_WUERTH("C1308", "WCAP-CSGP", 330*capacitor::nF, POEinput/2., 50), false);
+    POEmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
 
     float I_R1311_R1313 = POEinput / (47E3 + 47E3);
     POEmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1311", 47*resistor::kOhm, pow(I_R1311_R1313,2)*47E3, 0.1));
@@ -462,39 +594,55 @@ int main(int argc, char* argv[]){
     POEmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1312", 100*resistor::Ohm, 0.05, 0.1));
 
     float I_R1302_R1305 = POEinput / (56E3 + 2.2E3);
-    POEmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1302", 56*resistor::kOhm, pow(I_R1302_R1305,2) * 56E3, 0.1));
-    POEmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1305", 2.2*resistor::kOhm, pow(I_R1302_R1305,2)*2.2E3, 0.1));
+    POEmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1302", 56*resistor::kOhm, pow(I_R1302_R1305,2) * 56E3, 0.1), false);
+    POEmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_ResFixedFilm_SHORT + FMD91_ResFixedFilm_VALCH );
+    POEmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1305", 2.2*resistor::kOhm, pow(I_R1302_R1305,2)*2.2E3, 0.1), false);
+    POEmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_ResFixedFilm_OPEN + FMD91_ResFixedFilm_VALCH );
 
     POEmonitoring -> addComponent(new IC_TI("U1303", "INA168"));
     //FIXME TODO insert maximal current here
     POEmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1301", 150*resistor::kOhm, pow(200E-6,2)*150E3, 0.1));
 
     POEmonitoring -> addComponent(new IC_TI("U1302", "TLV2316"));
-    POEmonitoring -> addComponent(new capacitor_WUERTH("C1305", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
+    POEmonitoring -> addComponent(new capacitor_WUERTH("C1305", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16), false);
+    POEmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
 
     float I_R1300_R1309 = 3.3 / (100 + 47e3);
-    POEmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1300", 100*resistor::Ohm, pow(I_R1300_R1309,2)*100, 0.1));
-    POEmonitoring -> addComponent(new capacitor_WUERTH("C1304", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
-    POEmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1309", 47*resistor::kOhm, pow(I_R1300_R1309,2)*47e3, 0.1));
+    POEmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1300", 100*resistor::Ohm, pow(I_R1300_R1309,2)*100, 0.1), false);
+    POEmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_ResFixedFilm_OPEN );
+    POEmonitoring -> addComponent(new capacitor_WUERTH("C1304", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16), false);
+    POEmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    POEmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1309", 47*resistor::kOhm, pow(I_R1300_R1309,2)*47e3, 0.1), false);
+    POEmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_ResFixedFilm_SHORT );
 
-    POEmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1307", 100*resistor::Ohm, pow(I_R1300_R1309,2)*100, 0.1));
-    POEmonitoring -> addComponent(new capacitor_WUERTH("C1306", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
-    POEmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1310", 47*resistor::kOhm, pow(I_R1300_R1309,2)*47e3, 0.1));
+    POEmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1307", 100*resistor::Ohm, pow(I_R1300_R1309,2)*100, 0.1), false);
+    POEmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_ResFixedFilm_OPEN );
+    POEmonitoring -> addComponent(new capacitor_WUERTH("C1306", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16), false);
+    POEmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+    POEmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1310", 47*resistor::kOhm, pow(I_R1300_R1309,2)*47e3, 0.1), false);
+    POEmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_ResFixedFilm_SHORT );
 
     float I_R1314_R1315 = 12.0 / (39e3 + 6.8e3);
-    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1314", 27*resistor::kOhm, pow(I_R1314_R1315,2)*39e3, 0.1));
-    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1315", 6.8*resistor::kOhm, pow(I_R1314_R1315,2)*6.8e3, 0.1));
+    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1314", 27*resistor::kOhm, pow(I_R1314_R1315,2)*39e3, 0.1), false);
+    POEmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_ResFixedFilm_SHORT + FMD91_ResFixedFilm_VALCH );
+    POCmonitoring -> addComponent(new resistor_VISHAY_CRCWe3("R1315", 6.8*resistor::kOhm, pow(I_R1314_R1315,2)*6.8e3, 0.1), false);
+    POEmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_ResFixedFilm_OPEN + FMD91_ResFixedFilm_VALCH );
 
     POEmonitoring -> addComponent(new IC_TI("U1304", "ADS1015"));
-    POEmonitoring -> addComponent(new capacitor_WUERTH("C1307", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
+    POEmonitoring -> addComponent(new capacitor_WUERTH("C1307", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16), false);
+    POEmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
 
 /****************************************************************************************************************/
 // Temperature Monitoring p. 13
     schematic* Tmonitoring = new schematic("Temp monitoring");
+
     Tmonitoring -> addComponent(new IC_TI("U1", "TMP100"));
-    Tmonitoring -> addComponent(new capacitor_WUERTH("C1", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
+    Tmonitoring -> addComponent(new capacitor_WUERTH("C1", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16), false);
+    Tmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
+
     Tmonitoring -> addComponent(new IC_TI("U1300", "TMP100"));
-    Tmonitoring -> addComponent(new capacitor_WUERTH("C1300", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16));
+    Tmonitoring -> addComponent(new capacitor_WUERTH("C1300", "WCAP-CSGP", 100*capacitor::nF, 3.3, 16), false);
+    Tmonitoring -> getLastComponent() -> setProbSeriousError( FMD91_CapCeram_SHORT );
 
 /****************************************************************************************************************/
 // put the whole thing together
@@ -543,12 +691,58 @@ int main(int argc, char* argv[]){
     cout << "###############################################################################" << endl;
     cout << endl;
 
+/*
     std::ofstream ofs;
     ofs.open ("reliability_PowerBoard.txt", std::ofstream::out | std::ofstream::app);
     ofs << time(NULL) << "\t" << Temperature << "\t" << POCinput << "\t" << POEinput << "\t" << FITPowerBoard << endl;
     ofs.close();
+*/
+/****************************************************************************************************************/
+/* MC FIT calculation for more correct mission profile
+ *
+ */
+    filter -> MCsetLimitSoftError(2);
 
-//    cout << "Failures of the Power Board within 6 years: \t" << schematic::getFailureRate( 6 * component::YEAR, FITPowerBoard ) * 100. << " %" << endl;
+    TriggerDriver -> MCsetLimitSoftError(2);
+    CLKreceiver -> MCsetLimitSoftError(2);
+    CLKPowerSplitting -> MCsetLimitSoftError(2);
+
+    C3V3 -> MCsetLimitSoftError(2);
+    A1V8 -> MCsetLimitSoftError(2);
+    A3V3 -> MCsetLimitSoftError(2);
+
+    Int_U -> MCsetLimitSoftError(2);
+
+    POE -> MCsetLimitSoftError(2);
+    GCU_U -> MCsetLimitSoftError(2);
+
+    I2Ciso -> MCsetLimitSoftError(2);
+
+    POCmonitoring -> MCsetLimitSoftError(2);
+    POEmonitoring -> MCsetLimitSoftError(2);
+    Tmonitoring -> MCsetLimitSoftError(2);
+
+    // save result in file and maybe one can generate a distribution
+    std::ofstream ofsFMD;
+    ofsFMD.open ("reliability_PowerBoard_FMD.txt", std::ofstream::out | std::ofstream::app);
+    double sumFITall = 0, sumFITfmd = 0;
+    for(unsigned int i = 0; i < PowerBoard -> getComponentNumber(); i++){
+	double FITall, FITfmd;
+//	cout << PowerBoard -> getComponent(i) -> getName() << endl;
+	PowerBoard -> getComponent(i) -> MCcalculateFIT( FITall, FITfmd );		
+	sumFITall += FITall;
+	sumFITfmd += FITfmd;
+
+//	cout << i << "\t" << FITall << "\t" << FITfmd << endl;
+	ofsFMD << i << "\t" << FITall << "\t" << FITfmd << endl; 
+    }
+
+    ofsFMD << -1. << "\t" << sumFITall << "\t" << sumFITfmd << endl; 
+
+    cout << endl;
+    cout << sumFITall << "\t" << sumFITfmd << endl;
+
+    ofsFMD.close();
 
     return 0;
 }
