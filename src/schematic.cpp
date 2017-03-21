@@ -16,14 +16,19 @@
 #include "IC.h"
 #include "inductor.h"
 
+#include <time.h>
+
 #define FIT_PRECISION	4
 #define FIT_WIDTH	10
 #define SPACE_WIDTH	3
 #define INDENTION	20
 
 schematic::schematic(std::string name) : component(name){
+    // for MC calculations, we need a random number generator
+    srand(time(NULL));
     verbose_output = false;
-    //ctor
+
+    MCsoftErrorTol = 2;
 }
 
 float schematic::getFIT(){

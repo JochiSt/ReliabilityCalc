@@ -36,6 +36,7 @@ int main(){
     cout << "\tcompiled @ " << __DATE__ << " " << __TIME__ << " using GCC " << __VERSION__ << endl << endl;
 
     cout << "FIT for 0.5% in 6 years " << utils::FailureRate2FIT(0.5/100., 6*365*24.) << endl;
+    cout << endl << endl;
 
     component::setAmbientTemperature(40);
 
@@ -47,6 +48,8 @@ int main(){
 
     example -> setVerboseOutput(true);
     float FIT = example -> getFIT();
+
+return 0;
 
     srand (time(NULL));
     const float fit = 100;
