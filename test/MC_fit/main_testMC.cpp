@@ -41,21 +41,25 @@ int main(){
     component::setAmbientTemperature(40);
 
     schematic* example = new schematic("Example Board");
-    example -> addComponent( new component_FIT("T1", 100), 1);
-    example -> addComponent( new component_FIT("T2", 100), 1);
-    example -> addComponent( new component_FIT("T3", 100), 1);
-    example -> addComponent( new component_FIT("T4", 100), 1);
+    example -> addComponent( new component_FIT("T1", 100), false);
+    example -> getLastComponent() -> setProbSeriousError( 0.05 );
+ 
+    example -> addComponent( new component_FIT("T2", 100), false);
+    example -> getLastComponent() -> setProbSeriousError( 0.05 );
 
-    example -> MCcalculateFIT();
+    example -> addComponent( new component_FIT("T3", 100), false);
+    example -> getLastComponent() -> setProbSeriousError( 0.05 );
+
+    example -> addComponent( new component_FIT("T4", 100), false);
+    example -> getLastComponent() -> setProbSeriousError( 0.05 );
+
+    double FITall, FITfmd;
+    example -> MCcalculateFIT(FITall, FITfmd);
 
     example -> setVerboseOutput(true);
     float FIT = example -> getFIT();
 
-    long int maxcnt = 10;
-    for(long int i = 0; i<maxcnt; i++){
-        printf("%ld of %ld done %lf \%\r", i, maxcnt, (double)i/maxcnt * 100.);
-	fflush(stdout);
-	sleep(1);
-    }
+    printf("%lf - %lf - %lf\n", FITall, FITfmd, FIT);
+
     return 0;
 }
