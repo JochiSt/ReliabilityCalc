@@ -2,7 +2,6 @@
 #define SCHEMATIC_H
 
 #include <vector>
-
 #include "component.h"
 
 /**
@@ -47,11 +46,13 @@ class schematic : public component {
          * add component to schematic
          * \param part component, which should be added
 	 * \param cnt number of exactly the same components, which should be added
+	 * \param critical defines, whether this part is critical for the mission or not
          */
-        void addComponent(component* part, unsigned int cnt = 1){
+        void addComponent(component* part, unsigned int cnt = 1, bool critical = true){
             if(part != NULL){
                 parts.push_back(part);
 		part_count.push_back(cnt);
+		part_critical.push_back(critical);
             }
         }
 
@@ -179,13 +180,40 @@ class schematic : public component {
          * @param vec2 second vector
          */
         static void exportDataToFile(std::string filename, std::vector<float> vec1, std::vector<float>vec2);
+
+
+/*****************************************************************************
+ * Failure Mode Distribution Handling
+ * 
+ */
+	/**
+	 * @brief calculate FIT based on MC (using the given probabilities)
+	 * @param[in] runtime time, which is used to calculate the probabilities
+	 * @param[in] tries number of MC calculations
+	 */
+	virtual void MCcalculateFIT(double runtime = 6*365*24., unsigned long int tries = 1E6);
+
+	/**
+	 * @brief set the limit of small errors, which do not cause the mission to fail
+	 * @param[in] errors number of errors
+	 */
+	virtual void MCsetLimitSoftError(unsigned int errors){
+	    MCsoftErrorTol = errors;
+	}
+
     protected:
+	/// allowed number of non mission critical errors
+	unsigned int MCsoftErrorTol;
 
     private:
         /// store components of this schematic
         std::vector<component*> parts;
+
 	/// store the amount of parts of the same type
         std::vector<unsigned int> part_count;
+
+	/// store whether the component is critical for the mission
+        std::vector<bool> part_critical;
 
         /// verbose output
         bool verbose_output;
