@@ -391,6 +391,10 @@ int main(int argc, char* argv[]){
     // frequency
     GCU_U -> addComponent(new resistor_VISHAY_CRCWe3("R1204", 68*resistor::kOhm, 0.05, 0.1)); 
     GCU_U -> addComponent(new resistor_VISHAY_CRCWe3("R1206", 12*resistor::kOhm, 0.05, 0.1)); 
+
+    // calculate FIT via MC for this part
+    GCU_U -> MCcalculateFIT();
+    cout << "FIT: " << GCU_U -> getFIT() << endl;
     
 /****************************************************************************************************************/
 // I2C isolation p. 10
