@@ -191,7 +191,10 @@ void schematic::MCcalculateFIT(double runtime, unsigned long int tries){
     double cntFMD = 0;	// sum of errors, which cause mission to fail
  
     // do multiple simulations
-    for(unsigned int run = 0; run < tries; run ++){
+    for(unsigned long int run = 0; run < tries; run ++){
+	printf("%ld of %ld done %lf \%\r", run, tries, (double) run/tries * 100.);
+	fflush(stdout);
+
 	unsigned int softFailureCNT = 0;    // sum of all small errors
 	bool missionFail = false;	    // mission critical error happened
 	bool partFail = false;		    // part failure according to FIT
@@ -233,7 +236,8 @@ void schematic::MCcalculateFIT(double runtime, unsigned long int tries){
     double FITall = utils::FailureRate2FIT(cntALL, runtime); 
     double FITfmd = utils::FailureRate2FIT(cntFMD, runtime); 
     
-    printf("ALL %lf FIT \t\t FMD %lf FIT\n", FITall, FITfmd);
+    printf("All errors are mission critical          \t%lf FIT ALL\n", FITall);
+    printf("Some errors do not cause mission to fail \t%lf FIT FMD\n", FITfmd);
 
 }
 
