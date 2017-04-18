@@ -16,14 +16,19 @@
 #include "IC.h"
 #include "inductor.h"
 
+#include <time.h>
+
 #define FIT_PRECISION	4
 #define FIT_WIDTH	10
 #define SPACE_WIDTH	3
 #define INDENTION	20
 
 schematic::schematic(std::string name) : component(name){
+    // for MC calculations, we need a random number generator
+    srand(time(NULL));
     verbose_output = false;
-    //ctor
+
+    MCsoftErrorTol = 2;
 }
 
 float schematic::getFIT(){
@@ -176,35 +181,49 @@ void schematic::exportDataToFile(std::string filename, std::vector<float> vec1, 
     output.close();
 }
 
-/*****************************************************************************/
-
+/******************************************************************************
+ * Monte Carlo FIT calculation
+ *	    using failure probabilities and can still cause mission to suceed
+ *	    with some errors
+ */
 void schematic::MCcalculateFIT(double runtime, unsigned long int tries){
     double cntALL = 0;	// sum of all errors
     double cntFMD = 0;	// sum of errors, which cause mission to fail
+
+    std::vector<float> cmp_FIT;
+
+    // create a map of all component's FIT data (will speed up MC calculation
+    for(unsigned int cmp = 0; cmp < parts.size(); cmp ++){
+	cmp_FIT.push_back( parts[cmp] -> getFIT() );
+    }
  
     // do multiple simulations
-    for(unsigned int run = 0; run < tries; run ++){
+    for(unsigned long int run = 0; run < tries; run ++){
+	printf("%ld of %ld done %lf \%\r", run, tries, (double) run/tries * 100.);
+	fflush(stdout);
+
 	unsigned int softFailureCNT = 0;    // sum of all small errors
 	bool missionFail = false;	    // mission critical error happened
 	bool partFail = false;		    // part failure according to FIT
 
 	// loop over all components of this schematic
 	for(unsigned int cmp = 0; cmp < parts.size(); cmp ++){
-	    double partFailureProb = utils::FIT2FailureRate(parts[cmp] -> getFIT(), runtime);
-	    
+
+	    double partFailureProb = utils::FIT2FailureRate( cmp_FIT[cmp] , runtime);
 	    double partFailure = rand(); partFailure /= RAND_MAX;
+
 	    // is this part failing ?
 	    if( partFailure < partFailureProb ){    // if true part has been failed
-		partFail = true;	
+		partFail = true;		    // there has been some failure observed
 		
 		// if failing -> have a look at the failure mode
 	    	double failureMode = rand(); failureMode /= RAND_MAX;
 	   
 		// TODO FIXME insert right failure mode prob here 
-		if( 0.5 > failureMode){     // component seriously failed
-		    missionFail = true;
+		if( 0.5 > failureMode || part_critical[cmp] ){	// component seriously failed
+		    missionFail = true;				// or component really important for mission
                 }else{
-		    softFailureCNT ++;		    // SoftFailure, which might still cause mission to succeed
+		    softFailureCNT ++;				// SoftFailure, which might still cause mission to succeed
 		}
     	    }
 	} 
@@ -224,7 +243,8 @@ void schematic::MCcalculateFIT(double runtime, unsigned long int tries){
     double FITall = utils::FailureRate2FIT(cntALL, runtime); 
     double FITfmd = utils::FailureRate2FIT(cntFMD, runtime); 
     
-    printf("ALL %lf FIT \t\t FMD %lf FIT\n", FITall, FITfmd);
+    printf("All errors are mission critical          \t%lf FIT ALL\n", FITall);
+    printf("Some errors do not cause mission to fail \t%lf FIT FMD\n", FITfmd);
 
 }
 
