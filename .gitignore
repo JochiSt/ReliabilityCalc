@@ -46,6 +46,7 @@ main_GCU
 main_PowerBoard
 main_BASE_Hamamatsu
 main_TsinghuaFMC
+main_HVU
 import_wuerth
 sqlite
 output

@@ -32,13 +32,14 @@ PROGRAM_3 = main_GCU
 PROGRAM_4 = main_BASE_Hamamatsu
 #PROGRAM_5 = main_TsinghuaFMC
 PROGRAM_6 = main_ESS
+PROGRAM_7 = main_HVU
 
 SRCS=$(wildcard src/*.cpp)
 OBJECTS = $(SRCS:.cpp=.o)
 
 .PHONY: all clean doc lib install $(BUSSES)
 
-all:	lib $(PROGRAM) $(PROGRAM_2) $(PROGRAM_3) $(PROGRAM_4) $(PROGRAM_5) $(PROGRAM_6)
+all:	lib $(PROGRAM) $(PROGRAM_2) $(PROGRAM_3) $(PROGRAM_4) $(PROGRAM_5) $(PROGRAM_6) $(PROGRAM_7)
 	@echo " ALL DONE. $@"
 
 $(PROGRAM):	lib $(PROGRAM).o
@@ -64,6 +65,10 @@ $(PROGRAM_5):	lib $(PROGRAM_5).o
 $(PROGRAM_6):	lib $(PROGRAM_6).o
 	@echo -n ">>> Linking   "
 	$(GPP)  -o $(PROGRAM_6) $(PROGRAM_6).o $(LDFLAGS)
+
+$(PROGRAM_7):	lib $(PROGRAM_7).o
+	@echo -n ">>> Linking   "
+	$(GPP)  -o $(PROGRAM_7) $(PROGRAM_7).o $(LDFLAGS)
 
 $(BUSSES):
 	@cd $@; $(MAKE);
