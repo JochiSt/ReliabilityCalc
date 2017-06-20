@@ -24,3 +24,20 @@ float utils::calcFIT(float conflevel, int failures, double devhours){
     return FIT;	    
 }
 
+
+
+void utils::temperatureScan(schematic* schematic, std::vector<float> temperatures, std::vector<float> &FIT){
+
+    FIT.clear();
+    
+    bool verboseOutput = schematic -> getVerboseOutput();
+    schematic->setVerboseOutput(false);	// we want a quiet function
+
+    for(unsigned int i=0; i < temperatures.size(); i++){
+	schematic -> setAmbientTemperature( temperatures[i] );
+	FIT.push_back( schematic -> getFIT() );
+
+    }
+
+    schematic -> setVerboseOutput( verboseOutput );
+}

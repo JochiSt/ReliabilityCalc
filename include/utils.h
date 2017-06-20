@@ -1,6 +1,9 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+#include <vector>
+#include "schematic.h"
+
 /**
  * \class utils
  * \author Jochen Steinmann
@@ -42,6 +45,13 @@ class utils {
 		 * \param[in] devhours device hours = runtime * devices * acceleration factor
 		 */
 		static float calcFIT(float conflevel, int failures, double devhours);
+
+    /**
+     * @param[in] schematic schematic, wich should be used for the temperature scan
+     * @param[in] temperatures given set of temperatures
+     * @param[out] FIT calculated FIT values corresponding the temperatures
+     */
+    static void temperatureScan(schematic* schematic, std::vector<float> temperatures, std::vector<float> &FIT);
 };
 
 #endif
