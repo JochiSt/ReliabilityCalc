@@ -4,7 +4,7 @@
     gStyle -> SetOptStat(0);
 
     ifstream input;
-    input.open("reliability_PowerBoard_FMD.txt");
+    input.open("../../reliability_PowerBoard_FMD.txt");
 
     TH2F* histoFMD = new TH2F("histoFMD", "FMD FIT", 14, .5, 14.5, 100, 0, 15);
     TH2F* histoALL = new TH2F("histoALL", "ALL FIT", 14, .5, 14.5, 100, 0, 15);
