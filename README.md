@@ -3,6 +3,9 @@ C++ realiability calculation framework, which can be used to calculate the lifet
 
 The parts, which are used are modelled from various sources. One source can be the datasheets, but also a "private" database with stored reliability data can be used.
 
+## Citation
+[![DOI](https://zenodo.org/badge/54101010.svg)](https://zenodo.org/badge/latestdoi/54101010)
+
 ## BuildStatus
 [![Build Status](https://travis-ci.org/JochiSt/ReliabilityCalc.svg?branch=master)](https://travis-ci.org/JochiSt/ReliabilityCalc)
 
