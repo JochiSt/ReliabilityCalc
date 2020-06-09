@@ -11,13 +11,13 @@ class resistor : public component {
          * @ingroup convUnits
          * @{
          */
-        static const float MOhm = 1;
-        static const float kOhm = 1./1000.;
-        static const float Ohm = 1./(1000*1000);
+        static constexpr float MOhm = 1;
+        static constexpr float kOhm = 1./1000.;
+        static constexpr float Ohm = 1./(1000*1000);
 
-        static const float mW = 1./1000.;
-        static const float W = 1.;
-        static const float kW = 1000.;
+        static constexpr float mW = 1./1000.;
+        static constexpr float W = 1.;
+        static constexpr float kW = 1000.;
         ///@}
 
         /**

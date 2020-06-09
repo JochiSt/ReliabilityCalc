@@ -15,7 +15,7 @@ class IC : public component{
          * @addtogroup NatConst Natural Constants
          * @{
          */
-        static const float EA = 0.7;        ///< binding energy electron in Silicium = 0.7eV
+        static constexpr float EA = 0.7;        ///< binding energy electron in Silicium = 0.7eV
         ///@}
 
         /**

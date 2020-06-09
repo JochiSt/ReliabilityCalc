@@ -12,13 +12,13 @@ class capacitor : public component {
          * @addtogroup convUnits convenience definitions of units
          * @{
          */
-        static const float pF = 1.;
-        static const float nF = 1000.;
-        static const float uF = 1000. * 1000.;
+        static constexpr float pF = 1.;
+        static constexpr float nF = 1000.;
+        static constexpr float uF = 1000. * 1000.;
 
-        static const float V  = 1.;
-        static const float mV = 1./1000.;
-        static const float kV = 1000.;
+        static constexpr float V  = 1.;
+        static constexpr float mV = 1./1000.;
+        static constexpr float kV = 1000.;
         ///@}
 
         /**
