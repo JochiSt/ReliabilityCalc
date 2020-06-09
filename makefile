@@ -7,9 +7,10 @@ CFLAGS+=-Iinclude/
 CFLAGS+=-g
 #CFLAGS+=-fpermissive
 
-LDFLAGS+=-lsqlite3 -lgsl -lgslcblas -lm
 LDFLAGS+=-L. -lReliability
 LDFLAGS+=$(shell curl-config --libs)
+LDFLAGS+=-lgsl -lgslcblas -lm
+LDFLAGS+=-lsqlite3 
 
 ###############################################################################
 # library....
