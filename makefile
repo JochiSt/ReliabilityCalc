@@ -1,6 +1,7 @@
 BUSSES+=src
 
 CFLAGS=-fPIC 
+CFLAGS+=-std=c++11
 CFLAGS+=-Wall 
 CFLAGS+=-Iinclude/
 CFLAGS+=-g
