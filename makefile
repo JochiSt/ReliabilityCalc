@@ -1,8 +1,10 @@
 BUSSES+=src
 
-CFLAGS=-fPIC -Wall 
+CFLAGS=-fPIC 
+CFLAGS+=-Wall 
 CFLAGS+=-Iinclude/
 CFLAGS+=-g
+#CFLAGS+=-fpermissive
 
 LDFLAGS+=-lsqlite3 -lgsl -lgslcblas -lm
 LDFLAGS+=-L. -lReliability
