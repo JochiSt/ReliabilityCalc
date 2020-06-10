@@ -23,6 +23,11 @@ In order to install them, please install:
 
 the dependencies should be installed automaticly
 
+For apt based environments (e.g. Debian), you can simply use:
+```bash
+apt-get install libsqlite3-dev libcurl4-openssl-dev libgsl-dev
+```
+
 ## Example Usage
 
 For a more detailed explanation how this framework works, and how it can be used, please have a look at the [wiki](https://github.com/JochiSt/ReliabilityCalc/wiki)
