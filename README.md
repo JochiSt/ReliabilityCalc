@@ -30,7 +30,17 @@ apt-get install libsqlite3-dev libcurl4-openssl-dev libgsl-dev
 
 ## Example Usage
 
-For a more detailed explanation how this framework works, and how it can be used, please have a look at the [wiki](https://github.com/JochiSt/ReliabilityCalc/wiki)
+### Create Temperature database
+There is the possibility to have a dedicated temperature for each component. 
+For this a small database is used. There must not be any entry in this database, 
+but in order to avoid erros, it is recommended to create this file. This can be 
+done by calling
+```
+./createDeltaTDB.sh
+```
+
+For a more detailed explanation how this framework works, and how it can be used, 
+please have a look at the [wiki](https://github.com/JochiSt/ReliabilityCalc/wiki)
 
 ###### Define the ambient (usage) temperature
 ```
