@@ -12,7 +12,9 @@
 
 #include "diode.h"
 #include "resistor.h"
+#include "resistor_mil.h"
 #include "capacitor.h"
+#include "capacitor_mil.h"
 #include "IC.h"
 #include "inductor.h"
 
