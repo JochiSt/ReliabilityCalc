@@ -58,3 +58,6 @@ websync
 *.sql
 *.csv
 *.png
+
+# for python branch
+.spyproject
