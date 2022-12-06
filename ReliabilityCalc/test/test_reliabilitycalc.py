@@ -8,12 +8,17 @@ sys.path.append("../")
 
 from components import *
 
-R = resistor(None)
-U = ic(300)
+R1 = resistor(20)
+R2 = resistor_MIL(20)
+
+U1 = ic(300)
+
 I = inductor(300)
 
-print(R.getTemperature())
+print(R1.getTemperature())
 
 component.setGlobalTemperature(300)
 
-print(R.getTemperature())
+print(R1.getTemperature())
+
+print("Number of resistors: ", resistor.getPartCnt())
