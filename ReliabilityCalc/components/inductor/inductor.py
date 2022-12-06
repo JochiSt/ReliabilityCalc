@@ -4,5 +4,7 @@ sys.path.append("../../")
 from components import component
 
 class inductor(component):
-    def __init__(self, T):
-        super().__init__(T)
+    def __init__(self, value, T=None, deltaT=None):
+        super().__init__(T, deltaT)
+        self.value = value
+
