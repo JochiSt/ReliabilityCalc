@@ -77,6 +77,6 @@ class component:
         if self.useGlobalT:
             return __class__.T + self.deltaT
         else:
-            return self.T + self.deltaT
+            return self.T
 
 
