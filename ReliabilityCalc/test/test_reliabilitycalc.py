@@ -9,7 +9,11 @@ sys.path.append("../")
 from components import *
 
 R = resistor(None)
-U = ic(293)
-I = inductor(293)
+U = ic(300)
+I = inductor(300)
 
-print(R.FIT())
+print(R.getTemperature())
+
+component.setGlobalTemperature(300)
+
+print(R.getTemperature())
