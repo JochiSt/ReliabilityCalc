@@ -55,7 +55,8 @@ class component:
         """
         __class__.T = T
 
-    def getGlobalTemperature(T):
+    @staticmethod
+    def getGlobalTemperature():
         """
         Returns
         -------
