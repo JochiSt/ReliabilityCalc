@@ -5,6 +5,21 @@ class component:
     T = 293 # global temperature
 
     def __init__(self, T=None, deltaT=None):
+        """
+        Parameters
+        ----------
+        T : float, optional
+            local device temperature. If None, the global temperature is used.
+            The default is None.
+        deltaT : float, optional
+            difference to global temperature. Only taken into account, when
+            global temperature is used. The default is None.
+
+        Returns
+        -------
+        None.
+
+        """
         if T is None:
             self.useGlobalT = True
         else:
@@ -17,16 +32,47 @@ class component:
             self.deltaT = deltaT
 
     def FIT(self):
+        """
+        Returns
+        -------
+        float
+            FIT - Failure in Time
+        """
         return -1
 
     @staticmethod
     def setGlobalTemperature(T):
+        """
+        Parameters
+        ----------
+        T : float
+            global Temperature of all devices
+
+        Returns
+        -------
+        None.
+
+        """
         __class__.T = T
 
     def getGlobalTemperature(T):
+        """
+        Returns
+        -------
+        float
+            global temperature of all devices
+
+        """
         return __class__.T
 
     def getTemperature(self):
+        """
+        Returns
+        -------
+        float
+            Temperature of device. Either global temperature + deltaT or local
+            temperature.
+        """
         if self.useGlobalT:
             return __class__.T + self.deltaT
         else:
