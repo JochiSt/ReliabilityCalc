@@ -3,6 +3,9 @@
 # base class
 from .component import component
 
+# assembly e.g. part of a whole schematic
+from assembly.assembly import assembly
+
 # all resistors
 from resistor.resistor import resistor
 from resistor.resistor_MIL import resistor_MIL
