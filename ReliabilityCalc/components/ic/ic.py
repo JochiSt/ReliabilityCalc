@@ -11,7 +11,7 @@ class ic(component):
     def getPartCnt():
         return __class__.partcnt
 
-    def __init__(self, value, T=None, deltaT=None):
+    def __init__(self, designator, value, T=None, deltaT=None):
         super().__init__(T, deltaT)
         assert value
         self.value = value

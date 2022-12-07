@@ -10,10 +10,8 @@ class resistor(component):
 
     partcnt = 0;
 
-    def __init__(self, value, T=None, deltaT=None):
-        super().__init__(T, deltaT)
-        assert value
-        self.value = value
+    def __init__(self, designator, value, T=None, deltaT=None):
+        super().__init__(designator, value, T, deltaT)
 
         __class__.partcnt += 1
 

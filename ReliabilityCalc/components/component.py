@@ -4,10 +4,14 @@ class component:
 
     T = 293 # global temperature
 
-    def __init__(self, T=None, deltaT=None):
+    def __init__(self, designator, value, T=None, deltaT=None):
         """
         Parameters
         ----------
+        designator : str
+            designator of the component, typ. R1, U2 etc.
+        value : str
+            value of the component
         T : float, optional
             local device temperature. If None, the global temperature is used.
             The default is None.
@@ -20,6 +24,10 @@ class component:
         None.
 
         """
+
+        self.designator = designator
+        self.value = value
+
         if T is None:
             self.useGlobalT = True
         else:
@@ -30,6 +38,7 @@ class component:
             self.deltaT = 0
         else:
             self.deltaT = deltaT
+
 
     def FIT(self):
         """
