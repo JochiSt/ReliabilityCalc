@@ -8,12 +8,13 @@ sys.path.append("../")
 
 from components import *
 
-R1 = resistor(20)
-R2 = resistor_MIL(20)
+R1 = resistor("R1", 20)
+R2 = resistor_MIL("R2", 20)
 
-U1 = ic(300)
+U1 = ic("U1", 300)
+U2 = ic_TI("U2", 300)
 
-I = inductor(300)
+L1 = inductor("L1", 300)
 
 print(R1.getTemperature())
 
