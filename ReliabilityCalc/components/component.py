@@ -47,7 +47,7 @@ class component:
         float
             FIT - Failure in Time
         """
-        return -1
+        return None
 
     @staticmethod
     def setGlobalTemperature(T):

@@ -22,4 +22,10 @@ component.setGlobalTemperature(300)
 
 print(R1.getTemperature())
 
+
+A1 = assembly("A1")
+A1.addComponent("R1", 10)
+
+print(A1.FIT())
+
 print("Number of resistors: ", resistor.getPartCnt())
